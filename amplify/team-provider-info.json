@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-flock-dev-185052-authRole",
+      "UnauthRoleArn": "arn:aws:iam::418812455106:role/amplify-flock-dev-185052-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::418812455106:role/amplify-flock-dev-185052-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-flock-dev-185052-deployment",
+      "UnauthRoleName": "amplify-flock-dev-185052-unauthRole",
+      "StackName": "amplify-flock-dev-185052",
+      "StackId": "arn:aws:cloudformation:us-east-1:418812455106:stack/amplify-flock-dev-185052/9c2024e0-9aaf-11ed-b448-0ad6163c7b79",
+      "AmplifyAppId": "doo84t1yt5s1w"
+    },
+    "categories": {
+      "auth": {
+        "flockAuth": {}
+      }
+    }
+  }
+}
