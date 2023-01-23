@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { Button, AuthLink, AuthTitle, Input } from "../../Components";
+import { Button, AuthLink, Title, Input } from "../../Components";
 
 export default function RedefinePassword() {
   
@@ -28,7 +28,7 @@ export default function RedefinePassword() {
   
     return (
       <form>
-        <AuthTitle text="redefine password" />
+        <Title text="redefine password" />
         <div className="mb-4">
           <Input
             type="email"

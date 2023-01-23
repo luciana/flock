@@ -5,15 +5,8 @@ const SignUp = async (email, password, name, locale) => {
   await AmplifyAuth.signUp({
     username: email,
     password,  
-    attributes: {
-      'custom:name': name,
-      email,
-      locale,
-    },
+    attributes: {email,locale},
   });
- 
-
-  
  
 };
 
@@ -43,12 +36,27 @@ const RedefinePassword = async (email, code, pwd) => {
 
 const GetUser = async () => {
   const { attributes } = await AmplifyAuth.currentAuthenticatedUser();
+  console.log("user attributes", attributes);
   return attributes;
 };
 
 const SignOut = async () => {
   await AmplifyAuth.signOut({ global: true });
 };
+
+const ChangeEmail = async (email) => {
+  const user = await AmplifyAuth.currentAuthenticatedUser();
+  await AmplifyAuth.updateUserAttributes(user, { 'email': email });
+}
+
+const ConfirmChangeEmail = async (code) => {
+  await AmplifyAuth.verifyCurrentUserAttributeSubmit('email', code);
+}
+
+const ChangePassword = async (pwd, newPwd) => {
+  const user = await AmplifyAuth.currentAuthenticatedUser();
+  await AmplifyAuth.changePassword(user, pwd, newPwd);
+}
 
 const Auth = {
   SignUp,
@@ -59,6 +67,10 @@ const Auth = {
   RedefinePassword,
   GetUser,
   SignOut,
+  ChangeEmail,
+  ConfirmChangeEmail,
+  ChangePassword
 };
+
 
 export default Auth;

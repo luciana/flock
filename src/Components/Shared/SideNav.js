@@ -3,6 +3,9 @@ import Avatar from 'react-avatar';
 import logo from'../../Assets/Images/logos/Flock-App-logos_white-small.png';
 
 function SideNav({ user, handleSignOut }) {
+
+    console.log("user in side nav", user);
+  
   return(
       <>       
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">
@@ -11,8 +14,8 @@ function SideNav({ user, handleSignOut }) {
                 <span className="d-block d-lg-none">{process.env.REACT_APP_TITLE}</span>
                 <span className="d-none d-lg-block">    
                     <p><img src={logo} className="img-fluid" alt="Flock App" /> </p>
-                    <Avatar name={user.name} className=" img-profile rounded-circle mx-auto mb-2" alt={user.name} />
-                    <div className="text-white my-3 profile-name">{user.name}</div>   
+                    <Avatar name={"Luciana"} className=" img-profile rounded-circle mx-auto mb-2" alt={"Luciana"} />
+                    <div className="text-white my-3 profile-name">{"Luciana"}</div>   
                 </span>          
             </a>
             

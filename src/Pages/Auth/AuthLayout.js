@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Auth from "../../Services/auth";
 import { Alert, Loading } from "../../Components";
@@ -111,7 +111,7 @@ export default function AuthLayout() {
     try {
       await Auth.ConfirmSignUp(email, code);
       stopLoading();
-      navigate("/", {
+      navigate("/profile", {
         state: {
           email,
           alert: { type: "success", text: "Confirmation successful!" },
@@ -125,6 +125,21 @@ export default function AuthLayout() {
       });
     }
   };
+
+  const loadUser = async () => {
+    setLoading(true);
+    try {
+      await Auth.GetUser();
+      setLoading(false);
+      navigate('/main')
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   return (
     <section className="h-screen mx-auto bg-white">

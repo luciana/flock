@@ -6,8 +6,7 @@ import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { useUser } from '../../Contexts/UserContext';
 
 const Navigation = () => {
-const {user} = useUser;  
-console.log("user from nav" , user);
+
 const tabs = [{
   route: "/Main",
   icon: faHome,
@@ -22,14 +21,11 @@ const tabs = [{
   label: "Account"
 }]
 
-const isLoggedIn = () =>{
-  return user !== null;
-}
 
 	return (
     <div>
        {/* Top Bar*/}
-       <div className={isLoggedIn ? 'd-none' : 'd-block'}>
+       <div className={true ? 'd-none' : 'd-block'}>
       <nav className="navbar navbar-expand-md navbar-light d-none d-lg-block sticky-top top-tab-nav" 	role="link">
         <div className="container-fluid">
             <a className="navbar-brand" href="/home">Flock App</a>

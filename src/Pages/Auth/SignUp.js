@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { Button, AuthLink, AuthTitle, Input } from "../../Components";
+import { Button, AuthLink, Title, Input } from "../../Components";
 
 export default function SignUp() {
   const { setImg, setAlert, signUp } = useOutletContext();
@@ -27,7 +27,7 @@ export default function SignUp() {
 
   return (
     <form>
-      <AuthTitle text="Welcome " />
+      <Title text="Welcome " />
       <div className="mb-4">
         <Input
           type="text"

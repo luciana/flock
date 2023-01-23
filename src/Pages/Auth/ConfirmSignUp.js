@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { Button, AuthLink, AuthTitle, Input } from "../../Components";
+import { Button, AuthLink, Title, Input } from "../../Components";
 
 
 export default function ConfirmSignUp() {
@@ -21,7 +21,7 @@ export default function ConfirmSignUp() {
 
   return (
     <form>
-      <AuthTitle text="Confirm Registration" />
+      <Title text="Confirm Registration" />
       <div className="mb-4">
         <Input
           type="email"
@@ -37,6 +37,7 @@ export default function ConfirmSignUp() {
         <button
           type="button"
           onClick={() => resendConfirmationCode(email)}
+          className="btn btn-light borders-0"
         >
           Resend Confirmation Code
         </button>

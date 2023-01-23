@@ -4,7 +4,7 @@ import { isValidEmail } from "../../Helpers";
 import {
     Button,
     AuthLink,
-    AuthTitle,
+    Title,
     Input,
     RememberMe,
   } from "../../Components";
@@ -25,7 +25,7 @@ export default function SignIn() {
   
     return (
       <form>
-        <AuthTitle text="sign in" />
+        <Title text="sign in" />
         <div className="mb-4">
           <Input
             type="email"

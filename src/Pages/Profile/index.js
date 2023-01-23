@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Auth from "../../Services/auth";
-import { Alert, Input} from "../../Components";
+import { Alert, Input, Title} from "../../Components";
 import { isValidEmail } from "../../Helpers";
 
 export default function Profile() {
@@ -79,6 +79,7 @@ export default function Profile() {
       <Input
         type="email"
         placeholder="Email"
+        label="Email"
         value={email}
         handler={setEmail}
       />    
@@ -86,11 +87,7 @@ export default function Profile() {
           type="button"
           onClick={() => handleChangeEmail()}
           disabled={disabledEmail()}
-          className={`${
-            disabled
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-indigo-500 cursor-pointer hover:bg-amber-500 hover:shadow-md focus:bg-amber-500 focus:shadow-md focus:outline-none focus:ring-0 active:bg-amber-500 active:shadow-md"
-          } inline-block px-2 py-2 text-white font-medium uppercase rounded shadow-md transition duration-150 ease-in-out w-full`}
+          className="btn btn-primary my-3"
         >
           Change Email
         </button>
@@ -106,12 +103,7 @@ export default function Profile() {
           type="button"
           onClick={() => handleVerifyCode()}
           disabled={disabledCode()}
-          className={`${
-            disabled
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-indigo-500 cursor-pointer hover:bg-amber-500 hover:shadow-md focus:bg-amber-500 focus:shadow-md focus:outline-none focus:ring-0 active:bg-amber-500 active:shadow-md"
-          } inline-block px-2 py-2 text-white font-medium uppercase rounded shadow-md transition duration-150 ease-in-out w-full`}
-        >
+          className="btn btn-primary my-3" >
         Send Code
         </button>
 
@@ -132,12 +124,14 @@ export default function Profile() {
         <Input
           type="password"
           placeholder="Current Password"
+          label="Current Password"
           value={currentPassword}
           handler={setCurrentPassword}
         />
         <Input
           type="password"
           placeholder="New Password"
+          label="New Password"
           value={newPassword}
           handler={setNewPassword}
           showTooltip
@@ -152,22 +146,18 @@ export default function Profile() {
             type="button"
             onClick={() => handlePassword()}
             disabled={disabledPassword()}
-            className={`${
-              disabled
-                ? "bg-gray-600 cursor-not-allowed"
-                : "bg-indigo-500 cursor-pointer hover:bg-amber-500 hover:shadow-md focus:bg-amber-500 focus:shadow-md focus:outline-none focus:ring-0 active:bg-amber-500 active:shadow-md"
-            } inline-block px-2 py-2 text-white font-medium uppercase rounded shadow-md transition duration-150 ease-in-out w-full`}
-          >
+            className="btn btn-primary my-3">
           Change Password
           </button>
       </div>
     </form>
   );
 
+  console.log("user from profile", user);
   return (
     <section>
        <div className="App profile">
-          <h4> Profile </h4>
+          <Title text="Profile" back="/main" />
           <Alert type={alert?.type} text={alert?.text} />
           {renderChangeEmail()}
           {renderChangePassword()}

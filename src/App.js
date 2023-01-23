@@ -34,10 +34,11 @@ import {
         <Suspense fallback={<Loading />}>
           <Routes>           
             <Route path="/" exact element={<HomePage />} />
-            <Route path="/Profile" exact element={<ProfilePage />} />
+           
             <Route path="/New" exact element={<NewQuestionPage />} /> 
             <Route element={<Layout />}>
                 <Route path="/Main" element={<MainPage />} />   
+                <Route path="/Profile" element={<ProfilePage />} />
             </Route>           
             
             <Route element={<AuthLayout />}>

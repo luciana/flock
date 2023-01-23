@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { Button, AuthLink, AuthTitle, Input } from "../../Components";
+import { Button, AuthLink, Title, Input } from "../../Components";
 
 
 export default function ForgorPassword() {
@@ -17,7 +17,7 @@ export default function ForgorPassword() {
 
   return (
     <form>
-      <AuthTitle text="forgot password" />
+      <Title text="forgot password" />
       <div className="mb-4">
         <Input
           type="email"
