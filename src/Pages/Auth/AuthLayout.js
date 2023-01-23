@@ -24,7 +24,7 @@ export default function AuthLayout() {
     try {
       await Auth.SignIn(email, pwd, remember);
       stopLoading();
-      navigate("/home");
+      navigate("/main");
     } catch (err) {
       stopLoading();
       setAlert({ type: "error", text: "Sorry, Unable to login" });

@@ -42,7 +42,7 @@ import {
             </Route>           
             
             <Route element={<AuthLayout />}>
-              <Route path="/" element={<SignIn />} />
+              <Route path="/signin" element={<SignIn />} />
               <Route path="/forgorpassword" element={<ForgotPassword />} />
               <Route path="/redefinepassword" element={<RedefinePassword />} />
               <Route path="/signup" element={<SignUp />} />

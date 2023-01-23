@@ -5,15 +5,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import awsconfig from './aws-exports';
-import { UserContextProvider } from './Contexts/UserContext';
+//import { UserContextProvider } from './Contexts/UserContext';
 
 Amplify.configure(awsconfig);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <UserContextProvider>
+  
       <App />
-    </UserContextProvider>    
+  
   </React.StrictMode>
 );
 

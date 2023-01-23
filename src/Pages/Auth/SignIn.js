@@ -25,7 +25,7 @@ export default function SignIn() {
   
     return (
       <form>
-        <Title text="sign in" />
+        <Title text="Sign In" />
         <div className="mb-4">
           <Input
             type="email"

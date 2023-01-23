@@ -3,7 +3,7 @@ import { Nav, NavItem} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { useUser } from '../../Contexts/UserContext';
+//import { useUser } from '../../Contexts/UserContext';
 
 const Navigation = () => {
 
@@ -28,7 +28,7 @@ const tabs = [{
        <div className={true ? 'd-none' : 'd-block'}>
       <nav className="navbar navbar-expand-md navbar-light d-none d-lg-block sticky-top top-tab-nav" 	role="link">
         <div className="container-fluid">
-            <a className="navbar-brand" href="/home">Flock App</a>
+            <a className="navbar-brand" href="/main">Flock App</a>
             <Nav className="ml-auto">
               <NavItem>
                 <NavLink to="/main" className="nav-link">
