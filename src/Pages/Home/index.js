@@ -2,11 +2,18 @@ import React from 'react';
 import { Header, Footer } from '../../Components/Shared/index';
 import '../pages.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useContext } from "react";
+import { AppContext} from '../../Contexts';
+import {HomeNav} from '../../Components';
 
 function Home() {
+    const { state } = useContext(AppContext);
+    const { user } = state;
+    console.log("user from home", user);
   return (
     <div className="App">
-        <Header></Header>        
+        <HomeNav />
+        <Header></Header>           
         <section className="App-header content-section  text-white text-center" id="services">
             <div className="container px-4 px-lg-5">
                 <div className="content-section-heading">

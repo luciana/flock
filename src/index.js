@@ -1,20 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from "react-router-dom";
 import Amplify from '@aws-amplify/core';
 import './index.css';
 import App from './App';
+import { AppProvider } from "./Contexts";
 import reportWebVitals from './reportWebVitals';
 import awsconfig from './aws-exports';
-//import { UserContextProvider } from './Contexts/UserContext';
 
 Amplify.configure(awsconfig);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-  
+  <BrowserRouter>
+    <AppProvider>
       <App />
-  
-  </React.StrictMode>
+    </AppProvider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

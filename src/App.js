@@ -1,61 +1,53 @@
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,   
-  } from "react-router-dom";
-  import 'bootstrap/dist/css/bootstrap.min.css';
-  import './Pages/pages.css'
-  import { lazy, Suspense } from "react";
-  import Navigation from './Components/Shared/Navigation';
-  import {Loading} from "./Components";
-  //https://www.linkedin.com/pulse/complete-login-flow-using-react-aws-amplify-auth-s3-jos%C3%A9-augusto/
- 
-  import MainPage from './Pages/Main';
-  const AuthLayout = lazy(() => import("./Pages/Auth/AuthLayout"));
-  const Layout = lazy(() => import("./Pages/Main/Layout"));
-  const SignIn = lazy(() => import("./Pages/Auth/SignIn"));
-  const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"));
-  const RedefinePassword = lazy(() => import("./Pages/Auth/RedefinePassword"));
-  const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
-  const ConfirmSignUp = lazy(() => import("./Pages/Auth/ConfirmSignUp"));
+import { lazy, Suspense, useContext, useEffect } from "react";
+import { Routes, Route, useSearchParams } from "react-router-dom";
+import { AppContext } from "./Contexts";
+import { ROUTES, TYPES } from "./Constants";
+import { Loading } from "./Components";
 
+const NotFound = lazy(() => import("./Pages/NotFound"));
+const AuthLayout = lazy(() => import("./Pages/Auth/AuthLayout"));
+const SignIn = lazy(() => import("./Pages/Auth/SignIn"));
+const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"));
+const RedefinePassword = lazy(() => import("./Pages/Auth/RedefinePassword"));
+const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
+const ConfirmSignUp = lazy(() => import("./Pages/Auth/ConfirmSignUp"));
 
-  const HomePage = lazy(() => import('./Pages/Home'));
-  const NotFoundPage = lazy(() => import("./Pages/NotFound"));
-  const ProfilePage = lazy(() => import("./Pages/Profile"));  
-  const NewQuestionPage= lazy(() => ('./Pages/NewQuestion'));
+const Layout = lazy(() => import("./Pages/Layout/Layout"));
+const Main = lazy(() => import("./Pages/Main"));
+const Home = lazy(() => import("./Pages/Home"));
+const Profile = lazy(() => import("./Pages/Profile"));
 
+function App() {
+  const [searchParams] = useSearchParams();
+  const { state, dispatch } = useContext(AppContext);
 
-  function App() {
-    return (      
-      <Router>
-        <Navigation/>
-        <div>
-        <Suspense fallback={<Loading />}>
-          <Routes>           
-            <Route path="/" exact element={<HomePage />} />
-           
-            <Route path="/New" exact element={<NewQuestionPage />} /> 
-            <Route element={<Layout />}>
-                <Route path="/Main" element={<MainPage />} />   
-                <Route path="/Profile" element={<ProfilePage />} />
-            </Route>           
-            
-            <Route element={<AuthLayout />}>
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/forgorpassword" element={<ForgotPassword />} />
-              <Route path="/redefinepassword" element={<RedefinePassword />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/confirmsignup" element={<ConfirmSignUp />} />
-            </Route>
-            <Route path="*" element={<NotFoundPage />} />                   
-          </Routes>
-          </Suspense>
-        </div>
-      </Router>
- 
-    );
-  }
-  
-  export default App;
-  
+  useEffect(() => {
+    if (searchParams.get("lang"))
+      dispatch({ type: TYPES.UPDATE_LANG, payload: searchParams.get("lang") });
+  }, []);
+
+  console.log("ROUTES from App.js", state);
+  return (
+    <Suspense fallback={<Loading />}>
+      <Routes>
+        <Route path={ROUTES[state.lang].HOME} element={<Home />} />
+        <Route element={<AuthLayout />}>
+          <Route path={ROUTES[state.lang].SIGN_IN} element={<SignIn />} />
+          <Route path={ROUTES[state.lang].FORGOT_PASSWORD} element={<ForgotPassword />} />
+          <Route path={ROUTES[state.lang].REDEFINE_PASSWORD} element={<RedefinePassword />}/>
+          <Route path={ROUTES[state.lang].SIGN_UP} element={<SignUp />} />
+          <Route path={ROUTES[state.lang].CONFIRM_SIGN_UP} element={<ConfirmSignUp />}/>
+        </Route>
+        <Route element={<Layout />}>
+          <Route path={ROUTES[state.lang].MAIN} element={<Main />} />
+          <Route path={ROUTES[state.lang].PROFILE} element={<Profile />} />
+        
+        </Route>
+        <Route path="*" element={<NotFound />} />
+       
+      </Routes>
+    </Suspense>
+  );
+}
+
+export default App;

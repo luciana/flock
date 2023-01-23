@@ -1,54 +1,46 @@
-import React from 'react';
+import logo from'../../Assets/Images/logos/Flock-App-logo-black-small.png';
+import { NavLink } from "react-router-dom";
 import { Nav, NavItem} from 'reactstrap';
-import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-//import { useUser } from '../../Contexts/UserContext';
+import { faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
-const Navigation = () => {
+const HomeNav = () => {
 
-const tabs = [{
-  route: "/Main",
-  icon: faHome,
-  label: "Home"
-},{
-  route: "/New",
-  icon: faPlus,
-  label: "Question"
-},{
-  route: "/Profile",
-  icon: faUserCircle,
-  label: "Account"
-}]
-
+  const tabs = [{
+    route: "/",
+    icon: faHome,
+    label: "Home"
+  },{
+    route: "/signin",
+    icon: faUserCircle,
+    label: "Sign In"
+  }]
 
 	return (
     <div>
        {/* Top Bar*/}
-       <div className={true ? 'd-none' : 'd-block'}>
       <nav className="navbar navbar-expand-md navbar-light d-none d-lg-block sticky-top top-tab-nav" 	role="link">
         <div className="container-fluid">
-            <a className="navbar-brand" href="/main">Flock App</a>
+            <a className="navbar-brand" href="/main">
+            <img src={logo} className="img-fluid" alt={process.env.REACT_APP_TITLE} />
+            </a>
             <Nav className="ml-auto">
-              <NavItem>
-                <NavLink to="/main" className="nav-link">
-                  Login
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/stats" className="nav-link">
-                  About
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/#" className="nav-link">
-                  Login
-                </NavLink>
-              </NavItem>
+            {
+              tabs.map((tab, index) =>(
+                <NavItem key={`tab-${index}`}>               
+                  <NavLink to={tab.route} className={(navData) => (navData.isActive ? "nav-link bottom-nav-link active-style" : 'nav-link bottom-nav-link none')}>
+                    <div className="nav-link row d-flex flex-column justify-content-center align-items-center">
+                      <FontAwesomeIcon size="lg" icon={tab.icon}/>
+                      <div className="">{tab.label}</div>
+                    </div>
+                  </NavLink>
+                </NavItem>
+              ))
+            }
             </Nav>
         </div>
       </nav>
-      </div>
+
        {/* Bottom Tab Navigator*/}
        <nav className="navbar fixed-bottom navbar-light d-block d-lg-none bottom-tab-nav" role="navigation">
         <Nav className="w-100">
@@ -73,4 +65,4 @@ const tabs = [{
   )
 };
 
-export default Navigation;
+export default HomeNav;

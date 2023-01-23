@@ -1,15 +1,20 @@
 
 import './../pages.css';
 import './../profile-nav.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useOutletContext, useNavigate} from "react-router-dom";
+import { LANGUAGES, ROUTES } from "../../Constants";
+import { AppContext } from "../../Contexts";
 import Auth from "../../Services/auth";
-import { Alert, Input, Title} from "../../Components";
+import Mutations from "../../Services/mutations";
+import { Alert, Button, Form, Input, Select, Title } from "../../Components";
 import { isValidEmail } from "../../Helpers";
 
 export default function Profile() {
-  const { user, loadUser, setLoading } = useOutletContext();
+  const { state } = useContext(AppContext);
+  const { user } = state;
+  const navigate = useNavigate();
+  const { loadUser, setLoading } = useOutletContext();
   const [alert, setAlert] = useState();
   const [showCode, setShowCode] = useState(false);
   const [email, setEmail] = useState("");
@@ -17,8 +22,9 @@ export default function Profile() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [language, setLanguage] = useState(user.locale);
 
-  const disabled = () => email === "" || !isValidEmail(email);
+  //const disabled = () => email === "" || !isValidEmail(email);
 
   useEffect(() => {
     user && setEmail(user?.email);
@@ -29,13 +35,37 @@ export default function Profile() {
     setLoading(true);
   }
 
+  const handleErrors = (message) => {
+    let errorMessage = message;
+    switch (message) {
+      case "Attempt limit exceeded, please try after some time.":
+        errorMessage = LANGUAGES[user.locale].CommonError.AttemptLimit;
+        break;
+      case "An account with the given email already exists.":
+        errorMessage = LANGUAGES[user.locale].CommonError.Email;
+        break;
+      case "Invalid verification code provided, please try again.":
+        errorMessage = LANGUAGES[user.locale].CommonError.CodeError;
+        break;
+      case "Incorrect username or password.":
+        errorMessage = LANGUAGES[user.locale].CommonError.Password;
+        break;
+      case "Password did not conform with policy: Password must have symbol characters":
+        errorMessage = LANGUAGES[user.locale].CommonError.NewPassword;
+        break;
+      default:
+        errorMessage = message;
+    }
+    setAlert({ type: "error", text: errorMessage });
+  };
+
   const handleChangeEmail = async () => {
     loading();
     try {
       await Auth.ChangeEmail(email);
       setShowCode(true);
     } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      handleErrors(error.message);
     }
     setLoading(false);
   };
@@ -44,11 +74,15 @@ export default function Profile() {
     loading();
     try {
       await Auth.ConfirmChangeEmail(code);
-      loadUser(true);
+      await Mutations.UpdateUser({ id: user.id, email, locale: user.locale });
+      loadUser({ force: true, email });
       setShowCode(false);
-      setAlert({ type: "success", text: 'Email changed successfully!' });
+      setAlert({
+        type: "success",
+        text: LANGUAGES[user.locale].Profile.EmailSuccess,
+      });
     } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      handleErrors(error.message);
     }
     setLoading(false);
   };
@@ -57,7 +91,23 @@ export default function Profile() {
     loading();
     try {
       await Auth.ChangePassword(currentPassword, newPassword);
-      setAlert({ type: "success", text: 'Password changed successfully!' });
+      setAlert({
+        type: "success",
+        text: LANGUAGES[user.locale].Profile.PasswordSuccess,
+      });
+    } catch (error) {
+      handleErrors(error.message);
+    }
+    setLoading(false);
+  };
+
+  const handleChangeLanguage = async () => {
+    loading();
+    try {
+      await Auth.ChangeLanguage(language);
+      await Mutations.UpdateUser({ id: user.id, email: user.email, locale: language });
+      loadUser({ force: true, email: user.email });
+      navigate(ROUTES[language].PROFILE);
     } catch (error) {
       setAlert({ type: "error", text: error.message });
     }
@@ -74,94 +124,112 @@ export default function Profile() {
     newPassword !== repeatPassword ||
     newPassword.length < 8;
 
+  const disabledLanguage = () => language === user.locale;
+
   const renderEmail = () => (
     <>
       <Input
         type="email"
-        placeholder="Email"
-        label="Email"
+        placeholder={LANGUAGES[user.locale].Email}
         value={email}
         handler={setEmail}
-      />    
-       <button
-          type="button"
-          onClick={() => handleChangeEmail()}
-          disabled={disabledEmail()}
-          className="btn btn-primary my-3"
-        >
-          Change Email
-        </button>
+      />
+      <Button
+        text={LANGUAGES[user.locale].Profile.ChangeEmail}
+        disabled={disabledEmail()}
+        handler={() => handleChangeEmail()}
+      />
     </>
   );
 
   const renderCode = () => (
     <>
-     <h1 className="text-xl text-center mb-4 uppercase">Title</h1>
-     
-      <Input type="text" placeholder="Code" value={code} handler={setCode} />  
-      <button
-          type="button"
-          onClick={() => handleVerifyCode()}
-          disabled={disabledCode()}
-          className="btn btn-primary my-3" >
-        Send Code
-        </button>
-
+      <Title
+        text={LANGUAGES[user.locale].Profile.CodeAlert}
+        color="text-amber-500"
+        size="text-sm"
+      />
+      <Input type="text" placeholder="Code" value={code} handler={setCode} />
+      <Button
+        text="Send Code"
+        disabled={disabledCode()}
+        handler={() => handleVerifyCode()}
+      />
     </>
   );
 
   const renderChangeEmail = () => (
-    <form className="w-full flex flex-wrap bg-white p-4 mb-4 mt-4 rounded-md shadow-md">
+    <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
         {!showCode ? renderEmail() : renderCode()}
       </div>
-    </form>
+    </Form>
   );
 
-  const renderChangePassword = () => (   
-      <form className="w-full flex flex-wrap bg-white p-4 mb-4 mt-4 rounded-md shadow-md">
+  const renderChangePassword = () => (
+    <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
         <Input
           type="password"
-          placeholder="Current Password"
-          label="Current Password"
+          placeholder={LANGUAGES[user.locale].Profile.CurrentPassword}
           value={currentPassword}
           handler={setCurrentPassword}
         />
         <Input
           type="password"
-          placeholder="New Password"
-          label="New Password"
+          placeholder={LANGUAGES[user.locale].Profile.NewPassword}
           value={newPassword}
           handler={setNewPassword}
           showTooltip
         />
         <Input
           type="password"
-          placeholder="Repeat New Password"
+          placeholder={LANGUAGES[user.locale].Profile.RepeatNewPassword}
           value={repeatPassword}
           handler={setRepeatPassword}
-        />       
-        <button
-            type="button"
-            onClick={() => handlePassword()}
-            disabled={disabledPassword()}
-            className="btn btn-primary my-3">
-          Change Password
-          </button>
+        />
+        <Button
+          text={LANGUAGES[user.locale].Profile.ChangePassword}
+          disabled={disabledPassword()}
+          handler={() => handlePassword()}
+        />
       </div>
-    </form>
+    </Form>
   );
 
+  const renderChangeLanguage = () => (
+    <Form>
+      <div className="mb-4 w-full flex flex-col gap-4 justify-center">
+        <Select value={language} handler={setLanguage}>
+          {Object.keys(LANGUAGES).map((l) => (
+            <option key={l} value={l}>
+              {LANGUAGES[user.locale].Languages[l]}
+            </option>
+          ))}
+        </Select>
+        <Button
+          text={LANGUAGES[user.locale].Profile.ChangeLanguage}
+          disabled={disabledLanguage()}
+          handler={() => handleChangeLanguage()}
+        />
+      </div>
+    </Form>
+  );
   console.log("user from profile", user);
+
   return (
     <section>
        <div className="App profile">
-          <Title text="Profile" back="/main" />
-          <Alert type={alert?.type} text={alert?.text} />
-          {renderChangeEmail()}
-          {renderChangePassword()}
-          
+        <Title
+        text={LANGUAGES[user.locale].Profile.Profile}
+        back={ROUTES[user.locale].MAIN}
+      />
+      <Alert type={alert?.type} text={alert?.text} />
+      <div className="grid sm:grid-cols-3 gap-2">
+        {renderChangeEmail()}
+        {renderChangePassword()}
+        {renderChangeLanguage()}
+      </div>
           <hr className="m-0"></hr>                   
         </div>
     

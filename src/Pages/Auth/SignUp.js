@@ -4,16 +4,15 @@ import { isValidEmail } from "../../Helpers";
 import { Button, AuthLink, Title, Input } from "../../Components";
 
 export default function SignUp() {
-  const { setImg, setAlert, signUp } = useOutletContext();
+  const { setAlert, signUp } = useOutletContext();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pwd, setPwd] = useState("");
   const [repeat, setRepeat] = useState("");
 
-  useEffect(() => {
-    setImg();
+  useEffect(() => {    
     setAlert();
-  }, [setAlert, setImg]);
+  }, [setAlert]);
 
   const disabled = () =>
     email === "" ||

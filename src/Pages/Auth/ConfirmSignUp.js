@@ -6,15 +6,14 @@ import { Button, AuthLink, Title, Input } from "../../Components";
 
 export default function ConfirmSignUp() {
   const location = useLocation();
-  const { setImg, setAlert, resendConfirmationCode, confirmSignUp } =
+  const { setAlert, resendConfirmationCode, confirmSignUp } =
     useOutletContext();
   const [email, setEmail] = useState(location?.state?.email || "");
   const [code, setCode] = useState("");
 
-  useEffect(() => {
-    setImg();
+  useEffect(() => {   
     setAlert(location?.state?.alert);
-  }, [location?.state?.alert, setAlert, setImg]);
+  }, [location?.state?.alert, setAlert]);
 
   const disabled = () =>
     email === "" || !isValidEmail(email) || code === "" || code.length < 6;

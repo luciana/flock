@@ -11,15 +11,14 @@ import {
 
 export default function SignIn() {
     const location = useLocation();
-    const { setImg, setAlert, signIn } = useOutletContext();
+    const {setAlert, signIn } = useOutletContext();
     const [email, setEmail] = useState(location?.state?.email || "");
     const [pwd, setPwd] = useState("");
     const [remember, setRemember] = useState(false);
   
-    useEffect(() => {
-      setImg();
+    useEffect(() => {      
       setAlert(location?.state?.alert);
-    }, [location?.state?.alert, setAlert, setImg]);
+    }, [location?.state?.alert, setAlert]);
   
     const disabled = () => email === "" || !isValidEmail(email) || pwd === "";
   
@@ -44,7 +43,7 @@ export default function SignIn() {
         </div>
         <div className="flex justify-between items-center mb-4">
           <RememberMe remember={remember} setRemember={setRemember} />
-          <AuthLink to="/forgorpassword" text="Forgot Password?" />
+          <AuthLink to="/forgotpassword" text="Forgot Password?" />
         </div>
         <Button
           text="Sign In"

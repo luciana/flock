@@ -6,16 +6,15 @@ import { Button, AuthLink, Title, Input } from "../../Components";
 export default function RedefinePassword() {
   
     const location = useLocation();
-    const { setImg, setAlert, redefinePassword } = useOutletContext();
+    const { setAlert, redefinePassword } = useOutletContext();
     const [email, setEmail] = useState(location?.state?.email || "");
     const [code, setCode] = useState("");
     const [pwd, setPwd] = useState("");
     const [repeat, setRepeat] = useState("");
   
-    useEffect(() => {
-      setImg();
+    useEffect(() => {      
       setAlert(location?.state?.alert);
-    }, [location?.state?.alert, setAlert, setImg]);
+    }, [location?.state?.alert, setAlert]);
   
     const disabled = () =>
       email === "" ||

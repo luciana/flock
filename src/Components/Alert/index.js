@@ -7,6 +7,8 @@ const Alert = ({ type, text }) => (
           ? "alert-danger"
           : type === "info"
           ? "alert-info"
+          : type === "warning"
+          ? "alert-warning"
           : "alert-secondary"
       }`}
     >

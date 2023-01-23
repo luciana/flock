@@ -4,12 +4,11 @@ import { isValidEmail } from "../../Helpers";
 import { Button, AuthLink, Title, Input } from "../../Components";
 
 
-export default function ForgorPassword() {
+export default function ForgotPassword() {
   const { setImg, setAlert, sendForgotPasswordCode } = useOutletContext();
   const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    setImg();
+  useEffect(() => {  
     setAlert();
   }, [setAlert, setImg]);
 
