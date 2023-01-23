@@ -12,6 +12,7 @@ import {
  
   import MainPage from './Pages/Main';
   const AuthLayout = lazy(() => import("./Pages/Auth/AuthLayout"));
+  const Layout = lazy(() => import("./Pages/Main/Layout"));
   const SignIn = lazy(() => import("./Pages/Auth/SignIn"));
   const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"));
   const RedefinePassword = lazy(() => import("./Pages/Auth/RedefinePassword"));
@@ -34,8 +35,11 @@ import {
           <Routes>           
             <Route path="/" exact element={<HomePage />} />
             <Route path="/Profile" exact element={<ProfilePage />} />
-            <Route path="/Main" exact element={<MainPage />} />   
             <Route path="/New" exact element={<NewQuestionPage />} /> 
+            <Route element={<Layout />}>
+                <Route path="/Main" element={<MainPage />} />   
+            </Route>           
+            
             <Route element={<AuthLayout />}>
               <Route path="/" element={<SignIn />} />
               <Route path="/forgorpassword" element={<ForgotPassword />} />

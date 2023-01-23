@@ -21,7 +21,7 @@ export default function ConfirmSignUp() {
 
   return (
     <form>
-      <AuthTitle text="confirm registration" />
+      <AuthTitle text="Confirm Registration" />
       <div className="mb-4">
         <Input
           type="email"

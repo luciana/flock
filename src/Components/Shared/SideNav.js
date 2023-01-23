@@ -2,17 +2,17 @@ import React from 'react';
 import Avatar from 'react-avatar';
 import logo from'../../Assets/Images/logos/Flock-App-logos_white-small.png';
 
-function SideNav({ name, signOut }) {
+function SideNav({ user, handleSignOut }) {
   return(
       <>       
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">
        
             <a className="navbar-brand js-scroll-trigger" href="#page-top">
-                <span className="d-block d-lg-none">Flock App</span>
+                <span className="d-block d-lg-none">{process.env.REACT_APP_TITLE}</span>
                 <span className="d-none d-lg-block">    
                     <p><img src={logo} className="img-fluid" alt="Flock App" /> </p>
-                    <Avatar name={name} className=" img-profile rounded-circle mx-auto mb-2" alt={name} />
-                    <div className="text-white my-3 profile-name">{name}</div>   
+                    <Avatar name={user.name} className=" img-profile rounded-circle mx-auto mb-2" alt={user.name} />
+                    <div className="text-white my-3 profile-name">{user.name}</div>   
                 </span>          
             </a>
             
@@ -24,7 +24,7 @@ function SideNav({ name, signOut }) {
                     <li className="nav-item"><a className="nav-link js-scroll-trigger" href="/Main">Questions</a></li>     
                     <li className="nav-item"><a className="nav-link js-scroll-trigger" href="/New">New Question</a></li>  
                     <hr />
-                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href="/#" onClick={signOut}>Logout</a></li>                
+                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href="/#" onClick={handleSignOut}>Logout</a></li>                
                 </ul>
             </div>
         </nav>
