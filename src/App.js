@@ -24,13 +24,15 @@ function App() {
   useEffect(() => {
     if (searchParams.get("lang"))
       dispatch({ type: TYPES.UPDATE_LANG, payload: searchParams.get("lang") });
-  }, []);
+    }, [dispatch, searchParams]);
 
-  console.log("ROUTES from App.js", state);
+  console.log("App.js state context", state);
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path={ROUTES[state.lang].HOME} element={<Home />} />
+        
+
         <Route element={<AuthLayout />}>
           <Route path={ROUTES[state.lang].SIGN_IN} element={<SignIn />} />
           <Route path={ROUTES[state.lang].FORGOT_PASSWORD} element={<ForgotPassword />} />

@@ -1,5 +1,5 @@
 import { API, graphqlOperation } from "aws-amplify";
-import * as queries from "./graphql/queries";
+import * as queries from "../graphql/queries";
 
 const GetUserByEmail = async (email) => {
   const data = await API.graphql(graphqlOperation(queries.userByEmail, { email }));

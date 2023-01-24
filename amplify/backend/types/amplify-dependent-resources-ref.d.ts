@@ -24,7 +24,6 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "api": {
         "flock": {
-            "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         }

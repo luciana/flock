@@ -8,6 +8,7 @@ import { Alert } from '../../Components';
 function Main() {  
   const { state } = useContext(AppContext);
   const { user } = state;
+  console.log("Main.js state", state);
   return (
     <div className="App profile ">      
         <div>{user && <pre>{JSON.stringify(user, undefined, 2)}</pre>}</div>

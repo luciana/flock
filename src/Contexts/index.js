@@ -3,14 +3,18 @@ import { STATENAME } from "../Constants";
 import AppReducer from "./Reducers";
 
 const initial = { 
-  lang: "en-US",
-  user: null,
+    lang: "en-US",
+    user: null,
  };
 
-const getState = () =>
-  localStorage.getItem(STATENAME)
+const getState = () => { 
+  let s =  localStorage.getItem(STATENAME)
     ? JSON.parse(localStorage.getItem(STATENAME))
     : initial;
+    console.log('Context get State', s);
+    return s;
+  
+  }
 
 const mainReducer = (state, action) => AppReducer(state, action);
 

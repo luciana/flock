@@ -16,11 +16,11 @@ export default function ForgotPassword() {
 
   return (
     <form>
-      <Title text="forgot password" />
+      <Title text="Let us help you with your password." />
       <div className="mb-4">
         <Input
           type="email"
-          placeholder="Email"
+          placeholder="Enter your email"
           value={email}
           handler={setEmail}
         />
@@ -31,7 +31,7 @@ export default function ForgotPassword() {
         handler={() => sendForgotPasswordCode(email)}
       />
       <div className="w-full text-center mt-6">
-        <AuthLink text="Back to Sign In" to="/" size="xl" />
+        <AuthLink text="Back to Sign In" to="/signin" size="xl" />
       </div>
     </form>
   );

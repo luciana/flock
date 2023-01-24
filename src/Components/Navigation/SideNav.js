@@ -3,8 +3,8 @@ import Avatar from 'react-avatar';
 import logo from'../../Assets/Images/logos/Flock-App-logos_white-small.png';
 import { LANGUAGES, ROUTES } from "../../Constants";
 import { AppContext } from "../../Contexts";
-import { useContext, useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { Nav, NavItem} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +13,6 @@ import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 function SideNav({ handleSignOut }) {
     const { state } = useContext(AppContext);
     const { user } = state;
-    const location = useLocation();
 
     const tabs = [{
         route: ROUTES[user.locale].MAIN,

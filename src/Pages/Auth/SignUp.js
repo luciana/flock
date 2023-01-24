@@ -70,7 +70,7 @@ export default function SignUp() {
         handler={() => signUp(email, pwd, repeat)}
       />
       <div className="w-full text-center mt-6">
-        <AuthLink text="Back to Sign In" to="/" size="xl" />
+        <AuthLink text="Go to Sign In" to="/signin" size="xl" />
       </div>
     </form>
   );

@@ -1,5 +1,5 @@
 import { API, graphqlOperation } from "aws-amplify";
-import * as mutations from "./graphql/mutations";
+import * as mutations from "../graphql/mutations";
 
 const CreateUser = async (email, locale) => {
   const {

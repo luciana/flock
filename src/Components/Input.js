@@ -1,6 +1,8 @@
-import { useState } from "react";
-
-const Input = ({ type, placeholder, value, handler, showTooltip, label }) => {
+import { useState, useContext } from "react";
+import { AppContext } from "../Contexts";
+import { LANGUAGES } from "../Constants";
+const Input = ({ type, placeholder, value, handler, showTooltip, error }) => {
+  const { state } = useContext(AppContext);
   const [inputType, setInputType] = useState(type);
   const [tooltip, setTooltip] = useState(false);
 
@@ -10,30 +12,44 @@ const Input = ({ type, placeholder, value, handler, showTooltip, label }) => {
   }
 
   return (
-    <>       
-        <   label  className="form-label">{label}</label>      
-            <input
-                type={inputType}
-                value={value}
-                onChange={(e) => handler(e.target.value)}
-                className=" form-control"
-                placeholder={placeholder}
-            />    
-        {type === "password" && (          
-           <span  className="form-text">
-            <ul
-                    className={`${
-                    tooltip ? "d-block flex" : "d-none"
-                    } flex-col text-left`}>
-                    <li>Must have at least 8 chars</li>
-                    <li>Requires Lowercase</li>
-                    <li>Requires Uppercase</li>
-                    <li>Requires Number</li>            
-                </ul>
-           </span>
-         
-        )}        
+    <div className="relative">
+      <input
+        type={inputType}
+        value={value}
+        onChange={(e) => handler(e.target.value)}
+        className={`block w-full px-4 py-2 font-normal border border-solid rounded transition ease-in-out m-0 focus:border-indigo-500 focus:outline-none ${!error ? 'border-gray-300' : 'border-red-500'}`}
+        placeholder={placeholder}
+      />
+      {type === "password" && (
+        <button
+          type="button"
+          onClick={() => handleChangeInputType()}
+          className=""
+        >
+         Show PAssword
+        </button>
+      )}
+      {showTooltip && (
+        <>
+          <button
+            type="button"
+            onMouseOver={() => setTooltip(true)}
+            onMouseLeave={() => setTooltip(false)}
+            className=""
+          >
+           Show Tooltip
+          </button>
+          <ul           
+          >
+            <li>{LANGUAGES[state.lang].PasswordRules.Chars}</li>
+            <li>{LANGUAGES[state.lang].PasswordRules.Lowercase}</li>
+            <li>{LANGUAGES[state.lang].PasswordRules.Uppercase}</li>
+            <li>{LANGUAGES[state.lang].PasswordRules.Number}</li>
+            <li>{LANGUAGES[state.lang].PasswordRules.Symbol}</li>
+          </ul>
         </>
+      )}
+    </div>
   );
 };
 

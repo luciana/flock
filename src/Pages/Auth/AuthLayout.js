@@ -1,9 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { AppContext } from "../../Contexts";
 import { LANGUAGES, ROUTES, TYPES } from "../../Constants";
 import Auth from "../../Services/auth";
-import { Alert, Loading } from "../../Components";
+import { Alert, Flags, Loading, HomeNav } from "../../Components";
+import '../pages.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export default function AuthLayout() {
   const navigate = useNavigate();
@@ -24,17 +28,23 @@ export default function AuthLayout() {
   const signIn = async (email, pwd, remember) => {
     startLoading();
     try {
-      const result  = await Auth.SignIn(email, pwd, remember);
-      console.log("successful Auth.SignIn call in AuthLayout", result);
-      const { attributes } = result;
-     
-      dispatch({ type: TYPES.UPDATE_LANG, payload: attributes.locale });
+      const { attributes } = await Auth.SignIn(email, pwd, remember);
+      console.log("AuthLayout.js signIn Auth attributes", attributes);
+      //TODO: the hard code "en-US"  in this function should
+      //be changed to attributes.locale.
+      //however, I am not getting the locale attribute from cognito login
+      //api call even though the cognito user at aws shows the locale
+      dispatch({ type: TYPES.UPDATE_LANG, payload: "en-US" });
       stopLoading();
-      navigate(ROUTES[attributes.locale].MAIN);
+      console.log("Navigate to ROUTES[en-US].MAIN", ROUTES["en-US"].MAIN);
+      navigate(ROUTES["en-US"].MAIN);
     } catch (err) {
       stopLoading();
-      console.log("signIn error in AuthLayout", err);
-      setAlert({ type: "error", text: LANGUAGES[state.lang].CommonError.Login });
+      console.error("AuthLayout.js signIn error calling Auth.Signin", err);
+      setAlert({
+        type: "error",
+        text: LANGUAGES[state.lang].CommonError.Login,
+      });
     }
   };
 
@@ -87,6 +97,7 @@ export default function AuthLayout() {
   const signUp = async (email, pwd) => {
     startLoading();
     try {
+      console.log("AuthLayout.js signUp");
       await Auth.SignUp(email, pwd, state.lang);
       stopLoading();
       navigate(ROUTES[state.lang].CONFIRM_SIGN_UP, {
@@ -154,38 +165,41 @@ export default function AuthLayout() {
   };
 
   useEffect(() => {
+    console.log("AuthLayout.js state context", state);
     const loadUser = async () => {
       setLoading(true);
       try {
         await Auth.GetUser();
         setLoading(false);
-        navigate(ROUTES[state.lang].MAIN);
+       // navigate(ROUTES[state.lang].MAIN);
       } catch (error) {
         setLoading(false);
       }
     };
     
-   // loadUser();
-  }, []);
+    loadUser();
+  }, [navigate, state.lang]);
+
+  console.log("AuthLayout.js state context", state);
 
   return (
-    <section className="h-screen mx-auto bg-white">
+    <div className="App">      
+      <HomeNav />
       {loading && <Loading />}
-      <div className="container h-full fixed">
-         
-            <Alert type={alert?.type} text={alert?.text} />
-            <Outlet
-              context={{                
-                setAlert,
-                signIn,
-                sendForgotPasswordCode,
-                redefinePassword,
-                signUp,
-                resendConfirmationCode,
-                confirmSignUp,
-              }}
-            />
-          </div>    
-    </section>
+      <Alert type={alert?.type} text={alert?.text} />
+        <Outlet
+          context={{            
+            setAlert,
+            signIn,
+            sendForgotPasswordCode,
+            redefinePassword,
+            signUp,
+            resendConfirmationCode,
+            confirmSignUp,
+          }}
+        />
+      
+     
+    </div>
   );
 }

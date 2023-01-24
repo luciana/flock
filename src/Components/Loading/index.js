@@ -1,14 +1,20 @@
+import { useContext } from "react";
+import { AppContext } from "../../Contexts";
+import { LANGUAGES } from "../../Constants";
 
-import React from 'react';
-function Loading() {
-  return(
+const Loading = () => {
+  const { state } = useContext(AppContext);
+
+  return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-90 overflow-y-auto h-full w-full z-50">
-    <div className="flex flex-col justify-center items-center h-full w-full">
-      <div className="mb-4 text-primary text-2xl font-bold">Loading...</div>
-      <div className="animate-spin rounded-full h-32 w-32 border-b-8 border-primary" />
+      <div className="flex flex-col justify-center items-center h-full w-full">
+        <div className="mb-4 text-indigo-500 text-2xl font-bold">
+          {LANGUAGES[state.lang].Loading}...
+        </div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-8 border-indigo-500" />
+      </div>
     </div>
-  </div>
   );
-}
+};
 
-export default Loading; 
+export default Loading;

@@ -22,41 +22,41 @@ export default function Layout() {
       dispatch({ type: TYPES.UPDATE_LANG, payload: locale || user.locale });
       dispatch({ type: TYPES.UPDATE_USER, payload: user });
     }
-  }, []);
+  }, [dispatch, state.user]);
 
   const handleSignOut = async () => {
     await Auth.SignOut();
     dispatch({ type: TYPES.UPDATE_LANG, payload: state.user.locale });
     dispatch({ type: TYPES.UPDATE_USER, payload: null });
     navigate(ROUTES[state.lang].SIGN_IN);
-  }
+  };
 
   useEffect(() => {
     const isUserLoggedIn = async () => {
       try {
         const attributes = await Auth.GetUser();
-        console.log("sucessful  useEffect isUserLoggedIn in Layout ", attributes);
+        console.log("Layout.js isUserLoggedIn Auth GetUser attributes", attributes);
         await loadUser({
           email: attributes.email,
-          locale: attributes.locale,
+          locale: "en-US", //this should be attributes.locale
         });
       } catch (error) {
-        console.log("error useEffect isUserLoggedIn in Layout", error);
+        console.error("Layout.js Main error in isUserLoggedIn", error);
         navigate(ROUTES[state.lang].SIGN_IN);
       }
     };
 
     isUserLoggedIn();
-  }, []);
+  }, [loadUser, navigate, state.lang]);
 
   if (!state.user) return <Loading />;
 
   return (
-    <main className="mx-auto h-screen">
+    <main className="mx-auto max-w-screen-lg h-screen">
       {loading && <Loading />}
-      <SideNav handleSignOut={handleSignOut} />      
-      <div className="mx-auto max-w-screen-lg p-4">
-         <Outlet context={{ loadUser , setLoading}} />
+      <SideNav handleSignOut={handleSignOut} />
+      <div className="h-full -mt-12 pt-12">
+        <Outlet context={{ loadUser, setLoading }} />
       </div>
     </main>
   );
