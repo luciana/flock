@@ -16,6 +16,7 @@ const Layout = lazy(() => import("./Pages/Layout/Layout"));
 const Main = lazy(() => import("./Pages/Main"));
 const Home = lazy(() => import("./Pages/Home"));
 const Profile = lazy(() => import("./Pages/Profile"));
+const NewQuestion = lazy(() => import("./Pages/NewQuestion"));
 
 function App() {
   const [searchParams] = useSearchParams();
@@ -43,7 +44,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path={ROUTES[state.lang].MAIN} element={<Main />} />
           <Route path={ROUTES[state.lang].PROFILE} element={<Profile />} />
-        
+          <Route path={ROUTES[state.lang].NEW_QUESTION} element={<NewQuestion />} />
         </Route>
         <Route path="*" element={<NotFound />} />
        

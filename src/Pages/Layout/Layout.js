@@ -52,12 +52,12 @@ export default function Layout() {
   if (!state.user) return <Loading />;
 
   return (
-    <main className="mx-auto max-w-screen-lg h-screen">
+    <section className="App profile mx-auto max-w-screen-lg h-screen">
       {loading && <Loading />}
       <SideNav handleSignOut={handleSignOut} />
       <div className="h-full -mt-12 pt-12">
         <Outlet context={{ loadUser, setLoading }} />
       </div>
-    </main>
+    </section>
   );
 }

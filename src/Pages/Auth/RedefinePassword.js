@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { Button, AuthLink, Title, Input } from "../../Components";
+import { Button, AuthLink, AuthTitle, Input } from "../../Components";
+import { AppContext } from "../../Contexts";
+import { LANGUAGES, ROUTES } from "../../Constants";
 
 export default function RedefinePassword() {
-  
+    const { state } = useContext(AppContext);
     const location = useLocation();
     const { setAlert, redefinePassword } = useOutletContext();
     const [email, setEmail] = useState(location?.state?.email || "");
@@ -26,23 +28,25 @@ export default function RedefinePassword() {
       pwd !== repeat;
   
     return (
-      <form>
-        <Title text="redefine password" />
+      <form className="form-control">
+         <AuthTitle text={LANGUAGES[state.lang].Auth.RedefinePassword} />      
         <div className="mb-4">
           <Input
             type="email"
-            placeholder="Email"
+            placeholder={LANGUAGES[state.lang].Email}
             value={email}
             handler={setEmail}
           />
         </div>
         <div className="mb-4">
-          <Input type="text" placeholder="Code" value={code} handler={setCode} />
+          <Input type="text" 
+           placeholder={LANGUAGES[state.lang].Code}
+          value={code} handler={setCode} />
         </div>
         <div className="mb-4">
           <Input
             type="password"
-            placeholder="Password"
+            placeholder={LANGUAGES[state.lang].Password}
             value={pwd}
             handler={setPwd}
             showTooltip
@@ -51,18 +55,18 @@ export default function RedefinePassword() {
         <div className="mb-4">
           <Input
             type="password"
-            placeholder="Repeat Password"
+            placeholder={LANGUAGES[state.lang].Auth.RepeatPassword}
             value={repeat}
             handler={setRepeat}
           />
         </div>
         <Button
-          text="Redefine Password"
+          text={LANGUAGES[state.lang].Auth.RedefinePasswordButton}
           disabled={disabled()}
           handler={() => redefinePassword(email, code, pwd, repeat)}
         />
         <div className="w-full text-center mt-6">
-          <AuthLink text="Back to Sign In" to="/" size="xl" />
+          <AuthLink text={LANGUAGES[state.lang].Auth.GoToSignIn} to={ROUTES[state.lang].SIGN_IN} size="xl" />
         </div>
       </form>
     );

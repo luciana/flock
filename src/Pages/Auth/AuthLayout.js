@@ -185,21 +185,25 @@ export default function AuthLayout() {
   return (
     <div className="App">      
       <HomeNav />
+      <Flags />
       {loading && <Loading />}
-      <Alert type={alert?.type} text={alert?.text} />
-        <Outlet
-          context={{            
-            setAlert,
-            signIn,
-            sendForgotPasswordCode,
-            redefinePassword,
-            signUp,
-            resendConfirmationCode,
-            confirmSignUp,
-          }}
-        />
-      
-     
-    </div>
+      <div className="container my-4">
+        <div className="h-full flex flex-col-reverse md:flex-row items-center justify-evenly">         
+          <div className="w-10/12 md:w-5/12 lg:w-4/12"></div>
+              <Alert type={alert?.type} text={alert?.text} />
+                <Outlet
+                  context={{            
+                    setAlert,
+                    signIn,
+                    sendForgotPasswordCode,
+                    redefinePassword,
+                    signUp,
+                    resendConfirmationCode,
+                    confirmSignUp,
+                  }}
+                  />
+          </div>
+          </div></div>
+       
   );
 }

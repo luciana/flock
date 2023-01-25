@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { Button, AuthLink, Title, Input } from "../../Components";
+import { Button, AuthLink, AuthTitle, Input } from "../../Components";
+import { AppContext } from "../../Contexts";
+import { LANGUAGES, ROUTES } from "../../Constants";
 
 export default function SignUp() {
+  const location = useLocation();
+  const { state } = useContext(AppContext);
   const { setAlert, signUp } = useOutletContext();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pwd, setPwd] = useState("");
   const [repeat, setRepeat] = useState("");
 
-  useEffect(() => {    
-    setAlert();
-  }, [setAlert]);
+  useEffect(() => {
+    setAlert(location?.state?.alert);
+  }, [location?.state?.alert, setAlert]);
 
   const disabled = () =>
     email === "" ||
@@ -25,8 +29,8 @@ export default function SignUp() {
   console.log('app name', appname);
 
   return (
-    <form>
-      <Title text="Welcome " />
+    <form className="form-control">
+    <AuthTitle text={LANGUAGES[state.lang].Auth.SignUpTitle} />  
       <div className="mb-4">
         <Input
           type="text"
@@ -39,8 +43,8 @@ export default function SignUp() {
       <div className="mb-4">
         <Input
           type="email"
-          label="Email"     
-          placeholder="Email"
+          label={LANGUAGES[state.lang].Email}     
+          placeholder={LANGUAGES[state.lang].Email}
           value={email}
           handler={setEmail}
         />
@@ -48,8 +52,8 @@ export default function SignUp() {
       <div className="mb-4">
         <Input
           type="password"
-          label="Password"
-          placeholder="Password"
+          label={LANGUAGES[state.lang].Password}
+          placeholder={LANGUAGES[state.lang].Password}
           value={pwd}
           handler={setPwd}
           showTooltip
@@ -58,19 +62,19 @@ export default function SignUp() {
       <div className="mb-4">
         <Input
           type="password"
-          label="Password again"
-          placeholder="Repeat the Password"
+          label={LANGUAGES[state.lang].Auth.RepeatPassword}
+          placeholder={LANGUAGES[state.lang].Auth.RepeatPassword}
           value={repeat}
           handler={setRepeat}
         />
       </div>
       <Button
-        text="Sign Up"
+        text={LANGUAGES[state.lang].Auth.SignUpButton}
         disabled={disabled()}
         handler={() => signUp(email, pwd, repeat)}
       />
       <div className="w-full text-center mt-6">
-        <AuthLink text="Go to Sign In" to="/signin" size="xl" />
+        <AuthLink text={LANGUAGES[state.lang].Auth.GoToSignIn} to={ROUTES[state.lang].SIGN_IN} size="xl" />
       </div>
     </form>
   );

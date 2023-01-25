@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { Button, AuthLink, Title, Input } from "../../Components";
-
+import { Button, AuthLink, AuthTitle, Input } from "../../Components";
+import { AppContext } from "../../Contexts";
+import { LANGUAGES, ROUTES } from "../../Constants";
 
 export default function ConfirmSignUp() {
+  const { state } = useContext(AppContext); 
   const location = useLocation();
   const { setAlert, resendConfirmationCode, confirmSignUp } =
     useOutletContext();
@@ -19,12 +21,13 @@ export default function ConfirmSignUp() {
     email === "" || !isValidEmail(email) || code === "" || code.length < 6;
 
   return (
-    <form>
-      <Title text="Confirm Registration" />
+    <form className="form-control">
+    <AuthTitle text={LANGUAGES[state.lang].Auth.ConfirmRegistrationTitle} />      
+ 
       <div className="mb-4">
         <Input
           type="email"
-          placeholder="Email"
+          placeholder={LANGUAGES[state.lang].Email}
           value={email}
           handler={setEmail}
         />
@@ -38,16 +41,16 @@ export default function ConfirmSignUp() {
           onClick={() => resendConfirmationCode(email)}
           className="btn btn-light borders-0"
         >
-          Resend Confirmation Code
+          {LANGUAGES[state.lang].ResendConfirmationCode}
         </button>
       </div>
       <Button
-        text="Confim"
+        text={LANGUAGES[state.lang].Confirm}
         disabled={disabled()}
         handler={() => confirmSignUp(email, code)}
       />
       <div className="w-full text-center mt-6">
-        <AuthLink text="Back to Sign In" to="/" size="xl" />
+        <AuthLink text={LANGUAGES[state.lang].GoToSignIn} to={ROUTES[state.lang].SIGN_IN} size="xl" />
       </div>
     </form>
   );

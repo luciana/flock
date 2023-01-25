@@ -1,10 +1,8 @@
-import { useState, useContext } from "react";
-import { AppContext } from "../Contexts";
-import { LANGUAGES } from "../Constants";
+import { useState } from "react";
+import { RiEyeLine } from 'react-icons/ri';
+
 const Input = ({ type, placeholder, value, handler, showTooltip, error }) => {
-  const { state } = useContext(AppContext);
   const [inputType, setInputType] = useState(type);
-  const [tooltip, setTooltip] = useState(false);
 
   function handleChangeInputType() {
     if (inputType === "password") setInputType("text");
@@ -12,42 +10,18 @@ const Input = ({ type, placeholder, value, handler, showTooltip, error }) => {
   }
 
   return (
-    <div className="relative">
+
+
+<div className="input-group mb-3">
       <input
         type={inputType}
         value={value}
         onChange={(e) => handler(e.target.value)}
-        className={`block w-full px-4 py-2 font-normal border border-solid rounded transition ease-in-out m-0 focus:border-indigo-500 focus:outline-none ${!error ? 'border-gray-300' : 'border-red-500'}`}
+        className={`form-control block w-full px-4 py-2 font-normal border border-1  rounded transition ease-in-out m-0 focus:border-2 focus:outline-none ${!error ? 'border-gray-300' : 'border-danger'}`}
         placeholder={placeholder}
       />
-      {type === "password" && (
-        <button
-          type="button"
-          onClick={() => handleChangeInputType()}
-          className=""
-        >
-         Show PAssword
-        </button>
-      )}
-      {showTooltip && (
-        <>
-          <button
-            type="button"
-            onMouseOver={() => setTooltip(true)}
-            onMouseLeave={() => setTooltip(false)}
-            className=""
-          >
-           Show Tooltip
-          </button>
-          <ul           
-          >
-            <li>{LANGUAGES[state.lang].PasswordRules.Chars}</li>
-            <li>{LANGUAGES[state.lang].PasswordRules.Lowercase}</li>
-            <li>{LANGUAGES[state.lang].PasswordRules.Uppercase}</li>
-            <li>{LANGUAGES[state.lang].PasswordRules.Number}</li>
-            <li>{LANGUAGES[state.lang].PasswordRules.Symbol}</li>
-          </ul>
-        </>
+      {type === "password" && (            
+         <button className="btn btn-outline-secondary" onClick={() => handleChangeInputType()} type="button" ><RiEyeLine /></button>      
       )}
     </div>
   );

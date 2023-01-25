@@ -1,6 +1,5 @@
 
-import './../pages.css';
-import './../profile-nav.css';
+
 import { useEffect, useState, useContext } from "react";
 import { useOutletContext, useNavigate} from "react-router-dom";
 import { LANGUAGES, ROUTES } from "../../Constants";
@@ -218,9 +217,8 @@ export default function Profile() {
   console.log("user from profile", user);
 
   return (
-    <section>
-       <div className="App profile">
-        <Title
+   <div className="container">
+      <Title
         text={LANGUAGES[user.locale].Profile.Profile}
         back={ROUTES[user.locale].MAIN}
       />
@@ -231,8 +229,7 @@ export default function Profile() {
         {renderChangeLanguage()}
       </div>
           <hr className="m-0"></hr>                   
-        </div>
-    
-    </section>
+   </div>
+  
   );
 }

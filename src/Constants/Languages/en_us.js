@@ -6,6 +6,7 @@ const en_us_lang = {
     Home: "Home",
     Questions:{
       New: "New",
+      NewQuestionTitle: "Need help? Ask a question!"
     },
     PasswordRules: {
       Chars: "Must have at least 8 chars",
@@ -40,11 +41,13 @@ const en_us_lang = {
       RememberMe: "Remember Me",
       ForgotPassword: "Forgot Password?",
       ForgotPasswordSuccess: "Check your Email",
+      EnterYourEmail: "Enter your email",
       SignInButton: "Sign In",
       NotRegistered: "Not Registered?",
       ForgotPasswordTitle: "Forgot Password",
       SendCode: "Send Code",
       BackToSignIn: "Back to Sign In",
+      GoToSignIn: "Go to Sign In",
       RedefinePasswordTitle: "Redefine Password",
       RepeatPassword: "Repeat Password",
       RedefinePasswordSuccess: "Password changed successfully!",

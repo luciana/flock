@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../Contexts";
 import { LANGUAGES, ROUTES, TYPES } from "../Constants";
-import Arrow from "../Assets/Images/Arrow";
 import BR from "../Assets/Images/flags/pt-BR.svg";
 import EN from "../Assets/Images/flags/en-US.svg";
+import { Dropdown } from 'bootstrap';
 
 export default function Flags() {
   const location = useLocation();
@@ -12,10 +12,17 @@ export default function Flags() {
   const { state, dispatch } = useContext(AppContext);
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    Array.from(document.querySelectorAll('button[data-bs-toggle="dropdown"]'))
+    .forEach(dpNode => new Dropdown(dpNode))
+  
+  
+  });
+
   function showFlag(lang) {
     if (lang === "pt-BR")
-      return <img src={BR} alt="Português" className="w-6 h-6" />;
-    return <img src={EN} alt="English" className="w-6 h-6" />;
+      return <img src={BR} alt="Português" height="24" className="" />;
+    return <img src={EN} alt="English" height="24" className="" />;
   }
 
   function handleChangeLanguage(lang) {
@@ -28,23 +35,23 @@ export default function Flags() {
   }
 
   return (
-    <div className="">
-      <button
-        type="button"
-        className=""
-        onClick={() => setOpen(!open)}
-      >
-        {showFlag(state.lang)}    
-        <Arrow styles={`ml-1 w-4 h-4 ${open && "rotate-180"}`} />   
+    <div className="dropdown">
+      <button className="btn btn-light dropdown-toggle" 
+              type="button" 
+              onClick={() => setOpen(!open)}
+              id="dropdownMenuButton1"          
+              data-bs-toggle="dropdown" aria-expanded="false">
+        {showFlag(state.lang)}  
       </button>
       <ul       
-        className={`flex flex-col items-start pl-1 mt-2 ${!open && "hidden"}`}
+        aria-labelledby="dropdownMenuButton1"
+        className={`dropdown-menu flex flex-col items-start pl-1 mt-2 ${!open && "hidden"}`}
       >
         {Object.keys(LANGUAGES)
           .filter((l) => l !== state.lang)
           .map((l) => (
             <li key={l}>
-              <button type="button" onClick={() => handleChangeLanguage(l)}>
+              <button type="button" className="btn btn-light dropdown-item" onClick={() => handleChangeLanguage(l)}>
                 {showFlag(l)}
               </button>
             </li>

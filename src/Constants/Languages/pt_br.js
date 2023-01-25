@@ -6,6 +6,7 @@ const pt_br_lang = {
     Home: "Inicial",
     Questions:{
       New: "Nova",
+      NewQuestionTitle: "Precisa de ajuda? Faca uma pergunta",
     },
     PasswordRules: {
       Chars: "Pelo menos 8 caracteres",
@@ -42,11 +43,13 @@ const pt_br_lang = {
       RememberMe: "Manter Conectado",
       ForgotPassword: "Esqueceu a Senha?",
       ForgotPasswordSuccess: "Verifique seu Email",
+      EnterYourEmail: "Coloque seu Email",
       SignInButton: "Entrar",
       NotRegistered: "Não tem Registro?",
       ForgotPasswordTitle: "Esqueceu a Senha?",
       SendCode: "Enviar Código",
       BackToSignIn: "Votlar para Entrar",
+      GoToSignIn: "Ir para Sign In",
       RedefinePasswordTitle: "Redefinir Senha",
       RepeatPassword: "Repita a Senha",
       RedefinePasswordSuccess: "Senha Alterada com Sucesso!",

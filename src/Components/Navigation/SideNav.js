@@ -13,6 +13,16 @@ import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 function SideNav({ handleSignOut }) {
     const { state } = useContext(AppContext);
     const { user } = state;
+  //   user:{
+  //     "id": "57cd07d8-b898-4e5c-904a-458ab4e8d8b8",
+  //     "locale": "en-US",
+  //     "email": "luciana123_2002@yahoo.com",
+  //     "name": null,
+  //     "birthdate": null,
+  //     "createdAt": "2023-01-24T22:52:00.410Z",
+  //     "updatedAt": "2023-01-24T22:52:00.410Z",
+  //     "owner": "4555cc5e-191a-4bf2-8a29-e63b2fde117e"
+  // }
 
     const tabs = [{
         route: ROUTES[user.locale].MAIN,
@@ -79,10 +89,10 @@ function SideNav({ handleSignOut }) {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">       
             <a className="navbar-brand js-scroll-trigger" href="#page-top">
                 <span className="d-block d-lg-none">{process.env.REACT_APP_TITLE}</span>
-                <span className="d-none d-lg-block">    
+                <span className="d-none d-lg-block text-wrap">    
                     <p><img src={logo} className="img-fluid" alt={process.env.REACT_APP_TITLE} /> </p>
-                    <Avatar name={user} className=" img-profile rounded-circle mx-auto mb-2" alt={user} />
-                    <div className="text-white my-3 profile-name">{user}</div>   
+                    <Avatar name={user.email} className=" img-profile rounded-circle mx-auto mb-2" />
+                    <div className="text-white my-3 profile-name">{user.email}</div>   
                 </span>          
             </a>
             
