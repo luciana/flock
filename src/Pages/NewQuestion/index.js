@@ -21,14 +21,10 @@ return (
   
   <div className="container grid sm:grid-cols-3 gap-2">  
       <Title
-      text={LANGUAGES[user.locale].Profile.Profile}
+      text={LANGUAGES[user.locale].Questions.NewQuestionTitle}
       back={ROUTES[user.locale].MAIN}
     />
       <Alert type={alert?.type} text={alert?.text} />
-
-        <div className="white-bg container border border-2 p-2 d-flex flex-column">
-           {LANGUAGES[user.locale].Questions.NewQuestionTitle}            
-        </div>   
                                                
         <div id="question-form">
           <QuestionAndPoll2  />

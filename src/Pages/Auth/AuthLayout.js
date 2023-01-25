@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { AppContext } from "../../Contexts";
 import { LANGUAGES, ROUTES, TYPES } from "../../Constants";
 import Auth from "../../Services/auth";
-import { Alert, Flags, Loading, HomeNav } from "../../Components";
+import { Alert, Loading, HomeNav } from "../../Components";
 import '../pages.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -185,7 +185,7 @@ export default function AuthLayout() {
   return (
     <div className="App">      
       <HomeNav />
-      <Flags />
+     
       {loading && <Loading />}
       <div className="container my-4">
         <div className="h-full flex flex-col-reverse md:flex-row items-center justify-evenly">         

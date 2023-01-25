@@ -62,13 +62,8 @@ body {
   border-bottom: solid 2px #EBEBEB;
   background-color: #212529;
 }
-.nav-link,
-.bottom-nav-link {
-  /*color: #55575b;*/
-  color: #dee2e6;
-}
-.bottom-nav-link.active {
-  color: #922c88;
+.bg-company-white {
+  color:#FFF;
 }
 .bottom-tab-label {
   font-size: 12px;

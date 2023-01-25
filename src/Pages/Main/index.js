@@ -13,8 +13,8 @@ function Main() {
     <div className="App profile ">      
         <div>{user && <pre>{JSON.stringify(user, undefined, 2)}</pre>}</div>
         {(!user.name || !user.birthdate) && <Alert type="warning" text="Please, complete the Profile!" />}
-        <div className="white-bg container border border-2 p-2 d-flex flex-column">
-                  <h3>Decisions made simple</h3>    
+        <div className="white-bg container border border-1 p-2 d-flex flex-column">
+                <Questions />
         </div>               
         <hr className="m-0"></hr>       
                   

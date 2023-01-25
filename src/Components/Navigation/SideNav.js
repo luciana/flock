@@ -1,6 +1,6 @@
 import React from 'react';
 import Avatar from 'react-avatar';
-import logo from'../../Assets/Images/logos/Flock-App-logos_white-small.png';
+import logo from'../../Assets/Images/logos/Flock-App-logo-black-small.png';
 import { LANGUAGES, ROUTES } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import { useContext } from "react";
@@ -47,17 +47,17 @@ function SideNav({ handleSignOut }) {
             <a className="navbar-brand" href={ROUTES[user.locale].MAIN}>Flock App</a>
             <Nav className="ml-auto">
               <NavItem>
-                <NavLink to={ROUTES[user.locale].MAIN} className="nav-link">
+                <NavLink to={ROUTES[user.locale].MAIN} className="nav-link bg-company-white">
                   Login
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/stats" className="nav-link">
+                <NavLink to="/stats" className="nav-link bg-company-white">
                   About
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/#" className="nav-link">
+                <NavLink to="/#" className="nav-link bg-company-white">
                   Login
                 </NavLink>
               </NavItem>
@@ -75,8 +75,8 @@ function SideNav({ handleSignOut }) {
                
                   <NavLink to={tab.route} className={(navData) => (navData.isActive ? "nav-link bottom-nav-link active-style" : 'nav-link bottom-nav-link none')}>
                     <div className="row d-flex flex-column justify-content-center align-items-center">
-                      <FontAwesomeIcon size="lg" icon={tab.icon}/>
-                      <div className="bottom-tab-label">{tab.label}</div>
+                      <FontAwesomeIcon size="lg" icon={tab.icon} className="bg-company-white"/>
+                      <div className="bottom-tab-label bg-company-white">{tab.label}</div>
                     </div>
                   </NavLink>
                 </NavItem>
@@ -92,7 +92,7 @@ function SideNav({ handleSignOut }) {
                 <span className="d-none d-lg-block text-wrap">    
                     <p><img src={logo} className="img-fluid" alt={process.env.REACT_APP_TITLE} /> </p>
                     <Avatar name={user.email} className=" img-profile rounded-circle mx-auto mb-2" />
-                    <div className="text-white my-3 profile-name">{user.email}</div>   
+                    <div className="text-white my-3 profile-name">{user.name}</div>   
                 </span>          
             </a>
             
@@ -105,9 +105,9 @@ function SideNav({ handleSignOut }) {
                     <li className="nav-item"><a className="nav-link js-scroll-trigger" href="/New">New Question</a></li>  
                     <hr />
                     <li className="nav-item">                     
-                      <button type="button" onClick={() => handleSignOut()} className="nav-link js-scroll-trigger">
+                      <a onClick={() => handleSignOut()} href="/#" className="nav-link js-scroll-trigger">
                         {LANGUAGES[user.locale].Profile.SignOut}
-                      </button>
+                      </a>
                       </li>                
                 </ul>
             </div>
