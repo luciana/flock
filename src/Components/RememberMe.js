@@ -13,7 +13,7 @@ const RememberMe = ({ remember, setRemember }) => {
         type="checkbox"
         name="checkbox"
         id="checkbox"
-        defaultChecked={remember}
+       
         checked={remember}
         onChange={() => setRemember(!remember)}
         className="form-check-input h-4 w-4 border border-gray-300 rounded-sm "

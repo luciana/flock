@@ -44,3 +44,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /temp
+
+amplify/mock-api-resources

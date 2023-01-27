@@ -1,6 +1,6 @@
 projects:
   flock:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/flock/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

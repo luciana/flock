@@ -22,14 +22,23 @@ function Question({
   currentUserId = '2'
  }) {
  
+
+
+
+
   useEffect(() => {
     Array.from(document.querySelectorAll('button[data-bs-toggle="tooltip"]'))
     .forEach(tooltipNode => new Tooltip(tooltipNode))
   
   
+
   });
 
      
+
+ 
+
+
 
  if (!question) return;
  console.log("question", question);

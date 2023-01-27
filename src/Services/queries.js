@@ -7,8 +7,19 @@ const GetUserByEmail = async (email) => {
   return data.data.userByEmail.items.length ? data.data.userByEmail.items[0] : null;
 };
 
+const GetAllQuestions = async() => {
+
+  const data = await API.graphql(graphqlOperation(queries.listQuestions));
+
+  return data.data.listQuestions.items.length ? data.data.listQuestions.items : null;
+}
+
 const Queries = {
   GetUserByEmail,
+  GetAllQuestions,
 };
+
+
+
 
 export default Queries;

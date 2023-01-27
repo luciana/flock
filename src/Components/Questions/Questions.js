@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
 import { Loading }  from '../../Components';
+import Queries from "../../Services/queries";
+import Mutations from "../../Services/mutations";
 
 const Questions = () => {
     const [backendQuestions, setBackendQuestions] = useState([]);
@@ -15,21 +17,29 @@ const Questions = () => {
       new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     )
 
-    // const rootOpenQuestions = backendQuestions.filter(
-    //   (backendQuestion) => ((backendQuestion.parentId === null) && 
-    //     (new Date().getTime() < new Date(backendQuestion.voteEndAt).getTime()))
-    //   ).sort(
-    //     (a, b) =>
-    //     new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    //   )
-
-
     const [loading, setLoading] = useState(false);
+
     const loadQuestions = async () => {
-      setLoading(true);
-      setBackendQuestions(await QuestionService.getQuestions());
-      setLoading(false);
+      try{
+        setLoading(true);
+        let q = await Queries.GetAllQuestions();
+        console.log("Get all Questions from db", q);
+        setBackendQuestions(q);
+        setLoading(false);
+      }catch(err){
+        console.error("Loading Questions from queries error", err);
+      }
+
     };
+
+    // const loadOptionsVotes = async () => {
+    //   setLoading(true);
+    //   let q = await Queries.OptionsByVotes();
+    //   console.log("Options by vote", q);
+    //   setVoteOptionsdList(q);
+    //   setVotedList(q);
+    //   setLoading(false);
+    // };
 
     useEffect(() => {
         // QuestionService.getQuestions().then((data) => {
@@ -37,17 +47,18 @@ const Questions = () => {
         // });
 
         loadQuestions();
+       // loadOptionsVotes();
 
-        QuestionService.getQuestionsVotes().then((data) => {
-          console.log("Vote component call to getQuestionsVotes", data);        
-          const newArray = [];            
-          for (let i = 0; i < data.length; i++) {
-            newArray.push(data[i].optionId);
-          }
-          setVoteOptionsdList(newArray);
-          setVotedList(data);
+        // QuestionService.getQuestionsVotes().then((data) => {
+        //   console.log("Vote component call to getQuestionsVotes", data);        
+        //   const newArray = [];            
+        //   for (let i = 0; i < data.length; i++) {
+        //     newArray.push(data[i].optionId);
+        //   }
+        //   setVoteOptionsdList(newArray);
+        //   setVotedList(data);
 
-         });
+        //  });
         
       }, []);
 
