@@ -21,9 +21,36 @@ const UpdateUser = async ({ id, email, locale }) => {
   return updateUser;
 };
 
+const CreateQuestion = async (
+    text, 
+    userID,
+    voteEndAt,
+    sentiment,
+    parentID,
+    questionTag,
+    options,
+    ) => {
+  const {
+    data: { createQuestion },
+  } = await API.graphql(
+    graphqlOperation(mutations.createQuestion, { input: 
+      {  text, 
+        userID,
+        voteEndAt,
+        sentiment,
+        parentID,
+        questionTag,
+        options
+      } })
+  );
+  return createQuestion;
+
+}
+
 const Mutations = {
   CreateUser,
   UpdateUser,
+  CreateQuestion,
 };
 
 export default Mutations;   

@@ -18,30 +18,31 @@ function Question({
   deleteQuestion,
   addQuestion,
   parentId = null,
-  user = null,
-  currentUserId = '2'
+  user
  }) {
  
-
-
-
-
   useEffect(() => {
     Array.from(document.querySelectorAll('button[data-bs-toggle="tooltip"]'))
     .forEach(tooltipNode => new Tooltip(tooltipNode))
-  
-  
-
   });
 
-     
-
- 
-
-
-
  if (!question) return;
- console.log("question", question);
+ console.log("Question ", question);
+//  {
+//   "id": "b35d6d5e-4160-40d2-951d-6444d7fe90a2",
+//   "text": "For a simple app, should I use reactjs or vuejs?",
+//   "userID": "9064ac93-118e-4a72-8008-f20c3f2e7279",
+//   "voteEndAt": null,
+//   "sentiment": null,
+//   "parentID": null,
+//   "questionTag": "technologist",
+//   "options": "[{\"votes\":0,\"id\":1,\"text\":\"reactjs\"},{\"votes\":0,\"id\":2,\"text\":\"vuejs\"}]",
+//   "createdAt": "2023-01-29T14:28:19.383Z",
+//   "updatedAt": "2023-01-29T14:28:19.383Z",
+//   "createdBy": "user1"
+// }
+
+
  const formatDateAndTime = (date_input)  => {
   let date = new Date(date_input);
   var hours = date.getHours();
@@ -55,8 +56,8 @@ function Question({
 }
 
   const isAReply = question.parentId != null;
-  const canDelete = currentUserId === question.userId  && !isAReply;
-  const canReply = currentUserId === question.userId && !isAReply && replies.length === 0;
+  const canDelete = user.id === question.userId  && !isAReply;
+  const canReply = user.id === question.userId && !isAReply && replies.length === 0;
   const createdAt = formatDateAndTime(question.createdAt);
   const replyId = parentId ? parentId : question.id;
   const voteEnded = new Date() - new Date(question.voteEndAt) > 1;
@@ -156,7 +157,7 @@ function Question({
                 deleteQuestion={deleteQuestion}          
                 parentId={question.id}
                 replies={[]}
-                currentUserId={currentUserId}
+                user.id={user.id}
               />
             ))}
           </div>

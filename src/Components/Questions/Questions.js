@@ -3,19 +3,15 @@ import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
 import { Loading }  from '../../Components';
 import Queries from "../../Services/queries";
-import Mutations from "../../Services/mutations";
 
-const Questions = () => {
+const Questions = (
+  user
+) => {
     const [backendQuestions, setBackendQuestions] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState(null);
     const [votedList, setVotedList] = useState([]);
     const [votedOptionsList, setVoteOptionsdList] = useState([]);
-    const rootQuestions = backendQuestions.filter(
-        (backendQuestion) => ((backendQuestion.parentId === null) )
-    ).sort(
-      (a, b) =>
-      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    )
+  
 
     const [loading, setLoading] = useState(false);
 
@@ -25,45 +21,37 @@ const Questions = () => {
         let q = await Queries.GetAllQuestions();
         console.log("Get all Questions from db", q);
         setBackendQuestions(q);
+        console.log("setBackendQuestions", backendQuestions);
         setLoading(false);
       }catch(err){
         console.error("Loading Questions from queries error", err);
+        setBackendQuestions([]);
       }
 
     };
 
-    // const loadOptionsVotes = async () => {
-    //   setLoading(true);
-    //   let q = await Queries.OptionsByVotes();
-    //   console.log("Options by vote", q);
-    //   setVoteOptionsdList(q);
-    //   setVotedList(q);
-    //   setLoading(false);
-    // };
-
     useEffect(() => {
-        // QuestionService.getQuestions().then((data) => {
-        //   setBackendQuestions(data);
-        // });
-
         loadQuestions();
-       // loadOptionsVotes();
-
-        // QuestionService.getQuestionsVotes().then((data) => {
-        //   console.log("Vote component call to getQuestionsVotes", data);        
-        //   const newArray = [];            
-        //   for (let i = 0; i < data.length; i++) {
-        //     newArray.push(data[i].optionId);
-        //   }
-        //   setVoteOptionsdList(newArray);
-        //   setVotedList(data);
-
-        //  });
-        
+        if(user.votes) {
+          let votes = JSON.parse(user.votes);
+          setVotedList(votes);
+          const newArray = [];            
+          for (let i = 0; i < votes.length; i++) {
+            newArray.push(votes[i].optionId);
+          }
+          setVoteOptionsdList(newArray);
+        };               
       }, []);
 
+      const rootQuestions = backendQuestions.filter(
+        (backendQuestion) => ((backendQuestion.parentID === null) )
+        ).sort(
+          (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        )
+
       const addQuestion = (text) => {
-        console.log('addQuestion triggered from question and poll', text);
+        console.log('addQuestion triggered from question and poll - not calling graphql mutation', text);
         QuestionService.createQuestion(text).then((question) => {         
           setBackendQuestions([question.text, ...backendQuestions]);
           setActiveQuestion(null);
@@ -127,6 +115,8 @@ const Questions = () => {
         });
       }
 
+      console.log("root questions", rootQuestions);
+
       return ( 
         <>
             {loading && <Loading />}
@@ -151,7 +141,7 @@ const Questions = () => {
                         activeQuestion={activeQuestion}                       
                         deleteQuestion={deleteQuestion}
                         updateQuestion={updateQuestion}                        
-                       // user={user}
+                        user={user}
                     />
                 ))}
             </div>

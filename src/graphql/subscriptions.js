@@ -13,21 +13,7 @@ export const onCreateUser = /* GraphQL */ `
       name
       userTag
       birthdate
-      votes {
-        items {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        scannedCount
-        count
-        nextToken
-      }
-      online_ping
-      last_seen_at
+      votes
       createdAt
       updatedAt
       owner
@@ -46,21 +32,7 @@ export const onUpdateUser = /* GraphQL */ `
       name
       userTag
       birthdate
-      votes {
-        items {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        scannedCount
-        count
-        nextToken
-      }
-      online_ping
-      last_seen_at
+      votes
       createdAt
       updatedAt
       owner
@@ -79,21 +51,7 @@ export const onDeleteUser = /* GraphQL */ `
       name
       userTag
       birthdate
-      votes {
-        items {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        scannedCount
-        count
-        nextToken
-      }
-      online_ping
-      last_seen_at
+      votes
       createdAt
       updatedAt
       owner
@@ -105,41 +63,15 @@ export const onCreateQuestion = /* GraphQL */ `
     onCreateQuestion(filter: $filter) {
       id
       text
-      user {
-        id
-        locale
-        email
-        name
-        userTag
-        birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
-        createdAt
-        updatedAt
-        owner
-      }
-      voteEndedAt
+      userID
+      voteEndAt
       sentiment
       parentID
       questionTag
-      options {
-        items {
-          id
-          text
-          questionID
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
+      options
       createdAt
       updatedAt
+      createdBy
     }
   }
 `;
@@ -148,41 +80,15 @@ export const onUpdateQuestion = /* GraphQL */ `
     onUpdateQuestion(filter: $filter) {
       id
       text
-      user {
-        id
-        locale
-        email
-        name
-        userTag
-        birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
-        createdAt
-        updatedAt
-        owner
-      }
-      voteEndedAt
+      userID
+      voteEndAt
       sentiment
       parentID
       questionTag
-      options {
-        items {
-          id
-          text
-          questionID
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
+      options
       createdAt
       updatedAt
+      createdBy
     }
   }
 `;
@@ -191,155 +97,15 @@ export const onDeleteQuestion = /* GraphQL */ `
     onDeleteQuestion(filter: $filter) {
       id
       text
-      user {
-        id
-        locale
-        email
-        name
-        userTag
-        birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
-        createdAt
-        updatedAt
-        owner
-      }
-      voteEndedAt
+      userID
+      voteEndAt
       sentiment
       parentID
       questionTag
-      options {
-        items {
-          id
-          text
-          questionID
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
+      options
       createdAt
       updatedAt
-    }
-  }
-`;
-export const onCreateOption = /* GraphQL */ `
-  subscription OnCreateOption(
-    $filter: ModelSubscriptionOptionFilterInput
-    $owner: String
-  ) {
-    onCreateOption(filter: $filter, owner: $owner) {
-      id
-      text
-      votes {
-        id
-        userID
-        optionID
-        createdAt
-        updatedAt
-        owner
-      }
-      questionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onUpdateOption = /* GraphQL */ `
-  subscription OnUpdateOption(
-    $filter: ModelSubscriptionOptionFilterInput
-    $owner: String
-  ) {
-    onUpdateOption(filter: $filter, owner: $owner) {
-      id
-      text
-      votes {
-        id
-        userID
-        optionID
-        createdAt
-        updatedAt
-        owner
-      }
-      questionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onDeleteOption = /* GraphQL */ `
-  subscription OnDeleteOption(
-    $filter: ModelSubscriptionOptionFilterInput
-    $owner: String
-  ) {
-    onDeleteOption(filter: $filter, owner: $owner) {
-      id
-      text
-      votes {
-        id
-        userID
-        optionID
-        createdAt
-        updatedAt
-        owner
-      }
-      questionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onCreateVote = /* GraphQL */ `
-  subscription OnCreateVote(
-    $filter: ModelSubscriptionVoteFilterInput
-    $owner: String
-  ) {
-    onCreateVote(filter: $filter, owner: $owner) {
-      id
-      userID
-      optionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onUpdateVote = /* GraphQL */ `
-  subscription OnUpdateVote(
-    $filter: ModelSubscriptionVoteFilterInput
-    $owner: String
-  ) {
-    onUpdateVote(filter: $filter, owner: $owner) {
-      id
-      userID
-      optionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onDeleteVote = /* GraphQL */ `
-  subscription OnDeleteVote(
-    $filter: ModelSubscriptionVoteFilterInput
-    $owner: String
-  ) {
-    onDeleteVote(filter: $filter, owner: $owner) {
-      id
-      userID
-      optionID
-      createdAt
-      updatedAt
-      owner
+      createdBy
     }
   }
 `;

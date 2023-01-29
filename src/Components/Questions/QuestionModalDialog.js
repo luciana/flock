@@ -15,6 +15,7 @@ function QuestionModalDialog(
   completeTodo,
   todos,
   addTodo,
+  userId,
   hasCancelButton = true}
 ) {
 
@@ -60,12 +61,10 @@ function QuestionModalDialog(
       id: Math.floor(Math.random() * 10000),
       text: input,
       parentId: null,
-      userId: 2,
-      username: "Luciana",
-      name: "Luciana Bruscino",
+      userId: userId,
       createdAt: new Date().toISOString(),
       voteEndAt: addMinutes(new Date(), parseFloat(votePeriod)),
-      sentiment: "Positive",
+      sentiment: "",
       options:null,
       tag: expertTag
     });
@@ -147,7 +146,7 @@ function QuestionModalDialog(
                                   <option value="#parents" />
                                   <option value="#lawyer" />
                                   <option value="#life_coach" />
-                                  <options value="#finance" />
+                                  <option value="#finance" />
                                 </datalist>
 
                       </div>         

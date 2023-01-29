@@ -27,7 +27,7 @@ return (
       <Alert type={alert?.type} text={alert?.text} />
                                                
         <div id="question-form">
-          <QuestionAndPoll2  />
+          <QuestionAndPoll2 user={user}  />
         </div> 
     </div>
   )

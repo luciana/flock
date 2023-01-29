@@ -10,21 +10,7 @@ export const getUser = /* GraphQL */ `
       name
       userTag
       birthdate
-      votes {
-        items {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        scannedCount
-        count
-        nextToken
-      }
-      online_ping
-      last_seen_at
+      votes
       createdAt
       updatedAt
       owner
@@ -53,13 +39,7 @@ export const listUsers = /* GraphQL */ `
         name
         userTag
         birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
+        votes
         createdAt
         updatedAt
         owner
@@ -73,41 +53,15 @@ export const getQuestion = /* GraphQL */ `
     getQuestion(id: $id) {
       id
       text
-      user {
-        id
-        locale
-        email
-        name
-        userTag
-        birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
-        createdAt
-        updatedAt
-        owner
-      }
-      voteEndedAt
+      userID
+      voteEndAt
       sentiment
       parentID
       questionTag
-      options {
-        items {
-          id
-          text
-          questionID
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
+      options
       createdAt
       updatedAt
+      createdBy
     }
   }
 `;
@@ -129,125 +83,16 @@ export const listQuestions = /* GraphQL */ `
       items {
         id
         text
-        user {
-          id
-          locale
-          email
-          name
-          userTag
-          birthdate
-          online_ping
-          last_seen_at
-          createdAt
-          updatedAt
-          owner
-        }
-        voteEndedAt
+        userID
+        voteEndAt
         sentiment
         parentID
         questionTag
-        options {
-          nextToken
-        }
+        options
         createdAt
         updatedAt
+        createdBy
       }
-      nextToken
-    }
-  }
-`;
-export const getOption = /* GraphQL */ `
-  query GetOption($id: ID!) {
-    getOption(id: $id) {
-      id
-      text
-      votes {
-        id
-        userID
-        optionID
-        createdAt
-        updatedAt
-        owner
-      }
-      questionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const listOptions = /* GraphQL */ `
-  query ListOptions(
-    $id: ID
-    $filter: ModelOptionFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listOptions(
-      id: $id
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        id
-        text
-        votes {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        questionID
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getVote = /* GraphQL */ `
-  query GetVote($id: ID!) {
-    getVote(id: $id) {
-      id
-      userID
-      optionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const listVotes = /* GraphQL */ `
-  query ListVotes(
-    $id: ID
-    $filter: ModelVoteFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listVotes(
-      id: $id
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        id
-        userID
-        optionID
-        createdAt
-        updatedAt
-        owner
-      }
-      scannedCount
-      count
       nextToken
     }
   }
@@ -274,93 +119,7 @@ export const userByEmail = /* GraphQL */ `
         name
         userTag
         birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getAllQuestions = /* GraphQL */ `
-  query GetAllQuestions(
-    $text: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelQuestionFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    getAllQuestions(
-      text: $text
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        text
-        user {
-          id
-          locale
-          email
-          name
-          userTag
-          birthdate
-          online_ping
-          last_seen_at
-          createdAt
-          updatedAt
-          owner
-        }
-        voteEndedAt
-        sentiment
-        parentID
-        questionTag
-        options {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const optionsByVotes = /* GraphQL */ `
-  query OptionsByVotes(
-    $text: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelOptionFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    optionsByVotes(
-      text: $text
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        text
-        votes {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        questionID
+        votes
         createdAt
         updatedAt
         owner

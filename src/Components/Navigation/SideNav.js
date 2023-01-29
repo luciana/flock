@@ -13,17 +13,6 @@ import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 function SideNav({ handleSignOut }) {
     const { state } = useContext(AppContext);
     const { user } = state;
-  //   user:{
-  //     "id": "57cd07d8-b898-4e5c-904a-458ab4e8d8b8",
-  //     "locale": "en-US",
-  //     "email": "luciana123_2002@yahoo.com",
-  //     "name": null,
-  //     "birthdate": null,
-  //     "createdAt": "2023-01-24T22:52:00.410Z",
-  //     "updatedAt": "2023-01-24T22:52:00.410Z",
-  //     "owner": "4555cc5e-191a-4bf2-8a29-e63b2fde117e"
-  // }
-
     const tabs = [{
         route: ROUTES[user.locale].MAIN,
         icon: faHome,

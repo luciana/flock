@@ -1,31 +1,66 @@
 import React, {useState} from 'react';
 import QuestionModalDialog from './QuestionModalDialog';
-import QuestionService from '../../Services/QuestionService'
 import { useNavigate } from 'react-router-dom';
+import { Loading }  from '../../Components';
+import Mutations from "../../Services/mutations";
 
 const TAG = "#flocks";
 
 function QuestionAndPoll2({
     parentId = null,
+    user,
 }){
 
     const [todos, setTodos] = useState([]); 
     const [question, setQuestion] = useState([]);     
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
+    const addQuestion = async (question) => {       
+      try{
+        setLoading(true);
+        const text = question.text;
+        const parentID = question.parentId;
+        const questionTag = question.tag;
+        const userID = question.userId;
+        const voteEndAt = question.voteEndAt;
+        const sentiment = question.sentiment;
+        const options  = JSON.stringify(question.options);
 
-    const addQuestion = (text) => {
-          console.log('addQuestion triggered from question and poll 2', text);
-          QuestionService.createQuestion(text).then((question) => {         
-            // setBackendQuestions([question.text, ...backendQuestions]);
-            // setActiveQuestion(null);
-            console.log('addQuestion added question and poll', text);
-            
-            setQuestion(text);
-            //redirect to main page
-            navigate('/Main');            
-          });
-      };
+        console.log("before create question mutation question = ", question);
+
+        let q = await Mutations.CreateQuestion(
+          text, 
+          userID,
+          voteEndAt,
+          sentiment,
+          parentID,
+          questionTag,
+          options
+        );
+        setQuestion(question);      
+        console.log("Create Questions in db", q);   
+        navigate('/Main');  
+        
+        //question
+      //   {
+      //     "id": "7998615d-88dd-427a-a20f-1a2851d009b3",
+      //     "text": "my daughter love dolls.Should I buy American Doll or My Baby? #flocks American Doll, My Baby",
+      //     "userID": "57cd07d8-b898-4e5c-904a-458ab4e8d8b8",
+      //     "voteEndAt": "2023-01-30T01:13:29.953Z",
+      //     "sentiment": "",
+      //     "parentID": null,
+      //     "questionTag": "#parents",
+      //     "options": "[{\"votes\":0,\"id\":3942,\"text\":\"American Doll\",\"isComplete\":true},{\"votes\":0,\"id\":2604,\"text\":\"My Baby\",\"isComplete\":true}]",
+      //     "createdAt": "2023-01-29T17:13:34.243Z",
+      //     "updatedAt": "2023-01-29T17:13:34.243Z",
+      //     "createdBy": "4555cc5e-191a-4bf2-8a29-e63b2fde117e"
+      // }
+ 
+      }catch(err){
+        console.error("Error on Mutations.CreateQuestion ", err);
+      }        
+    };
     
       const addTodo = todo => {
         console.log('add Todo', todo);
@@ -102,17 +137,19 @@ function QuestionAndPoll2({
         setQuestion(question);
       } 
 
+      
+
+
       const handlePublishQuestion = e => {
         e.preventDefault();  
         question.options = todos;
         console.log("question from handlePublishQuestion", question);            
         addQuestion(question);
-        alert('You question was added - good luck ( this is mock data for now - it will not show on the questions page');
-        navigate('/Main');  
+        alert('You question was added - good luck ( this is mock data for now - it will not show on the questions page');       
       }
     return(
         <>
-        
+          {loading && <Loading />}
            <div className="white-bg container border border-2 p-2 d-flex flex-column">
               <QuestionModalDialog  
                   addPostOptionsFromQuestion={addPostOptionsFromQuestion}   
@@ -121,6 +158,7 @@ function QuestionAndPoll2({
                   updateTodo={updateTodo}
                   removeTodo={removeTodo}                   
                   todos={todos}
+                  userId = {user.id}
                 />
             </div>
         </>

@@ -13,21 +13,7 @@ export const createUser = /* GraphQL */ `
       name
       userTag
       birthdate
-      votes {
-        items {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        scannedCount
-        count
-        nextToken
-      }
-      online_ping
-      last_seen_at
+      votes
       createdAt
       updatedAt
       owner
@@ -46,21 +32,7 @@ export const updateUser = /* GraphQL */ `
       name
       userTag
       birthdate
-      votes {
-        items {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        scannedCount
-        count
-        nextToken
-      }
-      online_ping
-      last_seen_at
+      votes
       createdAt
       updatedAt
       owner
@@ -79,21 +51,7 @@ export const deleteUser = /* GraphQL */ `
       name
       userTag
       birthdate
-      votes {
-        items {
-          id
-          userID
-          optionID
-          createdAt
-          updatedAt
-          owner
-        }
-        scannedCount
-        count
-        nextToken
-      }
-      online_ping
-      last_seen_at
+      votes
       createdAt
       updatedAt
       owner
@@ -108,41 +66,15 @@ export const createQuestion = /* GraphQL */ `
     createQuestion(input: $input, condition: $condition) {
       id
       text
-      user {
-        id
-        locale
-        email
-        name
-        userTag
-        birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
-        createdAt
-        updatedAt
-        owner
-      }
-      voteEndedAt
+      userID
+      voteEndAt
       sentiment
       parentID
       questionTag
-      options {
-        items {
-          id
-          text
-          questionID
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
+      options
       createdAt
       updatedAt
+      createdBy
     }
   }
 `;
@@ -154,41 +86,15 @@ export const updateQuestion = /* GraphQL */ `
     updateQuestion(input: $input, condition: $condition) {
       id
       text
-      user {
-        id
-        locale
-        email
-        name
-        userTag
-        birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
-        createdAt
-        updatedAt
-        owner
-      }
-      voteEndedAt
+      userID
+      voteEndAt
       sentiment
       parentID
       questionTag
-      options {
-        items {
-          id
-          text
-          questionID
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
+      options
       createdAt
       updatedAt
+      createdBy
     }
   }
 `;
@@ -200,155 +106,15 @@ export const deleteQuestion = /* GraphQL */ `
     deleteQuestion(input: $input, condition: $condition) {
       id
       text
-      user {
-        id
-        locale
-        email
-        name
-        userTag
-        birthdate
-        votes {
-          scannedCount
-          count
-          nextToken
-        }
-        online_ping
-        last_seen_at
-        createdAt
-        updatedAt
-        owner
-      }
-      voteEndedAt
+      userID
+      voteEndAt
       sentiment
       parentID
       questionTag
-      options {
-        items {
-          id
-          text
-          questionID
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
+      options
       createdAt
       updatedAt
-    }
-  }
-`;
-export const createOption = /* GraphQL */ `
-  mutation CreateOption(
-    $input: CreateOptionInput!
-    $condition: ModelOptionConditionInput
-  ) {
-    createOption(input: $input, condition: $condition) {
-      id
-      text
-      votes {
-        id
-        userID
-        optionID
-        createdAt
-        updatedAt
-        owner
-      }
-      questionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const updateOption = /* GraphQL */ `
-  mutation UpdateOption(
-    $input: UpdateOptionInput!
-    $condition: ModelOptionConditionInput
-  ) {
-    updateOption(input: $input, condition: $condition) {
-      id
-      text
-      votes {
-        id
-        userID
-        optionID
-        createdAt
-        updatedAt
-        owner
-      }
-      questionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deleteOption = /* GraphQL */ `
-  mutation DeleteOption(
-    $input: DeleteOptionInput!
-    $condition: ModelOptionConditionInput
-  ) {
-    deleteOption(input: $input, condition: $condition) {
-      id
-      text
-      votes {
-        id
-        userID
-        optionID
-        createdAt
-        updatedAt
-        owner
-      }
-      questionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const createVote = /* GraphQL */ `
-  mutation CreateVote(
-    $input: CreateVoteInput!
-    $condition: ModelVoteConditionInput
-  ) {
-    createVote(input: $input, condition: $condition) {
-      id
-      userID
-      optionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const updateVote = /* GraphQL */ `
-  mutation UpdateVote(
-    $input: UpdateVoteInput!
-    $condition: ModelVoteConditionInput
-  ) {
-    updateVote(input: $input, condition: $condition) {
-      id
-      userID
-      optionID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deleteVote = /* GraphQL */ `
-  mutation DeleteVote(
-    $input: DeleteVoteInput!
-    $condition: ModelVoteConditionInput
-  ) {
-    deleteVote(input: $input, condition: $condition) {
-      id
-      userID
-      optionID
-      createdAt
-      updatedAt
-      owner
+      createdBy
     }
   }
 `;

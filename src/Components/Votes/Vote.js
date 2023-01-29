@@ -2,23 +2,17 @@ import React from 'react';
 import { FaCircle, FaRegCircle } from 'react-icons/fa';
 
 const Vote = ({ question,
-             handleVote,    
-             votedList,     
+             handleVote,             
              updateVotedList,      
              votedOptionsList,
              alreadyVotedForQuestionList,
              voteEnded }) => {
-      
-    //const [isHovered, setisHovered] = useState(false);
-    const items = question.options;
-   
+
+    const items = JSON.parse(question.options);
+    console.log("Votes items", items);
     if (!items) return;
 
-    // const toggleHover = () => {
-    //   console.log('togglehover triggered');
-    //   setisHovered(prevState => ({isHovered: !prevState.isHovered}));
-    //   console.log('togglehover isHovered', isHovered);
-    // }
+   
    
   let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
 
