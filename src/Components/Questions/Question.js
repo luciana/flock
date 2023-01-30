@@ -28,6 +28,7 @@ function Question({
 
  if (!question) return;
  console.log("Question ", question);
+ console.log("User ", user);
 //  {
 //   "id": "b35d6d5e-4160-40d2-951d-6444d7fe90a2",
 //   "text": "For a simple app, should I use reactjs or vuejs?",

@@ -10,7 +10,6 @@ type User @model @auth(rules: [{ allow: owner, operations: [create, read, update
   name: String
   userTag: String @index(name: "byUserTag", sortKeyFields: ["id"])  
   birthdate: AWSDate
-
   votes: AWSJSON
 }
 
@@ -32,30 +31,5 @@ type Question @model
   questionTag: String  #@index(name: "byQuestionTag", sortKeyFields: ["id"])
   options: AWSJSON
 }
-
-
-# # 1 Option belongs to 1 Question  #QuestionID
-# # 1 Option has many Votes
-# type Option @model  @auth(rules: [{ allow: owner, operations: [read, create, update] }]) {
-#   id:ID!  @primaryKey
-#   text: String! @index(name: "byVotes", queryField: "optionsByVotes")
-#   vote: [Vote] 
-#   questionID: ID!  @index(name: "byQuestion", sortKeyFields: ["id"]) 
-# }
-
-# # 1 Vote belongs to 1 Option #OptionID
-# # 1 Vote belongs to 1 User
-# type Vote @model @auth(rules: [{ allow: owner, operations: [read, create, update] }]) {
-#   id: ID!  @primaryKey
-#   userID: ID! @index(name: "byUserID", sortKeyFields: ["id"]) 
-#   optionID: ID! @index(name: "byOptionID", sortKeyFields: ["id"]) 
-# }
-
-# type ModelVoteConnection {
-# 	items: [Vote]!
-#   scannedCount: Int
-#   count: Int
-# 	nextToken: String
-# }
 
  

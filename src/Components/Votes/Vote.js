@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { FaCircle, FaRegCircle } from 'react-icons/fa';
 
 const Vote = ({ question,
@@ -8,11 +8,13 @@ const Vote = ({ question,
              alreadyVotedForQuestionList,
              voteEnded }) => {
 
+    const [voteCount, setVoteCount] = useState(0);
     const items = JSON.parse(question.options);
-    console.log("Votes items", items);
     if (!items) return;
 
-   
+    console.log("Votes items", items);
+    if(items.votes)
+      setVoteCount(items.votes);
    
   let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
 
@@ -21,23 +23,21 @@ const Vote = ({ question,
       let item = i.find(x => x.id === id);
     
       item.votes++;
+      setVoteCount(item.votes);
 
       if (alreadyVotedForQuestionListBool) {
         return;
       }if (votedOptionsList.includes(id)){
         return;
       }else{        
-        let item = {
-          "id": Math.floor(Math.random() * 10000),
-          "createdBbyUserId": 2,
+        let item = {         
           "optionId": id,
-          "questionId": question.id,
-          "createdAt": new Date().toISOString(),
+          "questionId": question.id,        
           }
         updateVotedList(item);
         votedOptionsList.push(id);
       } 
-      handleVote(question, id);
+      handleVote(question, item);
     };
 
     const iVotedForIt = ( id ) =>  {      
@@ -53,7 +53,7 @@ const Vote = ({ question,
     <div className='container p-3 border-bottom bg-light ' key={index} >
           <div className="row ">            
               <div key={item.id} onClick={() => voteUp(item.id)} className={iVotedForIt(item.id) ? 'col  ' : 'col  '}>
-                <span className="badge rounded-pill bg-light text-dark mx-2 ">{item.votes}</span> 
+                <span className="badge rounded-pill bg-light text-dark mx-2 ">{voteCount}</span> 
                 {item.text}
               </div>
             

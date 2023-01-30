@@ -3,6 +3,8 @@ import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
 import { Loading }  from '../../Components';
 import Queries from "../../Services/queries";
+import Mutations from "../../Services/mutations";
+
 
 const Questions = (
   user
@@ -92,19 +94,69 @@ const Questions = (
         }
       };
     
-      const handleVote =(question, optionId) =>{             
-        QuestionService.updateQuestionVotes(question.id, optionId ).then( () => {
-          console.log('update question record and create/update new vote item');
-          //update votedList
-            const updatedBackendQuestions = backendQuestions.map((backendQuestion) => {
-                if (backendQuestion.id === question.id) {
-                  return { ...backendQuestion, body: question };
-                }
-                return backendQuestion;
-              });
-            setBackendQuestions(updatedBackendQuestions);
-            setActiveQuestion(null);
+      const handleVote = async (question, option) =>{                     
+        try{
+        
+          setLoading(true);         
+          let qOpt = JSON.parse(question.options);
+          console.log("Options before", qOpt);
+         // console.log("Question to be updated", question);
+        //   {
+        //     "id": "7998615d-88dd-427a-a20f-1a2851d009b3",
+        //     "text": "my daughter love dolls.Should I buy American Doll or My Baby? #flocks American Doll, My Baby",
+        //     "userID": "57cd07d8-b898-4e5c-904a-458ab4e8d8b8",
+        //     "voteEndAt": "2023-01-30T01:13:29.953Z",
+        //     "sentiment": "",
+        //     "parentID": null,
+        //     "questionTag": "#parents",
+        //     "options": "[{\"votes\":0,\"id\":3942,\"text\":\"American Doll\",\"isComplete\":true},{\"votes\":0,\"id\":2604,\"text\":\"My Baby\",\"isComplete\":true}]",
+        //     "createdAt": "2023-01-29T17:13:34.243Z",
+        //     "updatedAt": "2023-01-29T17:13:34.243Z",
+        //     "createdBy": "4555cc5e-191a-4bf2-8a29-e63b2fde117e"
+        // }
+
+        let optID = option.id;
+        console.log("Option to be updated", option);
+
+        if (qOpt && qOpt.length >0 ){
+          if (optID){
+            for (var i = 0, len = qOpt.length; i < len; i++) {
+              console.log("looping array", qOpt[i]);
+              if (qOpt[i].id === optID){
+                console.log("updating vote");
+                qOpt[i].votes = qOpt[i].votes++;
+                
+                break;
+              }
+            }
+            console.log("Options after", qOpt);
+          }
+        }
+      
+         
+        //   {
+        //     "votes": 1,
+        //     "id": 3942,
+        //     "text": "American Doll",
+        //     "isComplete": true
+        // }
+
+          let q = await Mutations.UpdateQuestionOptionsVote(
+            question.id,
+            JSON.stringify(qOpt)
+          );
+          const updatedBackendQuestions = backendQuestions.map((backendQuestion) => {
+          if (backendQuestion.id === question.id) {
+            return { ...backendQuestion, body: question };
+          }
+            return backendQuestion;
           });
+          setBackendQuestions(updatedBackendQuestions);
+          setActiveQuestion(null);
+          console.log("Update vote for question");        
+        }catch(err){
+          console.error("Error on Mutations.UpdateQuestion ", err);
+        }      
       }
 
       const updateVotedList = (item) => {    
@@ -113,6 +165,8 @@ const Questions = (
           newArray.push(item);
           return newArray;
         });
+
+        
       }
 
       console.log("root questions", rootQuestions);

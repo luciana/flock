@@ -10,9 +10,9 @@ function Main() {
   const { user } = state;
   console.log("Main.js state", state);
   return (
-    <div className="App profile ">      
+    <div className="App  ">      
         <div>{user && <pre>{JSON.stringify(user, undefined, 2)}</pre>}</div>
-        {(!user.name || !user.birthdate) && <Alert type="warning" text="Please, complete the Profile!" />}
+        {(!user.name || !user.expertTag) && <Alert type="warning" text="Please, complete the Profile!" link="/Profile" />}
         <div className="white-bg container border border-1 p-2 d-flex flex-column">
                 <Questions user={user} />
         </div>               
