@@ -13,6 +13,7 @@ function Question({
   votedList,
   updateVotedList,
   votedOptionsList,
+  updateVotedOptionsList,
   handleVote,
   activeQuestion,
   deleteQuestion,
@@ -27,21 +28,9 @@ function Question({
   });
 
  if (!question) return;
- console.log("Question ", question);
- console.log("User ", user);
-//  {
-//   "id": "b35d6d5e-4160-40d2-951d-6444d7fe90a2",
-//   "text": "For a simple app, should I use reactjs or vuejs?",
-//   "userID": "9064ac93-118e-4a72-8008-f20c3f2e7279",
-//   "voteEndAt": null,
-//   "sentiment": null,
-//   "parentID": null,
-//   "questionTag": "technologist",
-//   "options": "[{\"votes\":0,\"id\":1,\"text\":\"reactjs\"},{\"votes\":0,\"id\":2,\"text\":\"vuejs\"}]",
-//   "createdAt": "2023-01-29T14:28:19.383Z",
-//   "updatedAt": "2023-01-29T14:28:19.383Z",
-//   "createdBy": "user1"
-// }
+//  console.log("Question ", question);
+//  console.log("User ", user);
+
 
 
  const formatDateAndTime = (date_input)  => {
@@ -113,7 +102,8 @@ function Question({
           <Vote question={question} 
                 handleVote={handleVote}   
                 votedList={votedList}       
-                updateVotedList={updateVotedList}     
+                updateVotedList={updateVotedList}   
+                updateVotedOptionsList={updateVotedOptionsList}  
                 votedOptionsList={votedOptionsList}
                 alreadyVotedForQuestionList={alreadyVotedForQuestionList}
                 voteEnded={voteEnded} />    

@@ -1,43 +1,49 @@
 import React, {useState} from 'react';
 import { FaCircle, FaRegCircle } from 'react-icons/fa';
+import { userByEmail } from '../../graphql/queries';
 
 const Vote = ({ question,
              handleVote,             
              updateVotedList,      
              votedOptionsList,
+             updateVotedOptionsList,
              alreadyVotedForQuestionList,
              voteEnded }) => {
 
-    const [voteCount, setVoteCount] = useState(0);
     const items = JSON.parse(question.options);
     if (!items) return;
 
-    console.log("Votes items", items);
-    if(items.votes)
-      setVoteCount(items.votes);
+//    console.log("Votes items", items);
    
-  let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
+    let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
 
     const voteUp = id => {
-      let i = [...items];
-      let item = i.find(x => x.id === id);
-    
-      item.votes++;
-      setVoteCount(item.votes);
-
+     
       if (alreadyVotedForQuestionListBool) {
         return;
       }if (votedOptionsList.includes(id)){
         return;
       }else{        
-        let item = {         
+        let i = [...items];
+        let item = i.find(x => x.id === id);          
+
+      //user.votes = "[{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]"
+      //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
+        let userVote ={
           "optionId": id,
-          "questionId": question.id,        
+          "questionId": question.id,  
+        };
+
+        let questionOption = {         
+          "optionId": id,
+          "questionId": question.id,  
+          "votes": item.votes++    
           }
-        updateVotedList(item);
+        updateVotedList(questionOption);
         votedOptionsList.push(id);
+        handleVote(question, questionOption, userVote);
       } 
-      handleVote(question, item);
+      
     };
 
     const iVotedForIt = ( id ) =>  {      
@@ -53,7 +59,7 @@ const Vote = ({ question,
     <div className='container p-3 border-bottom bg-light ' key={index} >
           <div className="row ">            
               <div key={item.id} onClick={() => voteUp(item.id)} className={iVotedForIt(item.id) ? 'col  ' : 'col  '}>
-                <span className="badge rounded-pill bg-light text-dark mx-2 ">{voteCount}</span> 
+                <span className="badge rounded-pill bg-light text-dark mx-2 ">{item.votes}</span> 
                 {item.text}
               </div>
             

@@ -14,7 +14,7 @@ function Main() {
         <div>{user && <pre>{JSON.stringify(user, undefined, 2)}</pre>}</div>
         {(!user.name || !user.expertTag) && <Alert type="warning" text="Please, complete the Profile!" link="/Profile" />}
         <div className="white-bg container border border-1 p-2 d-flex flex-column">
-                <Questions user={user} />
+                <Questions user={state.user} />
         </div>               
         <hr className="m-0"></hr>       
                   

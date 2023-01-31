@@ -22,9 +22,22 @@ const UpdateUser = async ({ id, email, locale }) => {
 };
 
 
+const UpdateUserVotes = async ( id, votes ) => {
+  //votes = [{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]
+  console.log("UpdateUserVotes mutation input", id, votes);
+  const {
+    data: { updateUser },
+  } = await API.graphql(
+    graphqlOperation(mutations.updateUser, {
+      input: { id,votes },
+    })
+  );
+  return updateUser;
+};
+
 // updateQuestion(input: {id: "b35d6d5e-4160-40d2-951d-6444d7fe90a2"
 //   options:"[{\"votes\":1,\"id\":1,\"text\":\"reactjs\"},{\"votes\":0,\"id\":2,\"text\":\"vuejs\"}]"})
-const UpdateQuestionOptionsVote = async ({ id, options }) => {
+const UpdateQuestionOptions = async ( id, options ) => { 
   const {
     data: { updateQuestion },
   } = await API.graphql(
@@ -65,7 +78,8 @@ const Mutations = {
   CreateUser,
   UpdateUser,
   CreateQuestion,
-  UpdateQuestionOptionsVote,
+  UpdateQuestionOptions,
+  UpdateUserVotes,
 };
 
 export default Mutations;   

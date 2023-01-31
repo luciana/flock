@@ -7,15 +7,16 @@ import Mutations from "../../Services/mutations";
 
 
 const Questions = (
-  user
+  state
 ) => {
     const [backendQuestions, setBackendQuestions] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState(null);
     const [votedList, setVotedList] = useState([]);
     const [votedOptionsList, setVoteOptionsdList] = useState([]);
-  
-
     const [loading, setLoading] = useState(false);
+
+    console.log("USER in Questions.js", state.user);
+    const user = state.user;
 
     const loadQuestions = async () => {
       try{
@@ -94,66 +95,49 @@ const Questions = (
         }
       };
     
-      const handleVote = async (question, option) =>{                     
+      const handleVote = async (question, option, userVote) =>{                     
         try{
         
           setLoading(true);         
-          let qOpt = JSON.parse(question.options);
-          console.log("Options before", qOpt);
-         // console.log("Question to be updated", question);
-        //   {
-        //     "id": "7998615d-88dd-427a-a20f-1a2851d009b3",
-        //     "text": "my daughter love dolls.Should I buy American Doll or My Baby? #flocks American Doll, My Baby",
-        //     "userID": "57cd07d8-b898-4e5c-904a-458ab4e8d8b8",
-        //     "voteEndAt": "2023-01-30T01:13:29.953Z",
-        //     "sentiment": "",
-        //     "parentID": null,
-        //     "questionTag": "#parents",
-        //     "options": "[{\"votes\":0,\"id\":3942,\"text\":\"American Doll\",\"isComplete\":true},{\"votes\":0,\"id\":2604,\"text\":\"My Baby\",\"isComplete\":true}]",
-        //     "createdAt": "2023-01-29T17:13:34.243Z",
-        //     "updatedAt": "2023-01-29T17:13:34.243Z",
-        //     "createdBy": "4555cc5e-191a-4bf2-8a29-e63b2fde117e"
-        // }
+          let optionsInQuestion = JSON.parse(question.options);
+          let userVotes = [];
+          if (user.votes) userVotes = JSON.parse(user.votes);
+          userVotes.push(userVote);
 
-        let optID = option.id;
-        console.log("Option to be updated", option);
+          let optID = option.id;
+          // console.log("Option to be updated", option);
+//user.votes = "[{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]"
+      //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
+      
+    
 
-        if (qOpt && qOpt.length >0 ){
+        if (optionsInQuestion && optionsInQuestion.length >0 ){
           if (optID){
-            for (var i = 0, len = qOpt.length; i < len; i++) {
-              console.log("looping array", qOpt[i]);
-              if (qOpt[i].id === optID){
-                console.log("updating vote");
-                qOpt[i].votes = qOpt[i].votes++;
-                
+            for (var i = 0, len = optionsInQuestion.length; i < len; i++) {
+              console.log("looping array", optionsInQuestion[i]);
+              if (optionsInQuestion[i].id === optID){
+                optionsInQuestion[i] = option;      
                 break;
               }
             }
-            console.log("Options after", qOpt);
+            console.log("Options after", optionsInQuestion);
           }
         }
-      
-         
-        //   {
-        //     "votes": 1,
-        //     "id": 3942,
-        //     "text": "American Doll",
-        //     "isComplete": true
-        // }
 
-          let q = await Mutations.UpdateQuestionOptionsVote(
+        console.log("input", question.id,JSON.stringify(optionsInQuestion));
+          let q = await Mutations.UpdateQuestionOptions(
             question.id,
-            JSON.stringify(qOpt)
+            JSON.stringify(optionsInQuestion)
           );
-          const updatedBackendQuestions = backendQuestions.map((backendQuestion) => {
-          if (backendQuestion.id === question.id) {
-            return { ...backendQuestion, body: question };
-          }
-            return backendQuestion;
-          });
-          setBackendQuestions(updatedBackendQuestions);
-          setActiveQuestion(null);
-          console.log("Update vote for question");        
+
+          console.log("user id for update user votes mutation ", user.id, JSON.stringify(userVotes));
+          let u = await Mutations.UpdateUserVotes(
+            user.id,
+            JSON.stringify(userVotes)
+          );
+      
+          updateVotedOptionsList(optID);
+         
         }catch(err){
           console.error("Error on Mutations.UpdateQuestion ", err);
         }      
@@ -164,10 +148,16 @@ const Questions = (
           const newArray = [...votedList];
           newArray.push(item);
           return newArray;
-        });
-
-        
+        });        
       }
+      const updateVotedOptionsList = (id) => {    
+        setVotedList(votedOptionsList => {           
+          const newArray = [...votedOptionsList];
+          newArray.push(id);
+          return newArray;
+        });        
+      }
+
 
       console.log("root questions", rootQuestions);
 
@@ -189,6 +179,7 @@ const Questions = (
                         setActiveQuestion={setActiveQuestion}
                         handleVote={handleVote}
                         updateVotedList={updateVotedList}
+                        updateVotedOptionsList={updateVotedOptionsList}
                         votedList={votedList}
                         votedOptionsList={votedOptionsList}
                         addQuestion={addQuestion}
