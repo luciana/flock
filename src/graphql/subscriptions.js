@@ -64,6 +64,7 @@ export const onCreateQuestion = /* GraphQL */ `
       id
       text
       userID
+      userName
       voteEndAt
       sentiment
       parentID
@@ -71,7 +72,6 @@ export const onCreateQuestion = /* GraphQL */ `
       options
       createdAt
       updatedAt
-      createdBy
     }
   }
 `;
@@ -81,6 +81,7 @@ export const onUpdateQuestion = /* GraphQL */ `
       id
       text
       userID
+      userName
       voteEndAt
       sentiment
       parentID
@@ -88,7 +89,6 @@ export const onUpdateQuestion = /* GraphQL */ `
       options
       createdAt
       updatedAt
-      createdBy
     }
   }
 `;
@@ -98,6 +98,7 @@ export const onDeleteQuestion = /* GraphQL */ `
       id
       text
       userID
+      userName
       voteEndAt
       sentiment
       parentID
@@ -105,7 +106,6 @@ export const onDeleteQuestion = /* GraphQL */ `
       options
       createdAt
       updatedAt
-      createdBy
     }
   }
 `;

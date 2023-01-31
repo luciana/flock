@@ -15,10 +15,10 @@ export default function Layout() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const loadUser = useCallback(async ({force, email, locale}) => {
+  const loadUser = useCallback(async ({force, email, locale, name}) => {
     if (!state.user || force === true) {
       let user = await Queries.GetUserByEmail(email);
-      if (!user) user = await Mutations.CreateUser(email, locale);
+      if (!user) user = await Mutations.CreateUser(email, locale, name, []);
       dispatch({ type: TYPES.UPDATE_LANG, payload: locale || user.locale });
       dispatch({ type: TYPES.UPDATE_USER, payload: user });
     }
@@ -39,6 +39,7 @@ export default function Layout() {
         await loadUser({
           email: attributes.email,
           locale: "en-US", //this should be attributes.locale
+          name: attributes.name
         });
       } catch (error) {
         console.error("Layout.js Main error in isUserLoggedIn", error);

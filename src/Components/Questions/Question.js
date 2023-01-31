@@ -28,8 +28,9 @@ function Question({
   });
 
  if (!question) return;
-//  console.log("Question ", question);
-//  console.log("User ", user);
+  console.log("Question ", question);
+  //console.log("User ", user.votes);
+  console.log("votedList", votedList);
 
 
 
@@ -57,7 +58,7 @@ function Question({
     activeQuestion.type === "replying";
 
   let alreadyVotedForQuestionList = votedList.filter(
-    (vote) => vote.questionId === question.id
+    (vote) => vote && vote.questionId === question.id
   );
 
   const expertNeeded = question.tag && question.tag !== "" && !voteEnded;
@@ -72,14 +73,14 @@ function Question({
       
       { alreadyVotedForQuestionListBool && (       
        <div className="container border border-1 bg-light text-small lh-3">
-        <span className="p-2">You helped {question.username} <FaGrinHearts /></span>
+        <span className="p-2">You helped {question.name} <FaGrinHearts /></span>
       </div>   )}
         
        <div key={question.id} className="container border border-1 p-1 d-flex  flex-column" >           
         <div className="p-2 row align-items-start"> 
             <div className="col-2"> <Avatar size="42" name={question.name} className=" img-profile rounded-circle mx-auto mb-0" alt="{question.name}" /></div>
             <div className="col-8">
-              <div className="text-small lh-1"><span>{question.username} </span><span aria-hidden="true"> · </span> <span> {createdAt} </span></div>
+              <div className="text-small lh-1"><span>{question.name} </span><span aria-hidden="true"> · </span> <span> {createdAt} </span></div>
               <div className="text-small">
                 {!isAReply && voteEnded && (<span > Voting closed <FaCircle /> </span>)}
                 {!isAReply && !voteEnded && (<span> Voting Open < FaCircleNotch /> until {formatDateAndTime(question.voteEndAt)}</span>)}

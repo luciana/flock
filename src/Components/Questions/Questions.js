@@ -50,7 +50,7 @@ const Questions = (
         (backendQuestion) => ((backendQuestion.parentID === null) )
         ).sort(
           (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         )
 
       const addQuestion = (text) => {
@@ -71,18 +71,51 @@ const Questions = (
 
    
     
-      const updateQuestion = (text, questionId) => {
-        console.log("updateQuestion triggered", QuestionService.updateQuestion(text, questionId));
-        QuestionService.updateQuestion(text, questionId).then((data) => {
-            const updatedBackendQuestions = backendQuestions.map((backendQuestion) => {
-            if (backendQuestion.id === questionId) {
-              return { ...backendQuestion, body: text };
+      const updateQuestion = async (question, option) => {
+       
+        if(! question.options) return; //TODO: alert
+        let optionsInQuestion = JSON.parse(question.options);
+        let optID = option.id;
+         
+       //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
+      
+    
+        try{        
+          if (optionsInQuestion && optionsInQuestion.length >0 ){
+            if (optID){
+              for (var i = 0, len = optionsInQuestion.length; i < len; i++) {               
+                if (optionsInQuestion[i].id === optID){
+                  optionsInQuestion[i] = option;      
+                  break;
+                }
+              }
+              console.log("Options after", optionsInQuestion);
             }
-            return backendQuestion;
-          });
-          setBackendQuestions(updatedBackendQuestions);
-          setActiveQuestion(null);
-        });
+          }
+
+        console.log("Mutations.UpdateQuestionOptions inputs", question.id,JSON.stringify(optionsInQuestion));
+          let q = await Mutations.UpdateQuestionOptions(
+            question.id,
+            JSON.stringify(optionsInQuestion)
+          );
+          console.log("Mutations.UpdateQuestionOptions result", q);
+          updateVotedOptionsList(optID);
+         
+        }catch(err){
+          console.error("Mutations.UpdateQuestion error", err);
+        } 
+
+        // console.log("updateQuestion triggered", QuestionService.updateQuestion(text, questionId));
+        // QuestionService.updateQuestion(text, questionId).then((data) => {
+        //     const updatedBackendQuestions = backendQuestions.map((backendQuestion) => {
+        //     if (backendQuestion.id === questionId) {
+        //       return { ...backendQuestion, body: text };
+        //     }
+        //     return backendQuestion;
+        //   });
+        //   setBackendQuestions(updatedBackendQuestions);
+        //   setActiveQuestion(null);
+        // });
       };
       const deleteQuestion = (questionId) => {
         if (window.confirm("Are you sure you want to remove question?")) {
@@ -94,52 +127,37 @@ const Questions = (
           });
         }
       };
-    
-      const handleVote = async (question, option, userVote) =>{                     
-        try{
-        
-          setLoading(true);         
-          let optionsInQuestion = JSON.parse(question.options);
+      const updateUserVotes = async (userVote) =>{   
+        try{                
           let userVotes = [];
           if (user.votes) userVotes = JSON.parse(user.votes);
           userVotes.push(userVote);
+          //user.votes = "[{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]"
 
-          let optID = option.id;
-          // console.log("Option to be updated", option);
-//user.votes = "[{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]"
-      //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
-      
-    
 
-        if (optionsInQuestion && optionsInQuestion.length >0 ){
-          if (optID){
-            for (var i = 0, len = optionsInQuestion.length; i < len; i++) {
-              console.log("looping array", optionsInQuestion[i]);
-              if (optionsInQuestion[i].id === optID){
-                optionsInQuestion[i] = option;      
-                break;
-              }
-            }
-            console.log("Options after", optionsInQuestion);
-          }
-        }
-
-        console.log("input", question.id,JSON.stringify(optionsInQuestion));
-          let q = await Mutations.UpdateQuestionOptions(
-            question.id,
-            JSON.stringify(optionsInQuestion)
-          );
-
-          console.log("user id for update user votes mutation ", user.id, JSON.stringify(userVotes));
+          console.log("Mutations.UpdateUserVotes inputs ", user.id, JSON.stringify(userVotes));
           let u = await Mutations.UpdateUserVotes(
             user.id,
             JSON.stringify(userVotes)
           );
       
-          updateVotedOptionsList(optID);
+          console.log("Mutations.UpdateUserVotes result", u);
          
         }catch(err){
-          console.error("Error on Mutations.UpdateQuestion ", err);
+          console.error("Mutations.UpdateUserVotes Error ", err);
+        }      
+      }
+
+      const handleVote = async (question, option, userVote) =>{                     
+        try{
+        
+        setLoading(true);         
+         updateQuestion(question, option);
+         //updateUserVotes(userVote);
+         setLoading(false);     
+         
+        }catch(err){
+          console.error("Error on handleVote ", err);
         }      
       }
 

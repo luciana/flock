@@ -1,10 +1,13 @@
 const en_us_lang = {
     Loading: "Loading",
     Email: "Email",
+    Name: "Name",
     Password: "Password",
     Code: "Code",
     Home: "Home",
     Questions:{
+      Questions: "Questions",
+      NewQuestion: "New Question",
       New: "New",
       NewQuestionTitle: "Need help? Ask a question!"
     },
@@ -65,6 +68,7 @@ const en_us_lang = {
       Profile: "Profile",
       SignOut: "Sign Out",
       ChangeEmail: "Change Email",
+      ChangeName: "Change Name",
       CurrentPassword: "Current Password",
       NewPassword: "New Password",
       RepeatNewPassword: "Repeat New Password",

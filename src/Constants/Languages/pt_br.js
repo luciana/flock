@@ -1,10 +1,13 @@
 const pt_br_lang = {
     Loading: "Carregando",
     Email: "Email",
+    Name: "Nome",
     Password: "Senha",
     Code: "Código",
     Home: "Inicial",
     Questions:{
+      Questions: "Perguntas",
+      NewQuestion: "Nova Pergunta",
       New: "Nova",
       NewQuestionTitle: "Precisa de ajuda? Faca uma pergunta",
     },
@@ -67,6 +70,7 @@ const pt_br_lang = {
       Profile: "Perfil",
       SignOut: "Sair",
       ChangeEmail: "Alterar Email",
+      ChangeName: "Alterar Nome",
       CurrentPassword: "Senha Atual",
       NewPassword: "Nova Senha",
       RepeatNewPassword: "Repetir Nova Senha",

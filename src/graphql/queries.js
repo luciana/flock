@@ -54,6 +54,7 @@ export const getQuestion = /* GraphQL */ `
       id
       text
       userID
+      userName
       voteEndAt
       sentiment
       parentID
@@ -61,7 +62,6 @@ export const getQuestion = /* GraphQL */ `
       options
       createdAt
       updatedAt
-      createdBy
     }
   }
 `;
@@ -84,6 +84,7 @@ export const listQuestions = /* GraphQL */ `
         id
         text
         userID
+        userName
         voteEndAt
         sentiment
         parentID
@@ -91,7 +92,6 @@ export const listQuestions = /* GraphQL */ `
         options
         createdAt
         updatedAt
-        createdBy
       }
       nextToken
     }
@@ -123,6 +123,38 @@ export const userByEmail = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+      }
+      nextToken
+    }
+  }
+`;
+export const questionByUserId = /* GraphQL */ `
+  query QuestionByUserId(
+    $userID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelQuestionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    questionByUserId(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        text
+        userID
+        userName
+        voteEndAt
+        sentiment
+        parentID
+        questionTag
+        options
+        createdAt
+        updatedAt
       }
       nextToken
     }

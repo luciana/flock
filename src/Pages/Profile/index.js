@@ -17,6 +17,7 @@ export default function Profile() {
   const [alert, setAlert] = useState();
   const [showCode, setShowCode] = useState(false);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [code, setCode] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -26,7 +27,7 @@ export default function Profile() {
   //const disabled = () => email === "" || !isValidEmail(email);
 
   useEffect(() => {
-    user && setEmail(user?.email);
+    user && setEmail(user?.email) && setName(user?.name)
   }, [user]);
 
   const loading = () => {
@@ -62,6 +63,17 @@ export default function Profile() {
     loading();
     try {
       await Auth.ChangeEmail(email);
+      setShowCode(true);
+    } catch (error) {
+      handleErrors(error.message);
+    }
+    setLoading(false);
+  };
+
+  const handleChangeName = async () => {
+    loading();
+    try {
+      await Auth.ChangeEmail(name);
       setShowCode(true);
     } catch (error) {
       handleErrors(error.message);
@@ -118,6 +130,8 @@ export default function Profile() {
 
   const disabledCode = () => !code || code.length > 6;
 
+  const disabledName = () => !name || name.length > 0;
+
   const disabledPassword = () =>
     !currentPassword ||
     newPassword !== repeatPassword ||
@@ -138,6 +152,26 @@ export default function Profile() {
         disabled={disabledEmail()}
         handler={() => handleChangeEmail()}
       />
+    </>
+  );
+
+  const renderName = () => (
+    <>
+    <Form>
+      <div className="mb-4 w-full flex flex-col gap-4 justify-center">
+      <Input
+        type="text"
+        placeholder={LANGUAGES[user.locale].Name}
+        value={name}
+        handler={setName}
+      />
+      <Button
+        text={LANGUAGES[user.locale].Profile.ChangeName}
+        disabled={disabledName()}
+        handler={() => handleChangeName()}
+      />
+    </div>
+    </Form>
     </>
   );
 
@@ -223,8 +257,9 @@ export default function Profile() {
         back={ROUTES[user.locale].MAIN}
       />
       <Alert type={alert?.type} text={alert?.text} />
-      <div className="grid sm:grid-cols-3 gap-2">
+      <div className="grid sm:grid-cols-3 gap-2">       
         {renderChangeEmail()}
+        {renderName()}
         {renderChangePassword()}
         {renderChangeLanguage()}
       </div>

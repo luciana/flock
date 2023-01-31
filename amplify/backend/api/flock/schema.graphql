@@ -10,7 +10,7 @@ type User @model @auth(rules: [{ allow: owner, operations: [create, read, update
   name: String
   userTag: String @index(name: "byUserTag", sortKeyFields: ["id"])  
   birthdate: AWSDate
-  votes: AWSJSON
+  votes: AWSJSON #make it empty [] at creation
 }
 
 
@@ -18,18 +18,19 @@ type User @model @auth(rules: [{ allow: owner, operations: [create, read, update
 # 1 Question has many options
 type Question @model            
              @auth(rules: [
-                  { allow: owner, ownerField: "createdBy", operations: [create, update, delete]},
-                  { allow: private, operations: [read] }
+                  { allow: owner, ownerField: "userID", operations: [ delete]},
+                  { allow: private, operations: [read, create, update, delete] }                  
                   ])
               {
   id: ID!  @primaryKey
   text: String!  #@index(name: "allQuestions", queryField: "getAllQuestions")
-  userID: ID
+  userID: ID! @index(name:"byUserId", queryField: "questionByUserId")
+  userName: String
   voteEndAt: AWSDateTime
   sentiment: String
   parentID: ID 
   questionTag: String  #@index(name: "byQuestionTag", sortKeyFields: ["id"])
-  options: AWSJSON
+  options: AWSJSON #need to make this mandatory
 }
 
  

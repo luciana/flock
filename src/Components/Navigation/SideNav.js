@@ -90,8 +90,9 @@ function SideNav({ handleSignOut }) {
             </button>
             <div className="collapse navbar-collapse" id="navbarResponsive">
                 <ul className="navbar-nav">                                                                     
-                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href={ROUTES[user.locale].MAIN}>Questions</a></li>     
-                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href="/New">New Question</a></li>  
+                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href={ROUTES[user.locale].MAIN}>{LANGUAGES[user.locale].Questions.Questions}</a></li>     
+                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href={ROUTES[user.locale].NEW_QUESTION}>{LANGUAGES[user.locale].Questions.NewQuestion}</a></li>  
+                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href={ROUTES[user.locale].PROFILE}>{LANGUAGES[user.locale].Profile.Profile}</a></li>  
                     <hr />
                     <li className="nav-item">                     
                       <a onClick={() => handleSignOut()} href="/#" className="nav-link js-scroll-trigger">

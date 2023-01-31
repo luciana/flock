@@ -26,7 +26,9 @@ function QuestionAndPoll2({
         const voteEndAt = question.voteEndAt;
         const sentiment = question.sentiment;
         const options  = JSON.stringify(question.options);
+        const userName = user.name;
 
+        console.log("userName = ", userName);
         console.log("before create question mutation question = ", question);
 
         let q = await Mutations.CreateQuestion(
@@ -34,6 +36,7 @@ function QuestionAndPoll2({
           userID,
           voteEndAt,
           sentiment,
+          userName,
           parentID,
           questionTag,
           options
