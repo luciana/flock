@@ -150,7 +150,7 @@ function QuestionAndPoll2({
         question.options = todos;
         console.log("question from handlePublishQuestion", question);            
         addQuestion(question);
-        alert('You question was added - good luck ( this is mock data for now - it will not show on the questions page');       
+        alert('You question was added - good luck');       
       }
     return(
         <>

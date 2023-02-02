@@ -21,6 +21,7 @@ export default function SignUp() {
   const disabled = () =>
     email === "" ||
     !isValidEmail(email) ||
+    name === "" ||
     pwd === "" ||
     repeat === "" ||
     pwd !== repeat;
