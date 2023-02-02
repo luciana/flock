@@ -34,7 +34,6 @@ export default function Profile() {
     setAlert()
     setLoading(true);
   }
-
   const handleErrors = (message) => {
     let errorMessage = message;
     switch (message) {
@@ -155,7 +154,7 @@ export default function Profile() {
     </>
   );
 
-  const renderName = () => (
+  const renderChangeName = () => (
     <>
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
@@ -248,7 +247,7 @@ export default function Profile() {
       </div>
     </Form>
   );
-  console.log("user from profile", user);
+  console.log("User from profile", user);
 
   return (
    <div className="container">
@@ -259,7 +258,7 @@ export default function Profile() {
       <Alert type={alert?.type} text={alert?.text} />
       <div className="grid sm:grid-cols-3 gap-2">       
         {renderChangeEmail()}
-        {renderName()}
+        {renderChangeName()}
         {renderChangePassword()}
         {renderChangeLanguage()}
       </div>

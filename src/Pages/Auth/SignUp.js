@@ -35,7 +35,7 @@ export default function SignUp() {
         <Input
           type="text"
           label="Name"     
-          placeholder="name"
+          placeholder="Name"
           value={name}
           handler={setName}
         />
@@ -71,7 +71,7 @@ export default function SignUp() {
       <Button
         text={LANGUAGES[state.lang].Auth.SignUpButton}
         disabled={disabled()}
-        handler={() => signUp(email, pwd, repeat)}
+        handler={() => signUp(email, pwd, name, repeat)}
       />
       <div className="w-full text-center mt-6">
         <AuthLink text={LANGUAGES[state.lang].Auth.GoToSignIn} to={ROUTES[state.lang].SIGN_IN} size="xl" />

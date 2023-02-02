@@ -1,11 +1,11 @@
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
 
-const CreateUser = async (email, locale, votes, name) => {
+const CreateUser = async (email, locale,  name) => {
   const {
     data: { createUser },
   } = await API.graphql(
-    graphqlOperation(mutations.createUser, { input: { email, locale, votes, name } })
+    graphqlOperation(mutations.createUser, { input: { email, locale, name } })
   );
   return createUser;
 };
@@ -49,25 +49,25 @@ const UpdateQuestionOptions = async ( id, options ) => {
 };
 
 const CreateQuestion = async (
-    text, 
-    userID,
-    voteEndAt,
-    sentiment,
-    parentID,
-    userName,
-    questionTag,
-    options,
+  text, 
+  userID,
+  voteEndAt,
+  sentiment,
+  userName,
+  parentID,
+  questionTag,
+  options
     ) => {
   const {
     data: { createQuestion },
   } = await API.graphql(
     graphqlOperation(mutations.createQuestion, { input: 
-      {  text, 
+      {   text, 
         userID,
         voteEndAt,
         sentiment,
-        parentID,
         userName,
+        parentID,
         questionTag,
         options
       } })

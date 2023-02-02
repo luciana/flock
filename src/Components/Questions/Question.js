@@ -78,9 +78,9 @@ function Question({
         
        <div key={question.id} className="container border border-1 p-1 d-flex  flex-column" >           
         <div className="p-2 row align-items-start"> 
-            <div className="col-2"> <Avatar size="42" name={question.name} className=" img-profile rounded-circle mx-auto mb-0" alt="{question.name}" /></div>
+            <div className="col-2"> <Avatar size="42" name={question.userName} className=" img-profile rounded-circle mx-auto mb-0" alt="{question.userName}" /></div>
             <div className="col-8">
-              <div className="text-small lh-1"><span>{question.name} </span><span aria-hidden="true"> · </span> <span> {createdAt} </span></div>
+              <div className="text-small lh-1"><span>{question.userName} </span><span aria-hidden="true"> · </span> <span> {createdAt} </span></div>
               <div className="text-small">
                 {!isAReply && voteEnded && (<span > Voting closed <FaCircle /> </span>)}
                 {!isAReply && !voteEnded && (<span> Voting Open < FaCircleNotch /> until {formatDateAndTime(question.voteEndAt)}</span>)}

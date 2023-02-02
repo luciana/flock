@@ -5,6 +5,7 @@ const pt_br_lang = {
     Password: "Senha",
     Code: "Código",
     Home: "Inicial",
+    Confirm: "Confirmar",
     Questions:{
       Questions: "Perguntas",
       NewQuestion: "Nova Pergunta",

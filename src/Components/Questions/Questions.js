@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
-import { Loading }  from '../../Components';
+import { Loading, Alert }  from '../../Components';
 import Queries from "../../Services/queries";
 import Mutations from "../../Services/mutations";
 
@@ -15,35 +15,53 @@ const Questions = (
     const [votedOptionsList, setVoteOptionsdList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    console.log("USER in Questions.js", state.user);
+    console.log ("USER in Questions.js", state.user);
     const user = state.user;
-
-    const loadQuestions = async () => {
-      try{
-        setLoading(true);
-        let q = await Queries.GetAllQuestions();
-        console.log("Get all Questions from db", q);
-        setBackendQuestions(q);
-        console.log("setBackendQuestions", backendQuestions);
-        setLoading(false);
-      }catch(err){
-        console.error("Loading Questions from queries error", err);
-        setBackendQuestions([]);
-      }
-
-    };
+   
+  
+  
 
     useEffect(() => {
+
+      const loadQuestions = async () => {
+        try{
+          setLoading(true);
+          let q = await Queries.GetAllQuestions();
+          console.log("Get all Questions from db", q);
+          setBackendQuestions(q);
+          console.log("setBackendQuestions", backendQuestions);
+         
+          setLoading(false);
+        }catch(err){
+          console.error("Loading Questions from queries error", err);
+          setBackendQuestions([]);
+          setLoading(false);
+        }
+      };
+    
+      const loadVotes = async () => {
+        try{
+          if(user.votes) {
+            let votes = JSON.parse(user.votes);
+            setVotedList(votes);
+            const newArray = [];            
+            for (let i = 0; i < votes.length; i++) {
+              newArray.push(votes[i].optionId);
+            }
+            setVoteOptionsdList(newArray);
+          }; 
+        }catch(err){
+          console.error("Loading Questions from queries error", err);
+          setBackendQuestions([]);
+          setLoading(false);
+        }
+      };
+
+
         loadQuestions();
-        if(user.votes) {
-          let votes = JSON.parse(user.votes);
-          setVotedList(votes);
-          const newArray = [];            
-          for (let i = 0; i < votes.length; i++) {
-            newArray.push(votes[i].optionId);
-          }
-          setVoteOptionsdList(newArray);
-        };               
+        loadVotes();
+        
+                      
       }, []);
 
       const rootQuestions = backendQuestions.filter(
@@ -51,7 +69,11 @@ const Questions = (
         ).sort(
           (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
+        )  
+    
+      
+                
+    
 
       const addQuestion = (text) => {
         console.log('addQuestion triggered from question and poll - not calling graphql mutation', text);
@@ -177,11 +199,13 @@ const Questions = (
       }
 
 
+      console.log("backendQuestion", backendQuestions);
       console.log("root questions", rootQuestions);
 
       return ( 
         <>
             {loading && <Loading />}
+            {( rootQuestions.length === 0 ) && <Alert type="warning" text="No questions retrieved. Start one!" link="/NewQuestion" />}
             {votedList.length > 0 && (
                 <div className="container border border-2 p-0 d-flex flex-colum">
                   <span className="text-small">You helped {votedList.length} decision{votedList.length > 1 ? 's' :''} be made.</span>

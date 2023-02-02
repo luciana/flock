@@ -1,20 +1,21 @@
 import { STATENAME, TYPES } from "../Constants";
 
 function saveState(state) {
+  console.log("App reducer update local storage for " , STATENAME, JSON.stringify(state));
   localStorage.setItem(STATENAME, JSON.stringify(state));
 }
 
 function updateLang(state, payload) {
-  console.log("App reducer update state old" , state);
   const newState = { ...state, lang: payload };
-  saveState(newState);
-  console.log("App reducer update statenew " , newState);
+  saveState(newState); 
   return newState;
 }
 
 function updateUser(state, payload) {
+  //localStorage.removeItem(STATENAME);
   const newState = { ...state, user: payload };
   saveState(newState);
+  console.log("App reducer update user" , state);
   return newState;
 }
 

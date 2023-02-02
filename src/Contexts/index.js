@@ -8,12 +8,16 @@ const initial = {
  };
 
 const getState = () => { 
-  let s =  localStorage.getItem(STATENAME)
-    ? JSON.parse(localStorage.getItem(STATENAME))
-    : initial;
-    console.log('Context get State', s);
-    return s;
-  
+  if (typeof(Storage) !== "undefined") {
+      let s =  localStorage.getItem(STATENAME)
+      ? JSON.parse(localStorage.getItem(STATENAME))
+      : initial;
+      console.log('Context get State', s);
+      return s;
+    } else {
+    // No web storage Support.
+    return;
+    }
   }
 
 const mainReducer = (state, action) => AppReducer(state, action);

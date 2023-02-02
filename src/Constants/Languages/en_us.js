@@ -5,6 +5,7 @@ const en_us_lang = {
     Password: "Password",
     Code: "Code",
     Home: "Home",
+    Confirm: "Confirm",
     Questions:{
       Questions: "Questions",
       NewQuestion: "New Question",

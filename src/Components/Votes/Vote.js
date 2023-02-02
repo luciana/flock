@@ -12,7 +12,7 @@ const Vote = ({ question,
 
     const items = JSON.parse(question.options);
     if (!items) return;
-
+    
 //    console.log("Votes items", items);
    
     let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
@@ -25,7 +25,8 @@ const Vote = ({ question,
         return;
       }else{        
         let i = [...items];
-        let item = i.find(x => x.id === id);          
+        let item = i.find(x => x.id === id);        
+        item.votes++;  
 
       //user.votes = "[{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]"
       //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
@@ -33,11 +34,11 @@ const Vote = ({ question,
           "optionId": id,
           "questionId": question.id,  
         };
-
+         
         let questionOption = {         
           "optionId": id,
           "questionId": question.id,  
-          "votes": item.votes++    
+          "votes": item.votes, 
           }
         updateVotedList(questionOption);
         votedOptionsList.push(id);

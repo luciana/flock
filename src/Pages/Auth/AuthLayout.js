@@ -94,11 +94,11 @@ export default function AuthLayout() {
     }
   };
 
-  const signUp = async (email, pwd) => {
+  const signUp = async (email, pwd, name) => {
     startLoading();
     try {
       console.log("AuthLayout.js signUp");
-      await Auth.SignUp(email, pwd, state.lang);
+      await Auth.SignUp(email, pwd, name, state.lang);
       stopLoading();
       navigate(ROUTES[state.lang].CONFIRM_SIGN_UP, {
         state: {

@@ -16,6 +16,8 @@ function QuestionAndPoll2({
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
+    console.log("USER in Questions and Poll 2", user);
+
     const addQuestion = async (question) => {       
       try{
         setLoading(true);
