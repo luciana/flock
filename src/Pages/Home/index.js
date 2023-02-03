@@ -9,7 +9,7 @@ import {HomeNav} from '../../Components';
 function Home() {
     const { state } = useContext(AppContext);
     const { user } = state;
-    console.log("user from home", user);
+    console.log("user from home", user);  
   return (
     <div className="App">
         <HomeNav />

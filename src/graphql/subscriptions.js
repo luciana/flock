@@ -59,8 +59,11 @@ export const onDeleteUser = /* GraphQL */ `
   }
 `;
 export const onCreateQuestion = /* GraphQL */ `
-  subscription OnCreateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onCreateQuestion(filter: $filter) {
+  subscription OnCreateQuestion(
+    $filter: ModelSubscriptionQuestionFilterInput
+    $userID: String
+  ) {
+    onCreateQuestion(filter: $filter, userID: $userID) {
       id
       text
       userID
@@ -76,8 +79,11 @@ export const onCreateQuestion = /* GraphQL */ `
   }
 `;
 export const onUpdateQuestion = /* GraphQL */ `
-  subscription OnUpdateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onUpdateQuestion(filter: $filter) {
+  subscription OnUpdateQuestion(
+    $filter: ModelSubscriptionQuestionFilterInput
+    $userID: String
+  ) {
+    onUpdateQuestion(filter: $filter, userID: $userID) {
       id
       text
       userID
@@ -93,8 +99,11 @@ export const onUpdateQuestion = /* GraphQL */ `
   }
 `;
 export const onDeleteQuestion = /* GraphQL */ `
-  subscription OnDeleteQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onDeleteQuestion(filter: $filter) {
+  subscription OnDeleteQuestion(
+    $filter: ModelSubscriptionQuestionFilterInput
+    $userID: String
+  ) {
+    onDeleteQuestion(filter: $filter, userID: $userID) {
       id
       text
       userID

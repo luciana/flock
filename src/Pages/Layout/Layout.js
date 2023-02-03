@@ -15,10 +15,11 @@ export default function Layout() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  console.log("Layhout.js state", state);  
   const loadUser = useCallback(async ({force, email, locale, name}) => {      
     if (!state.user || force === true) {     
       let user = await Queries.GetUserByEmail(email);
-      console.log("Layout.js ueries.GetUserByEmail result", user);   
+      console.log("Layout.js queries.GetUserByEmail result", user);   
       if (!user) user = await Mutations.CreateUser(email, locale, name);    
       console.log("Layout.js create user in mutation", user);
       dispatch({ type: TYPES.UPDATE_LANG, payload: locale || user.locale });

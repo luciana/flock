@@ -31,9 +31,9 @@ function App() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        <Route path={ROUTES[state.lang].HOME} element={<Home />} />
         
-
+        
+        <Route path={ROUTES[state.lang].HOME} element={<Home />} />
         <Route element={<AuthLayout />}>
           <Route path={ROUTES[state.lang].SIGN_IN} element={<SignIn />} />
           <Route path={ROUTES[state.lang].FORGOT_PASSWORD} element={<ForgotPassword />} />
@@ -42,6 +42,7 @@ function App() {
           <Route path={ROUTES[state.lang].CONFIRM_SIGN_UP} element={<ConfirmSignUp />}/>
         </Route>
         <Route element={<Layout />}>
+         
           <Route path={ROUTES[state.lang].MAIN} element={<Main />} />
           <Route path={ROUTES[state.lang].PROFILE} element={<Profile />} />
           <Route path={ROUTES[state.lang].NEW_QUESTION} element={<NewQuestion />} />

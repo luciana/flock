@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
 import { Loading, Alert }  from '../../Components';
 import Queries from "../../Services/queries";
 import Mutations from "../../Services/mutations";
+import { AppContext} from '../../Contexts'; 
 
 
 const Questions = (
-  state
+  
 ) => {
     const [backendQuestions, setBackendQuestions] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState(null);
@@ -15,25 +16,22 @@ const Questions = (
     const [votedOptionsList, setVoteOptionsdList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    console.log ("USER in Questions.js", state.user);
-    const user = state.user;
-   
-  
-  
+    const { state } = useContext(AppContext);
+    const { user } = state;
+    console.log("USER in Questions.js state", state);  
 
     useEffect(() => {
 
       const loadQuestions = async () => {
         try{
-          setLoading(true);
+          setLoading(true);       
           let q = await Queries.GetAllQuestions();
           console.log("Get all Questions from db", q);
           setBackendQuestions(q);
-          console.log("setBackendQuestions", backendQuestions);
          
           setLoading(false);
         }catch(err){
-          console.error("Loading Questions from queries error", err);
+          console.error("Questions.js Loading Questions from queries error", err);
           setBackendQuestions([]);
           setLoading(false);
         }
@@ -51,7 +49,7 @@ const Questions = (
             setVoteOptionsdList(newArray);
           }; 
         }catch(err){
-          console.error("Loading Questions from queries error", err);
+          console.error("Questions.js Loading Votes from queries error", err);
           setBackendQuestions([]);
           setLoading(false);
         }
@@ -173,9 +171,10 @@ const Questions = (
       const handleVote = async (question, option, userVote) =>{                     
         try{
         
-        setLoading(true);         
+        console.log("Questions.js Handle Vote updateUserVotes input", userVote);
+         setLoading(true);         
          updateQuestion(question, option);
-         //updateUserVotes(userVote);
+         updateUserVotes(userVote);
          setLoading(false);     
          
         }catch(err){
@@ -207,12 +206,12 @@ const Questions = (
             {loading && <Loading />}
             {( rootQuestions.length === 0 ) && <Alert type="warning" text="No questions retrieved. Start one!" link="/NewQuestion" />}
             {votedList.length > 0 && (
-                <div className="container border border-2 p-0 d-flex flex-colum">
+                <div className="container border border-0 p-0 d-flex flex-colum">
                   <span className="text-small">You helped {votedList.length} decision{votedList.length > 1 ? 's' :''} be made.</span>
                 </div>
             )}
         
-            <div id="all-questions" className=" container border border-2 p-0 d-flex flex-column">
+            <div id="all-questions" className=" container border border-0 p-0 d-flex flex-column">
                 {rootQuestions.map((rootQuestion) => (
                     <Question 
                         key={rootQuestion.id}

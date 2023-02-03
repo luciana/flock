@@ -28,9 +28,9 @@ function Question({
   });
 
  if (!question) return;
-  console.log("Question ", question);
-  //console.log("User ", user.votes);
-  console.log("votedList", votedList);
+  // console.log("Question ", question);
+  // //console.log("User ", user.votes);
+  // console.log("votedList", votedList);
 
 
 
@@ -62,19 +62,45 @@ function Question({
   );
 
   const expertNeeded = question.tag && question.tag !== "" && !voteEnded;
-
   let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
  
+  const voteUp = (item) => {
+    const id = item.id;
+    const text = item.text;
+    if (alreadyVotedForQuestionListBool) {
+      return;
+    }if (votedOptionsList.includes(id)){
+      return;
+    }else{        
+      // let i = [...items];
+      // let item = i.find(x => x.id === id);        
+      item.votes++;  
+
+    //user.votes = "[{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]"
+    //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
+      let userVote ={
+        "optionId": id,
+        "questionId": question.id,  
+      };
+       
+      let questionOption = {         
+        "id": id,
+        "text": text,  
+        "votes": item.votes, 
+        }         
+      updateVotedList(questionOption);      
+      handleVote(question, questionOption, userVote);
+     
+    } 
+    
+  };
 
 
   return (
     <div key={question.id} className="my-2">
 
       
-      { alreadyVotedForQuestionListBool && (       
-       <div className="container border border-1 bg-light text-small lh-3">
-        <span className="p-2">You helped {question.name} <FaGrinHearts /></span>
-      </div>   )}
+      
         
        <div key={question.id} className="container border border-1 p-1 d-flex  flex-column" >           
         <div className="p-2 row align-items-start"> 
@@ -102,7 +128,8 @@ function Question({
         <div className="p-2">
           <Vote question={question} 
                 handleVote={handleVote}   
-                votedList={votedList}       
+                votedList={votedList}   
+                voteUp={voteUp}    
                 updateVotedList={updateVotedList}   
                 updateVotedOptionsList={updateVotedOptionsList}  
                 votedOptionsList={votedOptionsList}
@@ -154,11 +181,16 @@ function Question({
             ))}
           </div>
         )} */}
-      </div>
-      { expertNeeded && (       
+        { expertNeeded && (       
        <div className="container border border-1 bg-light text-small lh-3">
         <span className="p-2"><FaPhoneVolume /> Special call out for #<strong>{question.tag}</strong></span>
       </div>   )}
+      { alreadyVotedForQuestionListBool && (       
+       <div className="container  text-small lh-3">
+        <span className="p-2">You helped {question.name} <FaGrinHearts /></span>
+      </div>   )}
+      </div>
+      
       </div>
   );
 }

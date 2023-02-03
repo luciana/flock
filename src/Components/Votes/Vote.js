@@ -1,65 +1,46 @@
 import React, {useState} from 'react';
 import { FaCircle, FaRegCircle } from 'react-icons/fa';
-import { userByEmail } from '../../graphql/queries';
 
 const Vote = ({ question,
              handleVote,             
              updateVotedList,      
              votedOptionsList,
+             voteUp,
              updateVotedOptionsList,
              alreadyVotedForQuestionList,
              voteEnded }) => {
 
     const items = JSON.parse(question.options);
-    if (!items) return;
     
-//    console.log("Votes items", items);
-   
+    const [counters, setCounters] = useState("");
+
+    if (!items) return;
+
     let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
-
-    const voteUp = id => {
-     
-      if (alreadyVotedForQuestionListBool) {
-        return;
-      }if (votedOptionsList.includes(id)){
-        return;
-      }else{        
-        let i = [...items];
-        let item = i.find(x => x.id === id);        
-        item.votes++;  
-
-      //user.votes = "[{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]"
-      //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
-        let userVote ={
-          "optionId": id,
-          "questionId": question.id,  
-        };
-         
-        let questionOption = {         
-          "optionId": id,
-          "questionId": question.id,  
-          "votes": item.votes, 
-          }
-        updateVotedList(questionOption);
-        votedOptionsList.push(id);
-        handleVote(question, questionOption, userVote);
-      } 
-      
-    };
-
-    const iVotedForIt = ( id ) =>  {      
+    const iVotedForIt = ( id ) =>  {    
       return votedOptionsList.includes(id)
     }
 
-    // console.log("votedList in Vote", votedList);
-    // console.log("votedOptionsList in Vote", votedOptionsList);
-    // console.log("alreadyVotedForQuestionList in Vote",alreadyVotedForQuestionList);
+    // const handleMe = () => {
+    //   setCounters(
+    //     counters[index]; // assign the object at the index to a variable
+    //     obj.value++; // increment the value in the object
+    //     state.counters.splice(index, 1); // remove the object from the array
+    //     return { counters: [...state.counters, obj] };
+    //   );
+
+    // }
+
+    // console.log("Vote.js votedList in Vote", votedList);
+    // console.log("Vote.js votedOptionsList in Vote", votedOptionsList);
+    // console.log("Vote.js alreadyVotedForQuestionList in Vote",alreadyVotedForQuestionList);
 
 
   return items.map((item, index) => (
+   
     <div className='container p-3 border-bottom bg-light ' key={index} >
           <div className="row ">            
-              <div key={item.id} onClick={() => voteUp(item.id)} className={iVotedForIt(item.id) ? 'col  ' : 'col  '}>
+              <div key={item.id} onClick={() => voteUp(item)} className={iVotedForIt(item.id) ? 'col  ' : 'col  '}>
                 <span className="badge rounded-pill bg-light text-dark mx-2 ">{item.votes}</span> 
                 {item.text}
               </div>
@@ -67,7 +48,7 @@ const Vote = ({ question,
             <div className="col ">                   
                 <button className=" mx-5 badge border-0 bg-light"  
                   disabled={(voteEnded || alreadyVotedForQuestionListBool) ? true : false}                   
-                  onClick={() => voteUp(item.id)}>                             
+                  onClick={() => voteUp(item)}>                             
                   { (iVotedForIt(item.id) ) && (
                     <FaCircle color='green' size={24}/>
                   )}
