@@ -50,6 +50,11 @@ const ChangeEmail = async (email) => {
   await AmplifyAuth.updateUserAttributes(user, { email: email });
 };
 
+const ChangeName = async (name) => {
+  const user = await AmplifyAuth.currentAuthenticatedUser();
+  await AmplifyAuth.updateUserAttributes(user, { name: name });
+};
+
 const ConfirmChangeEmail = async (code) => {
   await AmplifyAuth.verifyCurrentUserAttributeSubmit("email", code);
 };
@@ -79,6 +84,7 @@ const Auth = {
   GetUser,
   SignOut,
   ChangeEmail,
+  ChangeName,
   ConfirmChangeEmail,
   ChangePassword,
   ChangeLanguage,

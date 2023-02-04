@@ -27,9 +27,11 @@ export default function Profile() {
   //const disabled = () => email === "" || !isValidEmail(email);
 
   useEffect(() => {
-    user && setEmail(user?.email) && setName(user?.name)
+    user && setEmail(user?.email) 
+    user && setName(user?.name)
   }, [user]);
 
+  
   const loading = () => {
     setAlert()
     setLoading(true);
@@ -72,7 +74,7 @@ export default function Profile() {
   const handleChangeName = async () => {
     loading();
     try {
-      await Auth.ChangeEmail(name);
+      await Auth.ChangeName(name);
       setShowCode(true);
     } catch (error) {
       handleErrors(error.message);
@@ -129,7 +131,7 @@ export default function Profile() {
 
   const disabledCode = () => !code || code.length > 6;
 
-  const disabledName = () => !name || name.length > 0;
+  const disabledName = () => !name || name.length < 0;
 
   const disabledPassword = () =>
     !currentPassword ||

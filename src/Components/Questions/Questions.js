@@ -5,6 +5,7 @@ import { Loading, Alert }  from '../../Components';
 import Queries from "../../Services/queries";
 import Mutations from "../../Services/mutations";
 import { AppContext} from '../../Contexts'; 
+import { ROUTES, TYPES } from "../../Constants";
 
 
 const Questions = () => {
@@ -14,7 +15,7 @@ const Questions = () => {
     const [votedOptionsList, setVoteOptionsdList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const { state } = useContext(AppContext);
+    const { state, dispatch } = useContext(AppContext);
     const { user } = state;
     console.log("USER in Questions.js state", state);  
 
@@ -135,7 +136,7 @@ const Questions = () => {
           });
         }
       };
-      const updateUserVotes = async (userVote) =>{   
+      const updateUserVotes = async (userVote) =>{        
         try{                
           let userVotes = [];
           if (user.votes) userVotes = JSON.parse(user.votes);
@@ -150,7 +151,7 @@ const Questions = () => {
           );
       
           console.log("Mutations.UpdateUserVotes result", u);
-          //const updatedBackendQuestions =  backendQuestions.map(obj => newA.find(o => o.id === obj.id) || obj);
+          dispatch({ type: TYPES.UPDATE_USER, payload: user });
          
         }catch(err){
           console.error("Mutations.UpdateUserVotes Error ", err);
@@ -193,7 +194,7 @@ const Questions = () => {
       return ( 
         <>
             {loading && <Loading />}
-            {( rootQuestions.length === 0 ) && <Alert type="warning" text="No questions retrieved. Start one!" link="/NewQuestion" />}
+            {( rootQuestions.length === 0 ) && <Alert type="warning" text="No questions retrieved. Start one!" link={ROUTES[state.lang].NEW_QUESTION} />}
             {votedList.length > 0 && (
                 <div className="container border border-0 p-0 d-flex flex-colum">
                   <span className="text-small">You helped {votedList.length} decision{votedList.length > 1 ? 's' :''} be made.</span>
