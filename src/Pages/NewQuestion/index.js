@@ -9,11 +9,13 @@ import { Alert, Title } from "../../Components";
 const NewQuestion = (props) => {
   const { state } = useContext(AppContext);
   const { user } = state;
-  const [email, setEmail] = useState("");
-  const [alert, setAlert] = useState();
+  const [ setEmail] = useState("");
+  const [ setName] = useState("");
+  const [ alert] = useState();
 
   useEffect(() => {
     user && setEmail(user?.email);
+    user && setName(user?.name);
   }, [user]);
 
 

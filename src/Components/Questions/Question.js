@@ -103,7 +103,7 @@ function Question({
       
       
         
-       <div key={question.id} className="container border border-1 p-1 d-flex  flex-column" >           
+       <div key={question.id} className="container border border-1 p-1" >           
         <div className="p-2 row align-items-start"> 
             <div className="col-2"> <Avatar size="42" name={question.userName} className=" img-profile rounded-circle mx-auto mb-0" alt="{question.userName}" /></div>
             <div className="col-8">
@@ -151,13 +151,12 @@ function Question({
                 id: Math.floor(Math.random() * 10000),
                 text: text,
                 parentId: replyId,
-                userId: "2",
-                username: "Luciana",
-                name: "Luciana Bruscino",
+                userId: user.id,              
+                userName: user.name,
                 createdAt: new Date().toISOString(),
                 voteEndAt: null,
                 sentiment: "Positive",
-                options:[],
+                options:user.options,
               })}
             />
           )}
@@ -184,7 +183,7 @@ function Question({
       </div>   )}
       { alreadyVotedForQuestionListBool && (       
        <div className="container  text-small lh-3">
-        <span className="p-2">You helped {question.name} <FaGrinHearts /></span>
+        <span className="p-2">You helped {question.userName} <FaGrinHearts /></span>
       </div>   )}
       </div>
       

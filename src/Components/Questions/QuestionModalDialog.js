@@ -15,7 +15,7 @@ function QuestionModalDialog(
   completeTodo,
   todos,
   addTodo,
-  userId,
+  user,
   hasCancelButton = true}
 ) {
 
@@ -61,7 +61,7 @@ function QuestionModalDialog(
       id: Math.floor(Math.random() * 10000),
       text: input,
       parentId: null,
-      userId: userId,
+      userId: user.id,
       createdAt: new Date().toISOString(),
       voteEndAt: addMinutes(new Date(), parseFloat(votePeriod)),
       sentiment: "",
@@ -76,9 +76,9 @@ function QuestionModalDialog(
   return (
     <>
       <div className="p-2 row align-items-start"> 
-            <div className="col-2 px-1 d-grid  "> <Avatar size="42" name="Luciana Bruscino" className=" img-profile rounded-circle mx-auto mb-0" alt="{Luciana Bruscino}" /></div>
+            <div className="col-2 px-1 d-grid  "> <Avatar size="42" name="{user.name}" className=" img-profile rounded-circle mx-auto mb-0" alt="{Luciana Bruscino}" /></div>
             <div className="col-10 d-grid  py-3">
-                <div className="text-small lh-1"><span>Luciana </span><span aria-hidden="true"> · </span> <span> 1/6/2023 at 1:53 pm </span></div>                                                                   
+                <div className="text-small lh-1"><span>{user.name} </span><span aria-hidden="true"> · </span> <span> 1/6/2023 at 1:53 pm </span></div>                                                                   
             </div>  
             <button type="button" className="btn my-2 btn-outline-secondary rounded-pill btn-ouline-secondary-no-hover" onClick={initModal}> 
                       Enter your question 

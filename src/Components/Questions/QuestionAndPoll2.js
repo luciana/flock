@@ -147,15 +147,14 @@ function QuestionAndPoll2({
 
       const handlePublishQuestion = e => {
         e.preventDefault();  
-        question.options = todos;
-        console.log("question from handlePublishQuestion", question);            
+        question.options = todos;                 
         addQuestion(question);
         alert('You question was added - good luck');       
       }
     return(
         <>
           {loading && <Loading />}
-           <div className="white-bg container border border-2 p-2 d-flex flex-column">
+           <div className="white-bg container border border-1 p-2 ">
               <QuestionModalDialog  
                   addPostOptionsFromQuestion={addPostOptionsFromQuestion}   
                   handlePublishQuestion={handlePublishQuestion}                 
@@ -163,7 +162,7 @@ function QuestionAndPoll2({
                   updateTodo={updateTodo}
                   removeTodo={removeTodo}                   
                   todos={todos}
-                  userId = {user.id}
+                  user = {user}
                 />
             </div>
         </>

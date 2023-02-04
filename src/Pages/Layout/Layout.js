@@ -60,9 +60,9 @@ export default function Layout() {
     <section className="App profile mx-auto max-w-screen-lg h-screen">
       {loading && <Loading />}
       <SideNav handleSignOut={handleSignOut} />
-      <div className="h-full -mt-12 pt-12">
+      <div className="">
         <Outlet context={{ loadUser, setLoading }} />
-      </div>
+      </div>     
     </section>
   );
 }

@@ -59,7 +59,7 @@ const Questions = () => {
         loadVotes();
         
                       
-      }, []);
+      }, [user]);
 
       const rootQuestions = backendQuestions.filter(
         (backendQuestion) => ((backendQuestion.parentID === null) )
@@ -145,13 +145,14 @@ const Questions = () => {
 
 
           console.log("Mutations.UpdateUserVotes inputs ", user.id, JSON.stringify(userVotes));
-          let u = await Mutations.UpdateUserVotes(
+          let userVotesUpdated = await Mutations.UpdateUserVotes(
             user.id,
             JSON.stringify(userVotes)
           );
       
-          console.log("Mutations.UpdateUserVotes result", u);
-          dispatch({ type: TYPES.UPDATE_USER, payload: user });
+          console.log("Mutations.UpdateUserVotes result", userVotesUpdated);
+         
+          dispatch({ type: TYPES.UPDATE_USER, payload: userVotesUpdated });
          
         }catch(err){
           console.error("Mutations.UpdateUserVotes Error ", err);
@@ -195,32 +196,35 @@ const Questions = () => {
         <>
             {loading && <Loading />}
             {( rootQuestions.length === 0 ) && <Alert type="warning" text="No questions retrieved. Start one!" link={ROUTES[state.lang].NEW_QUESTION} />}
+           
             {votedList.length > 0 && (
-                <div className="container border border-0 p-0 d-flex flex-colum">
-                  <span className="text-small">You helped {votedList.length} decision{votedList.length > 1 ? 's' :''} be made.</span>
-                </div>
-            )}
-        
-            <div id="all-questions" className=" container border border-0 p-0 d-flex flex-column">
-                {rootQuestions.map((rootQuestion) => (
-                    <Question 
-                        key={rootQuestion.id}
-                        question={rootQuestion}
-                        replies={getReplies(rootQuestion.id)}                        
-                        setActiveQuestion={setActiveQuestion}
-                        handleVote={handleVote}
-                        updateVotedList={updateVotedList}
-                        updateVotedOptionsList={updateVotedOptionsList}
-                        votedList={votedList}
-                        votedOptionsList={votedOptionsList}
-                        addQuestion={addQuestion}
-                        activeQuestion={activeQuestion}                       
-                        deleteQuestion={deleteQuestion}
-                        updateQuestion={updateQuestion}                        
-                        user={user}
-                    />
-                ))}
-            </div>
+                      <div className=" border border-0 p-0 ">
+                        <span className="text-small">You helped {votedList.length} decision{votedList.length > 1 ? 's' :''} be made.</span>
+                      </div>
+                  )}
+           
+            
+              <div id="all-questions" className=" border border-0 p-0 ">
+                  {rootQuestions.map((rootQuestion) => (
+                      <Question 
+                          key={rootQuestion.id}
+                          question={rootQuestion}
+                          replies={getReplies(rootQuestion.id)}                        
+                          setActiveQuestion={setActiveQuestion}
+                          handleVote={handleVote}
+                          updateVotedList={updateVotedList}
+                          updateVotedOptionsList={updateVotedOptionsList}
+                          votedList={votedList}
+                          votedOptionsList={votedOptionsList}
+                          addQuestion={addQuestion}
+                          activeQuestion={activeQuestion}                       
+                          deleteQuestion={deleteQuestion}
+                          updateQuestion={updateQuestion}                        
+                          user={user}
+                      />
+                  ))}
+              </div>             
+       
         </>
       );
 };
