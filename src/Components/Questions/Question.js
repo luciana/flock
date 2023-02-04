@@ -28,7 +28,7 @@ function Question({
   });
 
  if (!question) return;
-  // console.log("Question ", question);
+  console.log("Question ", question);
   // //console.log("User ", user.votes);
   // console.log("votedList", votedList);
 
@@ -88,7 +88,8 @@ function Question({
         "text": text,  
         "votes": item.votes, 
         }         
-      updateVotedList(questionOption);      
+      updateVotedList(questionOption);    
+      updateVotedOptionsList(id);
       handleVote(question, questionOption, userVote);
      
     } 
@@ -126,12 +127,8 @@ function Question({
             {question.text} 
         </div>
         <div className="p-2">
-          <Vote question={question} 
-                handleVote={handleVote}   
-                votedList={votedList}   
-                voteUp={voteUp}    
-                updateVotedList={updateVotedList}   
-                updateVotedOptionsList={updateVotedOptionsList}  
+          <Vote question={question}                                
+                voteUp={voteUp}                     
                 votedOptionsList={votedOptionsList}
                 alreadyVotedForQuestionList={alreadyVotedForQuestionList}
                 voteEnded={voteEnded} />    

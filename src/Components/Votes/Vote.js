@@ -1,40 +1,20 @@
 import React, {useState} from 'react';
 import { FaCircle, FaRegCircle } from 'react-icons/fa';
 
-const Vote = ({ question,
-             handleVote,             
-             updateVotedList,      
+const Vote = ({ question,              
              votedOptionsList,
-             voteUp,
-             updateVotedOptionsList,
+             voteUp,            
              alreadyVotedForQuestionList,
              voteEnded }) => {
 
     const items = JSON.parse(question.options);
     
-    const [counters, setCounters] = useState("");
-
     if (!items) return;
 
     let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
     const iVotedForIt = ( id ) =>  {    
       return votedOptionsList.includes(id)
     }
-
-    // const handleMe = () => {
-    //   setCounters(
-    //     counters[index]; // assign the object at the index to a variable
-    //     obj.value++; // increment the value in the object
-    //     state.counters.splice(index, 1); // remove the object from the array
-    //     return { counters: [...state.counters, obj] };
-    //   );
-
-    // }
-
-    // console.log("Vote.js votedList in Vote", votedList);
-    // console.log("Vote.js votedOptionsList in Vote", votedOptionsList);
-    // console.log("Vote.js alreadyVotedForQuestionList in Vote",alreadyVotedForQuestionList);
-
 
   return items.map((item, index) => (
    

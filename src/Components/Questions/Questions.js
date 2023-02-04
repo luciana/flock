@@ -7,9 +7,7 @@ import Mutations from "../../Services/mutations";
 import { AppContext} from '../../Contexts'; 
 
 
-const Questions = (
-  
-) => {
+const Questions = () => {
     const [backendQuestions, setBackendQuestions] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState(null);
     const [votedList, setVotedList] = useState([]);
@@ -96,9 +94,7 @@ const Questions = (
         if(! question.options) return; //TODO: alert
         let optionsInQuestion = JSON.parse(question.options);
         let optID = option.id;
-         
-       //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
-      
+       
     
         try{        
           if (optionsInQuestion && optionsInQuestion.length >0 ){
@@ -113,30 +109,22 @@ const Questions = (
             }
           }
 
-        console.log("Mutations.UpdateQuestionOptions inputs", question.id,JSON.stringify(optionsInQuestion));
           let q = await Mutations.UpdateQuestionOptions(
             question.id,
             JSON.stringify(optionsInQuestion)
           );
-          console.log("Mutations.UpdateQuestionOptions result", q);
-          updateVotedOptionsList(optID);
-         
+
+          const newA = [];
+          newA.push(q);          
+          const updatedBackendQuestions =  backendQuestions.map(obj => newA.find(o => o.id === obj.id) || obj);
+          console.log("Questions.js updatedBackendQuestions result", updatedBackendQuestions);        
+          setBackendQuestions(updatedBackendQuestions);
+          setActiveQuestion(null);             
         }catch(err){
           console.error("Mutations.UpdateQuestion error", err);
         } 
-
-        // console.log("updateQuestion triggered", QuestionService.updateQuestion(text, questionId));
-        // QuestionService.updateQuestion(text, questionId).then((data) => {
-        //     const updatedBackendQuestions = backendQuestions.map((backendQuestion) => {
-        //     if (backendQuestion.id === questionId) {
-        //       return { ...backendQuestion, body: text };
-        //     }
-        //     return backendQuestion;
-        //   });
-        //   setBackendQuestions(updatedBackendQuestions);
-        //   setActiveQuestion(null);
-        // });
       };
+
       const deleteQuestion = (questionId) => {
         if (window.confirm("Are you sure you want to remove question?")) {
             QuestionService.deleteQuestion.then(() => {
@@ -162,6 +150,7 @@ const Questions = (
           );
       
           console.log("Mutations.UpdateUserVotes result", u);
+          //const updatedBackendQuestions =  backendQuestions.map(obj => newA.find(o => o.id === obj.id) || obj);
          
         }catch(err){
           console.error("Mutations.UpdateUserVotes Error ", err);
