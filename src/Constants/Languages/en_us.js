@@ -80,7 +80,24 @@ const en_us_lang = {
       EmailSuccess: "Email changed successfully!",
       PasswordSuccess: "Password changed successfully!",
       Account: "Account",
+      ChangeTag: "Change Expert Tag",
     },
+    Tags: {
+      parent: "#parent",
+      designer: "#designer",
+      nutricionist: "#nutricionist",
+      technologist: "#technologist",
+      cook: "#cook",
+      mechanic: "#mechanic",
+      teacher: "#teacher",
+      fashion_designer: "#fashion_designer",
+      interion_designer: "#interion_designer",
+      lawyer:"#lawyer",
+      life_coach: "#life_coach",
+      financial_analyst: "#financial_analyst",
+      doctor: "#doctor",
+      nurse: "#nurse",
+    }
   };
   
   export default en_us_lang;

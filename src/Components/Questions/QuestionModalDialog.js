@@ -4,6 +4,7 @@ import { RiTimeLine, RiMagicLine }  from 'react-icons/ri';
 import Avatar from 'react-avatar';
 import Item from '../Items/Item';
 import ItemForm from '../Items/ItemForm';
+import { TAGS, LANGUAGES } from '../../Constants';
 
 function QuestionModalDialog(
   {
@@ -66,7 +67,7 @@ function QuestionModalDialog(
       voteEndAt: addMinutes(new Date(), parseFloat(votePeriod)),
       sentiment: "",
       options:null,
-      tag: expertTag
+      questionTag: expertTag
     });
 
     setShowOptionsModal(true);
@@ -76,7 +77,7 @@ function QuestionModalDialog(
   return (
     <>
       <div className="p-2 row align-items-start"> 
-            <div className="col-2 px-1 d-grid  "> <Avatar size="42" name="{user.name}" className=" img-profile rounded-circle mx-auto mb-0" alt="{Luciana Bruscino}" /></div>
+            <div className="col-2 px-1 d-grid  "> <Avatar size="42" name={user.name} className=" img-profile rounded-circle mx-auto mb-0" alt="{Luciana Bruscino}" /></div>
             <div className="col-10 d-grid  py-3">
                 <div className="text-small lh-1"><span>{user.name} </span><span aria-hidden="true"> · </span> <span> 1/6/2023 at 1:53 pm </span></div>                                                                   
             </div>  
@@ -137,16 +138,11 @@ function QuestionModalDialog(
                               value={expertTag}
                               onChange={handleChangeExpertTage} />
                                 <datalist id="expertDatalistTagOptions">
-                                  <option value="#nutricionist" />
-                                  <option value="#designer" />
-                                  <option value="#technologist" />
-                                  <option value="#cook" />
-                                  <option value="#mechanic" />
-                                  <option value="#teacher" />
-                                  <option value="#parents" />
-                                  <option value="#lawyer" />
-                                  <option value="#life_coach" />
-                                  <option value="#finance" />
+                                {TAGS.map((l) => (
+                                  <option key={l} value={l}>
+                                    {LANGUAGES[user.locale].Tags[l]}
+                                  </option>
+                                ))}                               
                                 </datalist>
 
                       </div>         

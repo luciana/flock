@@ -23,7 +23,7 @@ function QuestionAndPoll2({
         setLoading(true);
         const text = question.text;
         const parentID = question.parentId;
-        const questionTag = question.tag;
+        const questionTag = question.questionTag;
         const userID = question.userId;
         const voteEndAt = question.voteEndAt;
         const sentiment = question.sentiment;
@@ -45,22 +45,7 @@ function QuestionAndPoll2({
         );
         setQuestion(question);      
         console.log("Create Questions in db", q);   
-        navigate('/Main');  
-        
-        //question
-      //   {
-      //     "id": "7998615d-88dd-427a-a20f-1a2851d009b3",
-      //     "text": "my daughter love dolls.Should I buy American Doll or My Baby? #flocks American Doll, My Baby",
-      //     "userID": "57cd07d8-b898-4e5c-904a-458ab4e8d8b8",
-      //     "voteEndAt": "2023-01-30T01:13:29.953Z",
-      //     "sentiment": "",
-      //     "parentID": null,
-      //     "questionTag": "#parents",
-      //     "options": "[{\"votes\":0,\"id\":3942,\"text\":\"American Doll\",\"isComplete\":true},{\"votes\":0,\"id\":2604,\"text\":\"My Baby\",\"isComplete\":true}]",
-      //     "createdAt": "2023-01-29T17:13:34.243Z",
-      //     "updatedAt": "2023-01-29T17:13:34.243Z",
-      //     "createdBy": "4555cc5e-191a-4bf2-8a29-e63b2fde117e"
-      // }
+        navigate('/Main');        
  
       }catch(err){
         console.error("Error on Mutations.CreateQuestion ", err);

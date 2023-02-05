@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useContext } from "react";
 import { useOutletContext, useNavigate} from "react-router-dom";
-import { LANGUAGES, ROUTES } from "../../Constants";
+import { LANGUAGES, ROUTES, TAGS } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import Auth from "../../Services/auth";
 import Mutations from "../../Services/mutations";
@@ -19,6 +19,7 @@ export default function Profile() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
+  const [tag, setTag] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -126,12 +127,27 @@ export default function Profile() {
     setLoading(false);
   };
 
+  const handleUserTag = async () => {
+    loading();
+    try {    
+      console.log("handleUserTag");
+      await Mutations.UpdateUserTag({ id: user.id, userTag: tag });
+      loadUser({ force: true, email: user.email });
+      navigate(ROUTES[language].PROFILE);
+    } catch (error) {
+      setAlert({ type: "error", text: error.message });
+    }
+    setLoading(false);
+  };
+
   const disabledEmail = () =>
     !email || email === user.email || !isValidEmail(email);
 
   const disabledCode = () => !code || code.length > 6;
 
   const disabledName = () => !name || name.length < 0;
+
+  const disabledTag = () => tag === user.userTag;
 
   const disabledPassword = () =>
     !currentPassword ||
@@ -231,6 +247,27 @@ export default function Profile() {
     </Form>
   );
 
+
+  const renderChangeTag = () => (
+    <Form>
+      <div className="mb-4 w-full flex flex-col gap-4 justify-center">
+        <Select value={tag} handler={setTag}>
+            <option key="" value=""></option>
+          {TAGS.map((l) => (
+            <option key={l} value={l}>
+              {LANGUAGES[user.locale].Tags[l]}
+            </option>
+          ))}
+        </Select>
+        <Button
+          text={LANGUAGES[user.locale].Profile.ChangeTag}
+          disabled={disabledTag()}
+          handler={() => handleUserTag()}
+        />
+      </div>
+    </Form>
+  );
+
   const renderChangeLanguage = () => (
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
@@ -261,6 +298,7 @@ export default function Profile() {
       <div className="grid sm:grid-cols-3 gap-2">       
         {renderChangeEmail()}
         {renderChangeName()}
+        {renderChangeTag()}
         {renderChangePassword()}
         {renderChangeLanguage()}
       </div>

@@ -17,3 +17,19 @@ export const ROUTES = {
   "en-US": en_us_routes,
   "pt-BR": pt_br_routes,
 };
+
+
+export const TAGS = [
+  "parent",
+  "designer",
+  "nutricionist",
+  "technologist",
+  "cook",
+  "mechanic",
+  "teacher",
+  "fashion_designer",
+  "interion_designer",
+  "lawyer",
+  "life_coach",
+  "financial_analyst",
+]

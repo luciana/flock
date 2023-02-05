@@ -61,7 +61,8 @@ function Question({
     (vote) => vote && vote.questionId === question.id
   );
 
-  const expertNeeded = question.tag && question.tag !== "" && !voteEnded;
+  const expertNeeded = question.questionTag && question.questionTag !== "" && !voteEnded;
+  const expertNeededWithYourSkill = expertNeeded && user.userTag === question.questionTag;
   let alreadyVotedForQuestionListBool = alreadyVotedForQuestionList.length !== 0;
  
   const voteUp = (item) => {
@@ -177,10 +178,16 @@ function Question({
             ))}
           </div>
         )} */}
+         <div className=" border border-0 bg-light text-small lh-3">    
         { expertNeeded && (       
-       <div className="container border border-1 bg-light text-small lh-3">
-        <span className="p-2"><FaPhoneVolume /> Special call out for #<strong>{question.tag}</strong></span>
-      </div>   )}
+          <span className="p-2"><FaPhoneVolume /> Special call out for #<strong>{question.questionTag}</strong></span>
+        )}
+      { expertNeededWithYourSkill && (       
+        
+        <span className="p-2">· You have the skill to help!</span>
+        )}
+        </div> 
+      
       { alreadyVotedForQuestionListBool && (       
        <div className="container  text-small lh-3">
         <span className="p-2">You helped {question.userName} <FaGrinHearts /></span>

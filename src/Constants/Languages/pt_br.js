@@ -82,7 +82,24 @@ const pt_br_lang = {
       EmailSuccess: "Email alterado com sucesso!",
       PasswordSuccess: "Senha alterada com sucesso!",
       Account: "Conta",
+      ChangeTag: "Alterar Especialidade",
     },
+    Tags: {
+      parent: "#pais",
+      designer: "#designer",
+      nutricionist: "#nutricionista",
+      technologist: "#technologist",
+      cook: "#cozinheiro",
+      mechanic: "#mecanico",
+      teacher: "#proferssor",
+      fashion_designer: "#fashion_designer",
+      interion_designer: "#interion_designer",
+      lawyer:"#advogado",
+      life_coach: "#life_coach",
+      financial_analyst: "#financial_analyst",
+      doctor: "#medico",
+      nurse: "#enfermeiro",
+    }
   };
   
   export default pt_br_lang;
