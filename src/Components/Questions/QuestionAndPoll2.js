@@ -134,7 +134,7 @@ function QuestionAndPoll2({
         e.preventDefault();  
         question.options = todos;                 
         addQuestion(question);
-        alert('You question was added - good luck');       
+           
       }
     return(
         <>

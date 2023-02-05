@@ -20,6 +20,7 @@ export default function Profile() {
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
   const [tag, setTag] = useState("");
+  const [voteCounts, setVoteCounts] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -30,6 +31,8 @@ export default function Profile() {
   useEffect(() => {
     user && setEmail(user?.email) 
     user && setName(user?.name)
+    user && setTag(user?.userTag)
+    userVoteCount();
   }, [user]);
 
   
@@ -156,6 +159,14 @@ export default function Profile() {
 
   const disabledLanguage = () => language === user.locale;
 
+  const userVoteCount = () => {
+   
+    if (user.votes) {
+        setVoteCounts(JSON.parse(user.votes).length);
+    }
+   
+  }
+
   const renderEmail = () => (
     <>
       <Input
@@ -251,13 +262,13 @@ export default function Profile() {
   const renderChangeTag = () => (
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
-        <Select value={tag} handler={setTag}>
-            <option key="" value=""></option>
+        <Select value={tag} handler={setTag}>            
           {TAGS.map((l) => (
             <option key={l} value={l}>
               {LANGUAGES[user.locale].Tags[l]}
             </option>
           ))}
+          <option key="" value=""></option>
         </Select>
         <Button
           text={LANGUAGES[user.locale].Profile.ChangeTag}
@@ -295,8 +306,14 @@ export default function Profile() {
         back={ROUTES[user.locale].MAIN}
       />
       <Alert type={alert?.type} text={alert?.text} />
-      <div className="grid sm:grid-cols-3 gap-2">       
-        {renderChangeEmail()}
+      <h3 className="">{user.name}</h3>
+      <div className="">{user.email}</div>
+      <div className="">{user.userTag}</div>
+      <div className="text-small">Helped in {voteCounts } questions</div>
+
+      <hr className="m-3"></hr>  
+      <h4>Edit Profile</h4>
+      <div className="grid sm:grid-cols-3 gap-2">              
         {renderChangeName()}
         {renderChangeTag()}
         {renderChangePassword()}
