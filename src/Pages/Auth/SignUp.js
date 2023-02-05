@@ -26,9 +26,6 @@ export default function SignUp() {
     repeat === "" ||
     pwd !== repeat;
 
-  const appname = process.env.REACT_APP_TITLE;
-  console.log('app name', appname);
-
   return (
     <form className="form-control">
     <AuthTitle text={LANGUAGES[state.lang].Auth.SignUpTitle} />  
