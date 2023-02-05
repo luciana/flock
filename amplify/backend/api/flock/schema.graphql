@@ -22,7 +22,7 @@ type User @model @auth(rules: [
 type Question @model            
              @auth(rules: [
                   { allow: owner, ownerField: "userID", operations: [ read, create, update, delete]},
-                  { allow: private, operations: [read, create, update] }                  
+                  { allow: private, operations: [read, create, update, delete] }                  
                   ])
               {
   id: ID!  @primaryKey
