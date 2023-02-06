@@ -3,7 +3,7 @@ const Button = ({ text, disabled, handler }) => (
       type="button"
       onClick={handler}
       disabled={disabled}
-      className="btn btn-primary"
+      className="btn rounded-pill btn-ouline-primary-no-hover"
     >
       {text}
     </button>

@@ -3,7 +3,7 @@ import { LANGUAGES } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import './Badge.scss';
 
-
+//credit to: https://codepen.io/oliviale/pen/qpPByV
 
 const Badge = (count) => {
 

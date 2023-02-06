@@ -6,7 +6,7 @@ import { LANGUAGES, ROUTES, TAGS } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import Auth from "../../Services/auth";
 import Mutations from "../../Services/mutations";
-import { Alert, Button, Form, Input, Select, Title, Badge } from "../../Components";
+import { Alert, Button, Form, Input, Select, Title, Badge, Card } from "../../Components";
 import { isValidEmail } from "../../Helpers";
 
 export default function Profile() {
@@ -299,12 +299,9 @@ export default function Profile() {
   console.log("User from profile", user);
 
   return (
-   <div className="container">
-      <Title
-        text={LANGUAGES[user.locale].Profile.Profile}
-        back={ROUTES[user.locale].MAIN}
-      />
+   <div className="container">     
       <Alert type={alert?.type} text={alert?.text} />
+      <Card voteCounts={voteCounts} />
       <h3 className="">{user.name}</h3>
       <div className="">{user.email}</div>
       <div className=" border border-0 p-0 ">
@@ -313,12 +310,7 @@ export default function Profile() {
       <div className=" border border-0 p-0 ">
         {user.userTag.length > 0 ? LANGUAGES[user.locale].Profile.AreaOfExpertise + user.userTag  : "" }
       </div>    
-      <div>
-        <Badge count={user.userTag.length} />
-      </div>
-      <div className=" border border-0 p-0 ">
-        <span className="text-small">You helped {voteCounts} decision{voteCounts > 1 ? 's' :' no '} be made.</span>
-      </div>
+     
      
 
       <hr className="m-3"></hr>  
