@@ -44,6 +44,10 @@ const GetUser = async () => {
 
 const SignOut = async () => {
   await AmplifyAuth.signOut({ global: true });
+  // await AmplifyAuth.signOut()
+  // .then(data => console.log("signout data", data))
+  // .catch(err => console.log("signout error",err));
+
 };
 
 const ChangeEmail = async (email) => {

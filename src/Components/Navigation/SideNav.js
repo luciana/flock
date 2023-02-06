@@ -98,6 +98,9 @@ function SideNav({ handleSignOut }) {
                       <a onClick={() => handleSignOut()} href="/#" className="nav-link js-scroll-trigger">
                         {LANGUAGES[user.locale].Profile.SignOut}
                       </a>
+                      <button onClick={() => handleSignOut()} className="nav-link js-scroll-trigger">
+                        {LANGUAGES[user.locale].Profile.SignOut}
+                      </button>
                       </li>                
                 </ul>
             </div>

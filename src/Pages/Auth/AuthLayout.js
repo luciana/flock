@@ -173,12 +173,13 @@ export default function AuthLayout() {
         setLoading(false);
         navigate(ROUTES[state.lang].MAIN);
       } catch (error) {
-        console.error("AuthLayout.js useeffect loadUser error", error);
-        setAlert({
-          type: "error",
-          text: LANGUAGES[state.lang].CommonError.SignUpAuthentication,
-        });
-        navigate(ROUTES[state.lang].SIGN_IN);
+
+        //console.error("AuthLayout.js useeffect loadUser error", error);
+        // setAlert({
+        //   type: "error",
+        //   text: LANGUAGES[state.lang].CommonError.SignUpAuthentication,
+        // });
+        // navigate(ROUTES[state.lang].SIGN_IN);
         setLoading(false);
       }
     };
