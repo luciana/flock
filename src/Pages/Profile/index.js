@@ -30,8 +30,8 @@ export default function Profile() {
 
   useEffect(() => {
     user && setEmail(user?.email) 
-    user && setName(user?.name)
-    user && setTag(user?.userTag)
+    user && setName(user?.name)   
+    user && setTag(user?.userTag === null ? "" : user.userTag)
     userVoteCount();
   }, [user]);
 
@@ -268,7 +268,6 @@ export default function Profile() {
               {LANGUAGES[user.locale].Tags[l]}
             </option>
           ))}
-          <option key="" value=""></option>
         </Select>
         <Button
           text={LANGUAGES[user.locale].Profile.ChangeTag}

@@ -1,6 +1,7 @@
 import { Auth as AmplifyAuth } from "aws-amplify";
 
 const SignUp = async (email, password, name, locale) => {
+  console.log("Auth Signup - about to call Amplify signup with ", email, locale, name);
   await AmplifyAuth.signUp({
     username: email,
     password,

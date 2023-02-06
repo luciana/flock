@@ -33,6 +33,7 @@ const en_us_lang = {
       RedefinePassword:
         "Unable to redefine password, email, code or new password are wrong!",
       SignUp: "Unable to Register. Email already exists or Password are wrong!",
+      SignUpAuthentication: "The user is not authenticated",
       ConfirmSignUp: "Unable to confirm registration, email or code are wrong!",
       CodeError: "Invalid verification code provided, please try again.",
       Email: "An account with the given email already exists.",

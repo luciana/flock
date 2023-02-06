@@ -34,6 +34,7 @@ const pt_br_lang = {
         "Não foi possível redefinir a senha, e-mail, código ou nova senha estão errados!",
       SignUp:
         "Não foi possível registrar. O e-mail já existe ou a senha está errada!",
+      SignUpAuthentication: "Conta inda nao autenticada.",
       ConfirmSignUp:
         "Não foi possível confirmar o registro, e-mail ou código estão errados!",
       CodeError: "Código de verificação inválido. Tente novamente.",

@@ -113,7 +113,7 @@ export default function AuthLayout() {
       stopLoading();
       setAlert({
         type: "error",
-        text: LANGUAGES[state.lang].CommonError.SignUp,
+        text: err, //LANGUAGES[state.lang].CommonError.SignUp,
       });
     }
   };
@@ -171,8 +171,14 @@ export default function AuthLayout() {
       try {
         await Auth.GetUser();
         setLoading(false);
-       // navigate(ROUTES[state.lang].MAIN);
+        navigate(ROUTES[state.lang].MAIN);
       } catch (error) {
+        console.error("AuthLayout.js useeffect loadUser error", error);
+        setAlert({
+          type: "error",
+          text: LANGUAGES[state.lang].CommonError.SignUpAuthentication,
+        });
+        navigate(ROUTES[state.lang].SIGN_IN);
         setLoading(false);
       }
     };
@@ -180,7 +186,7 @@ export default function AuthLayout() {
     loadUser();
   }, [navigate, state.lang]);
 
-  console.log("AuthLayout.js state context", state);
+ 
 
   return (
     <div className="App">      
