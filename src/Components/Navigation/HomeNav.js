@@ -61,7 +61,7 @@ const HomeNav = () => {
                   <NavLink to={tab.route} className={(navData) => (navData.isActive ? "nav-link bottom-nav-link active-style" : 'nav-link bottom-nav-link none')}>
                     <div className="row d-flex  flex-column justify-content-center align-items-center">
                       <FontAwesomeIcon size="lg" icon={tab.icon} className="bg-company-white"/>
-                      <div className="bottom-tab-label bg-company-white">{tab.label}</div>
+                      <div className="bottom-tab-label bg-company-white d-flex flex-column align-items-center">{tab.label}</div>
                     </div>
                   </NavLink>
                 </NavItem>
