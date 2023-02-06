@@ -11,3 +11,4 @@ export { default as RememberMe } from "./RememberMe";
 export { default as SideNav } from "./Navigation/SideNav";
 export { default as HomeNav } from "./Navigation/HomeNav";
 export { default as Flags } from "./Flags";
+export { default as Badge } from "./Votes/Badge";

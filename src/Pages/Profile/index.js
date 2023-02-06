@@ -6,7 +6,7 @@ import { LANGUAGES, ROUTES, TAGS } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import Auth from "../../Services/auth";
 import Mutations from "../../Services/mutations";
-import { Alert, Button, Form, Input, Select, Title } from "../../Components";
+import { Alert, Button, Form, Input, Select, Title, Badge } from "../../Components";
 import { isValidEmail } from "../../Helpers";
 
 export default function Profile() {
@@ -313,6 +313,9 @@ export default function Profile() {
       <div className=" border border-0 p-0 ">
         {user.userTag.length > 0 ? LANGUAGES[user.locale].Profile.AreaOfExpertise + user.userTag  : "" }
       </div>    
+      <div>
+        <Badge count={user.userTag.length} />
+      </div>
       <div className=" border border-0 p-0 ">
         <span className="text-small">You helped {voteCounts} decision{voteCounts > 1 ? 's' :' no '} be made.</span>
       </div>

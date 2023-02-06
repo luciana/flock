@@ -16,12 +16,12 @@ function Home() {
         <HomeNav />
         <Header></Header>          
         <section className="App-header content-section  text-white text-center" id="services">
-            <div className="container px-4 px-lg-5">
+            <div className="container px-2 px-lg-2">
                 <div className="content-section-heading">
                     <h3 className="text-secondary mb-0">our offer</h3>
                     <h2 className="mb-5">How does it work?</h2>
                 </div>
-                <div className="row gx-4 gx-lg-5">
+                <div className="row gx-4 gx-lg-4">
                     <div className="col-lg-3 col-md-6 mb-5 mb-lg-0">
                         <span className="service-icon rounded-circle mx-auto mb-3"><i className="icon-screen-smartphone"></i></span>
                         <h4><strong>Post a Question</strong></h4>
@@ -53,7 +53,7 @@ function Home() {
                     <h3 className="text-secondary mb-0">earn badges</h3>
                     <h2 className="mb-5">You deserve it</h2>
                 </div>
-                <Badge id={null}/>
+                <Badge count={null}/>
             </div>
         </section>
         <Footer></Footer>

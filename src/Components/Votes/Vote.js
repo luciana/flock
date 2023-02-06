@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { FaCircle, FaRegCircle } from 'react-icons/fa';
 
 const Vote = ({ question,              

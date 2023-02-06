@@ -9,74 +9,77 @@ const Badge = (count) => {
 
     const { state } = useContext(AppContext);
     const { user } = state;
+    let lang = "en-US";
+    if (user) lang= user.locale;
+  
     const badges = [{
         id: 1,
         color: "badge-earned yellow",
         icon: "fa fa-bolt",
-        label: LANGUAGES[user.locale].Badges.Initiator
+        label: LANGUAGES[lang].Badges.Initiator
       },{
         id: 2,
         color: "badge-earned orange",
         icon: "fa fa-shield",
-        label: LANGUAGES[user.locale].Badges.Support
+        label: LANGUAGES[lang].Badges.Support
       },{
         id: 3,
         color: "badge-earned pink",
         icon: "fa fa-bicycle",
-        label: LANGUAGES[user.locale].Badges.Jungler
+        label: LANGUAGES[lang].Badges.Jungler
       },
       {
         id: 4,
         color: "badge-earned red",
         icon: "fa fa-shield",
-        label: LANGUAGES[user.locale].Badges.Jungler
+        label: LANGUAGES[lang].Badges.Jungler
       },{
         id: 5,
         color: "badge-earned blue-dark",
         icon: "fa fa-rocket",
-        label: LANGUAGES[user.locale].Badges.Jungler
+        label: LANGUAGES[lang].Badges.Jungler
       },{
         id: 5,
         color: "badge-earned blue",
         icon: "fa fa-users",
-        label: LANGUAGES[user.locale].Badges.Community
+        label: LANGUAGES[lang].Badges.Community
       },
       {
         id: 6,
         color: "badge-earned green",
         icon: "fa fa-tree",
-        label: LANGUAGES[user.locale].Badges.Solid
+        label: LANGUAGES[lang].Badges.Solid
       },{
         id: 7,
         color: "badge-earned green-dark",
         icon: "fa fa-user",
-        label: LANGUAGES[user.locale].Badges.Jungler
+        label: LANGUAGES[lang].Badges.Jungler
       },{
         id: 8,
         color: "badge-earned purple",
         icon: "fa fa-anchor",
-        label: LANGUAGES[user.locale].Badges.Jungler
+        label: LANGUAGES[lang].Badges.Jungler
       },{
         id: 9,
         color: "badge-earned teal",
         icon: "fa fa-user fa-street-view",
-        label: LANGUAGES[user.locale].Badges.Solid
+        label: LANGUAGES[lang].Badges.Solid
       },
       {
         id: 10,
         color: "badge-earned silver",
         icon: "fa fa-battery-full",
-        label: LANGUAGES[user.locale].Badges.Charged
+        label: LANGUAGES[lang].Badges.Charged
       },{
         id: 11,
         color: "badge-earned gold",
         icon: "fa fa-magic",
-        label: LANGUAGES[user.locale].Badges.Jungler
+        label: LANGUAGES[lang].Badges.Jungler
       },{
         id: 12,
         color: "badge-earned silver-dark",
         icon: "fa fa-award",
-        label: LANGUAGES[user.locale].Badges.Award
+        label: LANGUAGES[lang].Badges.Award
       }
       ];
     
@@ -95,10 +98,15 @@ const Badge = (count) => {
         if(count > 950 ) return 12;
     }
 
-    let selectBadge = badges;    
-    if (!count){
-        const id = translateToBadgeId(count);
-        selectBadge = badges.filter((l) => l.id === id)
+    let selectBadge = badges;  
+    console.log("badge count", count);
+    if (count){
+        const userCount = count.count;  
+        if (userCount){
+        const id = translateToBadgeId(userCount);
+            console.log("badge id", id);
+            selectBadge = badges.filter((l) => l.id === id)
+        }
     }
     return (        
         <div className="main-badge-wrapper">

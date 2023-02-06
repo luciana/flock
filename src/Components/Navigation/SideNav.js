@@ -3,7 +3,7 @@ import Avatar from 'react-avatar';
 import logo from'../../Assets/Images/logos/Flock-App-logo-black-small.png';
 import { LANGUAGES, ROUTES } from "../../Constants";
 import { AppContext } from "../../Contexts";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { Nav, NavItem} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,7 @@ import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 function SideNav({ handleSignOut }) {
     const { state } = useContext(AppContext);
     const { user } = state;
+    const navigate = useNavigate();
     const tabs = [{
         route: ROUTES[user.locale].MAIN,
         icon: faHome,
@@ -77,7 +78,7 @@ function SideNav({ handleSignOut }) {
       </nav>
         {/* Side Tab Navigator*/}
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">       
-            <a className="navbar-brand js-scroll-trigger" href="#page-top">
+            <a className="navbar-brand js-scroll-trigger">
                 <span className="d-block d-lg-none">{process.env.REACT_APP_TITLE}</span>
                 <span className="d-none d-lg-block text-wrap">    
                     <p><img src={logo} className="img-fluid" alt={process.env.REACT_APP_TITLE} /> </p>
@@ -91,9 +92,9 @@ function SideNav({ handleSignOut }) {
             </button>
             <div className="collapse navbar-collapse" id="navbarResponsive">
                 <ul className="navbar-nav">                                                                     
-                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href={ROUTES[user.locale].MAIN}>{LANGUAGES[user.locale].Questions.Questions}</a></li>     
-                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href={ROUTES[user.locale].NEW_QUESTION}>{LANGUAGES[user.locale].Questions.NewQuestion}</a></li>  
-                    <li className="nav-item"><a className="nav-link js-scroll-trigger" href={ROUTES[user.locale].PROFILE}>{LANGUAGES[user.locale].Profile.Profile}</a></li>  
+                    <li className="nav-item"><button className="btn nav-link js-scroll-trigger" onClick={() => navigate(ROUTES[user.locale].MAIN)}>{LANGUAGES[user.locale].Questions.Questions}</button></li>     
+                    <li className="nav-item"><button className="btn nav-link js-scroll-trigger" onClick={() => navigate(ROUTES[user.locale].NEW_QUESTION)}>{LANGUAGES[user.locale].Questions.NewQuestion}</button></li>  
+                    <li className="nav-item"><button className="btn nav-link js-scroll-trigger" onClick={() => navigate(ROUTES[user.locale].PROFILE)}>{LANGUAGES[user.locale].Profile.Profile}</button></li>  
                     <hr />
                     <li className="nav-item">                     
                      
