@@ -23,6 +23,15 @@ const en_us_lang = {
       "en-US": "English",
       "pt-BR": "Portuguese",
     },
+    Badges: {
+      Initiator: "Initiator",
+      Support: "Support",
+      Jungler: "Jungler",
+      Community: "Community",
+      Solid:"Solid",
+      Charged: "Charged",
+      Award: "Award"
+    },
     NotFound: {
       Sorry: "Sorry",
       PageNotFound: "Page Not Found",
@@ -82,6 +91,8 @@ const en_us_lang = {
       PasswordSuccess: "Password changed successfully!",
       Account: "Account",
       ChangeTag: "Change Expert Tag",
+      AreaOfExpertise: "Area of expertise #",
+      LanguagePreference: "Language preference",
     },
     Tags: {
       parent: "#parent",

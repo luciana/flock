@@ -307,10 +307,19 @@ export default function Profile() {
       <Alert type={alert?.type} text={alert?.text} />
       <h3 className="">{user.name}</h3>
       <div className="">{user.email}</div>
-      <div className="">{user.userTag}</div>
-      <div className="text-small">Helped in {voteCounts } questions</div>
+      <div className=" border border-0 p-0 ">
+        {LANGUAGES[user.locale].Profile.LanguagePreference + " : " + LANGUAGES[user.locale].Languages[user.locale]  }
+      </div>
+      <div className=" border border-0 p-0 ">
+        {user.userTag.length > 0 ? LANGUAGES[user.locale].Profile.AreaOfExpertise + user.userTag  : "" }
+      </div>    
+      <div className=" border border-0 p-0 ">
+        <span className="text-small">You helped {voteCounts} decision{voteCounts > 1 ? 's' :' no '} be made.</span>
+      </div>
+     
 
       <hr className="m-3"></hr>  
+
       <h4>Edit Profile</h4>
       <div className="grid sm:grid-cols-3 gap-2">              
         {renderChangeName()}

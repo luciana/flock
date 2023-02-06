@@ -195,14 +195,7 @@ const Questions = () => {
       return ( 
         <>
             {loading && <Loading />}
-            {( rootQuestions.length === 0 ) && <Alert type="warning" text="No questions retrieved. Start one!" link={ROUTES[state.lang].NEW_QUESTION} />}
-           
-            {votedList.length > 0 && (
-                      <div className=" border border-0 p-0 ">
-                        <span className="text-small">You helped {votedList.length} decision{votedList.length > 1 ? 's' :''} be made.</span>
-                      </div>
-                  )}
-           
+            {( rootQuestions.length === 0 ) && <Alert type="warning" text="No questions retrieved. Start one!" link={ROUTES[state.lang].NEW_QUESTION} />}          
             
               <div id="all-questions" className=" border border-0 p-0 ">
                   {rootQuestions.map((rootQuestion) => (

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Avatar from 'react-avatar';
 import logo from'../../Assets/Images/logos/Flock-App-logo-black-small.png';
 import { LANGUAGES, ROUTES } from "../../Constants";
 import { AppContext } from "../../Contexts";
-import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Nav, NavItem} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useContext } from "react";
 import { AppContext} from '../../Contexts';
 import {HomeNav} from '../../Components';
+import Badge from '../../Components/Votes/Badge';
 
 function Home() {
     const { state } = useContext(AppContext);
@@ -13,7 +14,7 @@ function Home() {
   return (
     <div className="App">
         <HomeNav />
-        <Header></Header>           
+        <Header></Header>          
         <section className="App-header content-section  text-white text-center" id="services">
             <div className="container px-4 px-lg-5">
                 <div className="content-section-heading">
@@ -44,6 +45,15 @@ function Home() {
                         <p className="text-faded mb-0">You let us know how it turned out.</p>
                     </div>
                 </div>
+            </div>
+        </section>
+        <section className="App-header content-section  text-white text-center" id="badges">
+            <div className="container px-2 px-lg-2">
+                <div className="content-section-heading">
+                    <h3 className="text-secondary mb-0">earn badges</h3>
+                    <h2 className="mb-5">You deserve it</h2>
+                </div>
+                <Badge id={null}/>
             </div>
         </section>
         <Footer></Footer>

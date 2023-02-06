@@ -23,6 +23,15 @@ const pt_br_lang = {
       "en-US": "Inglês",
       "pt-BR": "Português",
     },
+    Badges: {
+      Initiator: "Iniciador",
+      Support: "Support",
+      Jungler: "Jungler",
+      Community: "Communidade",
+      Solid:"Solido",
+      Charged: "Charged",
+      Award: "Award"
+    },
     NotFound: {
       Sorry: "Desculpe",
       PageNotFound: "Página Não Encontrada",
@@ -84,6 +93,8 @@ const pt_br_lang = {
       PasswordSuccess: "Senha alterada com sucesso!",
       Account: "Conta",
       ChangeTag: "Alterar Especialidade",
+      AreaOfExpertise: "Especialidade em #",
+      LanguagePreference: "Idioma de preferencia",
     },
     Tags: {
       parent: "#pais",
