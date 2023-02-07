@@ -126,14 +126,32 @@ const Questions = () => {
         } 
       };
 
-      const deleteQuestion = (questionId) => {
+      const deleteQuestion = async (id) => {
         if (window.confirm("Are you sure you want to remove question?")) {
-            QuestionService.deleteQuestion.then(() => {
-            const updatedBackendQuestions = backendQuestions.filter(
-              (backendQuestion) => backendQuestion.id !== questionId
+          try{
+        
+            console.log("Questions.js Delete Question input ", id);
+            setLoading(true);  
+            let deletedQuestion = await Mutations.DeleteQuestion(
+              id             
             );
+
+            const updatedBackendQuestions = backendQuestions.filter(
+                  (backendQuestion) => backendQuestion.id !== id
+                );
             setBackendQuestions(updatedBackendQuestions);
-          });
+            setLoading(false);  
+
+          } catch (err){
+            setLoading(false); 
+            console.error("Error on deleteQuestion ", err);
+          }
+          //   QuestionService.deleteQuestion.then(() => {
+          //   const updatedBackendQuestions = backendQuestions.filter(
+          //     (backendQuestion) => backendQuestion.id !== questionId
+          //   );
+          //   setBackendQuestions(updatedBackendQuestions);
+          // });
         }
       };
       const updateUserVotes = async (userVote) =>{        

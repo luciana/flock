@@ -85,10 +85,23 @@ const CreateQuestion = async (
 
 }
 
+const DeleteQuestion = async ( id ) => {
+  console.log("Service Mudation to Delete Question input ", id);
+  const {
+    data: { deleteQuestion },
+  } = await API.graphql(
+    graphqlOperation(mutations.deleteQuestion, {
+      input: { id },
+    })
+  );
+  return deleteQuestion;
+};
+
 const Mutations = {
   CreateUser,
   UpdateUser,
   CreateQuestion,
+  DeleteQuestion,
   UpdateQuestionOptions,
   UpdateUserVotes,
   UpdateUserTag,
