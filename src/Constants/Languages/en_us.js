@@ -10,7 +10,10 @@ const en_us_lang = {
       Questions: "Questions",
       NewQuestion: "New Question",
       New: "New",
-      NewQuestionTitle: "Need help? Ask a question!"
+      NewQuestionTitle: "Need help? Ask a question!",
+      EnterNewQuestion: "Enter Your Question",
+      Next: "Next",
+      Publish: "Publish Question",
     },
     PasswordRules: {
       Chars: "Must have at least 8 chars",

@@ -5,6 +5,7 @@ import Avatar from 'react-avatar';
 import Item from '../Items/Item';
 import ItemForm from '../Items/ItemForm';
 import { TAGS, LANGUAGES } from '../../Constants';
+import { Button } from './../../Components';
 
 function QuestionModalDialog(
   {
@@ -23,7 +24,7 @@ function QuestionModalDialog(
  
   const [showQuestionModal, setShowQuestionModal] = useState(false);
   const [showOptionsModal, setShowOptionsModal] = useState(false);
-  const [votePeriod, setVotePeriod] = useState(10);
+  const [votePeriod, setVotePeriod] = useState(480);
   const [input, setInput] = useState("");
   const [expertTag, setExpertTag] = useState("");
   const inputRef = useRef(null);
@@ -31,10 +32,6 @@ function QuestionModalDialog(
   const initModal = () => {
     return setShowQuestionModal(!false)
   }  
-
-  // useEffect(() => {
-  //   inputRef.current.focus();
-  // });
 
   console.log('todos in question modal dialog', todos);
   const handleChange = e => {
@@ -81,9 +78,10 @@ function QuestionModalDialog(
             <div className="col-10 d-grid  py-3">
                 <div className="text-small lh-1"><span>{user.name} </span><span aria-hidden="true"> · </span> <span> 1/6/2023 at 1:53 pm </span></div>                                                                   
             </div>  
-            <button type="button" className="btn my-2 btn-outline-secondary rounded-pill btn-ouline-secondary-no-hover" onClick={initModal}> 
-                      Enter your question 
-            </button>    
+            <Button handler={initModal}
+                    text={LANGUAGES[user.locale].Questions.EnterNewQuestion}
+                    disabled={false} /> 
+                      
       </div>
 
       <div>
@@ -159,15 +157,17 @@ function QuestionModalDialog(
                   {hasCancelButton && (
                     <button
                       type="button"
-                      className="btn btn-md btn-dark"
+                      className="btn btn-outline-dark rounded-pill"
                       onClick={()=> {setShowQuestionModal(false)}}
                     >
                       Discard
                     </button>                    
                   )}         
-                  <button onClick={onSubmit} disabled={isTextareaEmpty} className='btn-md btn btn-primary my-3'>
-                    Next
-                </button>      
+                  <Button handler={onSubmit} 
+                  disabled={isTextareaEmpty} 
+                   text={LANGUAGES[user.locale].Questions.Next} />
+                  
+                          
               </Modal.Footer>
         </Modal>
         </form>   
@@ -186,9 +186,11 @@ function QuestionModalDialog(
                   <ItemForm onSubmit={addTodo} />
               </Modal.Body>
               <Modal.Footer>                           
-                <button onClick={handlePublishQuestion} className='btn btn-primary btn-lg my-3'>
-                  Publish Question & Poll
-                 </button>
+               
+
+                 <Button handler={handlePublishQuestion} 
+                  disabled={false} 
+                   text={LANGUAGES[user.locale].Questions.Publish} />
               </Modal.Footer>
         </Modal>
          </div>

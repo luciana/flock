@@ -13,7 +13,7 @@ export default function Profile() {
   const { state } = useContext(AppContext);
   const { user } = state;
   const navigate = useNavigate();
-  const { loadUser, setLoading } = useOutletContext();
+  const { loadUser, setLoading, handleSignOut } = useOutletContext();
   const [alert, setAlert] = useState();
   const [showCode, setShowCode] = useState(false);
   const [email, setEmail] = useState("");
@@ -184,7 +184,12 @@ export default function Profile() {
   );
 
   const renderChangeName = () => (
-    <>
+    
+     <div class="card">
+    <div class="card-header">
+      Change Your Profile Name
+    </div>
+     <div class="card-body"> 
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
       <Input
@@ -200,7 +205,8 @@ export default function Profile() {
       />
     </div>
     </Form>
-    </>
+    </div>
+    </div>
   );
 
   const renderCode = () => (
@@ -228,6 +234,12 @@ export default function Profile() {
   );
 
   const renderChangePassword = () => (
+
+  <div class="card">
+    <div class="card-header">
+      Change Your Password
+    </div>
+     <div class="card-body">  
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
         <Input
@@ -256,6 +268,8 @@ export default function Profile() {
         />
       </div>
     </Form>
+    </div>
+</div>
   );
 
 
@@ -301,7 +315,8 @@ export default function Profile() {
   return (
    <div className="container">     
       <Alert type={alert?.type} text={alert?.text} />
-      <Card voteCounts={voteCounts}  />
+      <Card voteCounts={voteCounts} 
+          handleSignOut={handleSignOut} />
      
       <hr className="m-3"></hr>  
 

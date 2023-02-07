@@ -81,16 +81,18 @@ const QuestionForm2 = ({
             </div>
           </div>
 
-          <button onClick={onSubmit} disabled={isTextareaEmpty} className='btn-md btn btn-success my-3'>
-           {submitLabel}
-          </button>
+          <Button onClick={onSubmit} 
+              disabled={isTextareaEmpty} 
+              text=  {submitLabel}
+              />
+             
           {hasCancelButton && (
             <button
               type="button"
-              className="btn btn-md btn-dark"
+              className="btn btn-outline-dark rounded-pill"
               onClick={handleCancel}
             >
-              Cancel
+              Discard
             </button>
           )}
     </form>

@@ -61,7 +61,7 @@ export default function Layout() {
       {loading && <Loading />}
       <SideNav handleSignOut={handleSignOut} />
       <div className="">
-        <Outlet context={{ loadUser, setLoading }} />
+        <Outlet context={{ loadUser, setLoading, handleSignOut }} />
       </div>     
     </section>
   );

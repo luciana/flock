@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Vote from '../Votes/Vote';
-import { FaCircleNotch , FaCircle, FaTrashAlt, FaGrinHearts, FaPhoneVolume} from 'react-icons/fa';
+import { FaCircleNotch , FaSyncAlt, FaCircle, FaTrashAlt, FaGrinHearts, FaPhoneVolume} from 'react-icons/fa';
 import { Tooltip } from 'bootstrap';
 import Avatar from 'react-avatar';
 import ReplyModalDialog from './ReplyModalDialog';
@@ -47,11 +47,12 @@ function Question({
 }
 
   const isAReply = question.parentId != null;
-  const canDelete = user.id === question.userId  && !isAReply;
-  const canReply = user.id === question.userId && !isAReply && replies.length === 0;
+  const canDelete = user.id === question.userID  && !isAReply; 
+  const canReply = user.id === question.userID && !isAReply && replies.length === 0;
   const createdAt = formatDateAndTime(question.createdAt);
   const replyId = parentId ? parentId : question.id;
   const voteEnded = new Date() - new Date(question.voteEndAt) > 1;
+  const canRepost = user.id === question.userID  && voteEnded; 
   const isReplying =
     activeQuestion &&
     activeQuestion.id === question.id &&
@@ -121,6 +122,10 @@ function Question({
               {canDelete && (
                 <button className="btn btn-sm  mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Question" onClick={()=> deleteQuestion(question.id)}>
                   <FaTrashAlt alt="Delete question" /></button>
+              )}
+              {canRepost && (
+                <button className="btn btn-sm  mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Repost Question" onClick={()=> alert("this will repost the question and reopen the vote, but functionality not done yet. Is this a good idea?")}>
+                  <FaSyncAlt alt="Repost question" /></button>
               )}
             </div>
         </div>      

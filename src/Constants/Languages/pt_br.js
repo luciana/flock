@@ -11,6 +11,9 @@ const pt_br_lang = {
       NewQuestion: "Nova Pergunta",
       New: "Nova",
       NewQuestionTitle: "Precisa de ajuda? Faca uma pergunta",
+      EnterNewQuestion: "Insira sua Nova Pergunta",
+      Next: "Proxima",
+      Publish: "Postar Pergunta",
     },
     PasswordRules: {
       Chars: "Pelo menos 8 caracteres",
