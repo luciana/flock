@@ -6,7 +6,7 @@ import { LANGUAGES, ROUTES, TAGS } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import Auth from "../../Services/auth";
 import Mutations from "../../Services/mutations";
-import { Alert, Button, Form, Input, Select, Title, Badge, Card } from "../../Components";
+import { Alert, Button, Form, Input, Select, Title, Card } from "../../Components";
 import { isValidEmail } from "../../Helpers";
 
 export default function Profile() {
@@ -301,21 +301,11 @@ export default function Profile() {
   return (
    <div className="container">     
       <Alert type={alert?.type} text={alert?.text} />
-      <Card voteCounts={voteCounts} />
-      <h3 className="">{user.name}</h3>
-      <div className="">{user.email}</div>
-      <div className=" border border-0 p-0 ">
-        {LANGUAGES[user.locale].Profile.LanguagePreference + " : " + LANGUAGES[user.locale].Languages[user.locale]  }
-      </div>
-      <div className=" border border-0 p-0 ">
-        {user.userTag.length > 0 ? LANGUAGES[user.locale].Profile.AreaOfExpertise + user.userTag  : "" }
-      </div>    
+      <Card voteCounts={voteCounts}  />
      
-     
-
       <hr className="m-3"></hr>  
 
-      <h4>Edit Profile</h4>
+      <h4 id="profile_edit">Edit Profile</h4>
       <div className="grid sm:grid-cols-3 gap-2">              
         {renderChangeName()}
         {renderChangeTag()}

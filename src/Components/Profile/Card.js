@@ -1,25 +1,26 @@
-import { faArrowUpFromWaterPump } from "@fortawesome/free-solid-svg-icons";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { useNavigate} from "react-router-dom";
 import { Button, Badge } from '..';
 import { LANGUAGES } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import './Card.css';
 
-const Card = (voteCounts) => {
+const Card = ({voteCounts}) => {
+
   const { state } = useContext(AppContext);
   const { user } = state;
+  console.log("Profile Card user", user);
   const navigate = useNavigate();
   return (
 
-
+    
 <div className="container mt-4 mb-4 p-3 d-flex justify-content-center"> 
   <div className="card p-4"> 
     <div className=" image d-flex flex-column justify-content-center align-items-center"> 
     
-        <Badge count={user.userTag.length} />
+    <Badge count={user.userTag.length} />
    
-    <span className="name mt-3">{user.name}</span> 
+    <span className="profile-name mt-3">{user.name}</span> 
     <span className="idd">{user.email}</span>    
     {user.userTag.length > 0 && (
         <span className="idd">
@@ -42,12 +43,12 @@ const Card = (voteCounts) => {
           </div>)
       }
     <div className=" d-flex mt-2"> 
-        <Button text="Edit Profile"
+    <Button text="Edit Profile"
                 disabled={true}
-                handler={navigate("/profile?edit")}
+                handler={()=>navigate("/#profile_edit")}
                  />
     </div>    
-    <div className=" px-2 rounded mt-4 date "> 
+    <div className=" px-2  mt-4  "> 
         <span className="join">Joined {user.createdAt}</span> 
     </div> 
   </div> 
