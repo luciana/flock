@@ -47,7 +47,6 @@ export default function Layout() {
         });
       } catch (error) {
         console.error("Layout.js Main error in isUserLoggedIn", error);
-        //alert("Error loading user", error);
         navigate(ROUTES[state.lang].SIGN_IN);
       }
     };
@@ -62,7 +61,7 @@ export default function Layout() {
       {loading && <Loading />}
       <SideNav handleSignOut={handleSignOut} />
       <div className="">
-        <Outlet context={{ loadUser, setLoading, handleSignOut }} />
+        <Outlet context={{ loadUser, setLoading }} />
       </div>     
     </section>
   );

@@ -111,12 +111,10 @@ export default function AuthLayout() {
       });
     } catch (err) {
       stopLoading();
-      console.error("AuthLayout.js signUp error", err);
       setAlert({
         type: "error",
-        text: LANGUAGES[state.lang].CommonError.SignUp,
+        text: err, //LANGUAGES[state.lang].CommonError.SignUp,
       });
-      navigate(ROUTES[state.lang].SIGN_IN);
     }
   };
 
@@ -175,13 +173,13 @@ export default function AuthLayout() {
         setLoading(false);
         navigate(ROUTES[state.lang].MAIN);
       } catch (error) {
-        console.error("AuthLayout.js useeffect loadUser error", error);
-        setAlert({
-          type: "error",
-          text: LANGUAGES[state.lang].CommonError.SignUpAuthentication,
-        });
-        navigate(ROUTES[state.lang].SIGN_IN);
-        //alert("Issue with loading user data");
+
+        //console.error("AuthLayout.js useeffect loadUser error", error);
+        // setAlert({
+        //   type: "error",
+        //   text: LANGUAGES[state.lang].CommonError.SignUpAuthentication,
+        // });
+        // navigate(ROUTES[state.lang].SIGN_IN);
         setLoading(false);
       }
     };
