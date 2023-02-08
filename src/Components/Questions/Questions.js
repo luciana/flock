@@ -27,7 +27,10 @@ const Questions = () => {
           setLoading(true);       
           let q = await Queries.GetAllQuestions();
           //console.log("Get all Questions from db", q);
-          setBackendQuestions(q);
+          setBackendQuestions(q.sort(
+            (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          ));
           setFilterList(q.filter(
             (backendQuestion) => ((backendQuestion.parentID === null) )
           ).sort(
@@ -163,7 +166,7 @@ const Questions = () => {
         
             console.log("Questions.js Delete Question input ", id);
             setLoading(true);  
-            let deletedQuestion = await Mutations.DeleteQuestion(
+            await Mutations.DeleteQuestion(
               id             
             );
 

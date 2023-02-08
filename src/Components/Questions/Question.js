@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Vote from '../Votes/Vote';
 import { FaCircleNotch , FaSyncAlt, FaCircle, FaTrashAlt, FaGrinHearts, FaPhoneVolume} from 'react-icons/fa';
-import { Tooltip } from 'bootstrap';
+//import { Tooltip } from 'bootstrap';
 import Avatar from 'react-avatar';
 import ReplyModalDialog from './ReplyModalDialog';
 import QuestionForm from './QuestionForm';
@@ -23,8 +23,8 @@ function Question({
  }) {
  
   useEffect(() => {
-    Array.from(document.querySelectorAll('button[data-bs-toggle="tooltip"]'))
-    .forEach(tooltipNode => new Tooltip(tooltipNode))
+    // Array.from(document.querySelectorAll('button[data-bs-toggle="tooltip"]'))
+    // .forEach(tooltipNode => new Tooltip(tooltipNode))
   });
 
  if (!question) return;
@@ -71,16 +71,15 @@ function Question({
     const id = item.id;
     const text = item.text;
     if (alreadyVotedForQuestionListBool) {
+      
       return;
     }if (votedOptionsList.includes(id)){
+      
       return;
     }else{        
-      // let i = [...items];
-      // let item = i.find(x => x.id === id);        
+        
       item.votes++;  
 
-    //user.votes = "[{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]"
-    //question.options = [{\"votes\":0,\"id\":3293,\"text\":\"cancun\",\"isComplete\":true},{\"votes\":0,\"id\":9623,\"text\":\"punta cana?\",\"isComplete\":true}]
       let userVote ={
         "optionId": id,
         "questionId": question.id,  
@@ -121,11 +120,11 @@ function Question({
             <div className="col-2">
              
               {canDelete && (
-                <button className="btn btn-sm  mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Question" onClick={()=> deleteQuestion(question.id)}>
+                <button className="btn btn-sm  mx-1" onClick={()=> deleteQuestion(question.id)}>
                   <FaTrashAlt alt="Delete question" /></button>
               )}
               {canRepost && (
-                <button className="btn btn-sm  mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Repost Question" onClick={()=> alert("this will repost the question and reopen the vote, but functionality not done yet. Is this a good idea?")}>
+                <button className="btn btn-sm  mx-1"  onClick={()=> alert("this will repost the question and reopen the vote, but functionality not done yet. Is this a good idea?")}>
                   <FaSyncAlt alt="Repost question" /></button>
               )}
             </div>

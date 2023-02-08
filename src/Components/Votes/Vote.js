@@ -21,7 +21,9 @@ const Vote = ({ question,
     <div className='container p-3 border-bottom bg-light ' key={index} >
           <div className="row ">            
               <div key={item.id} onClick={() => voteUp(item)} className={iVotedForIt(item.id) ? 'col  ' : 'col  '}>
-                <span className="badge rounded-pill bg-light text-dark mx-2 ">{item.votes}</span> 
+                <span className="badge fs-6 text rounded-pill bg-dark  mx-2 ">
+                  {item.votes}
+                </span>                
                 {item.text}
               </div>
             
@@ -30,13 +32,13 @@ const Vote = ({ question,
                   disabled={(voteEnded || alreadyVotedForQuestionListBool) ? true : false}                   
                   onClick={() => voteUp(item)}>                             
                   { (iVotedForIt(item.id) ) && (
-                    <FaCircle color='green' size={24}/>
+                    <FaCircle color='green' size={28}/>
                   )}
                   { (!iVotedForIt(item.id) && voteEnded )&& (
-                    <FaRegCircle color='gray' size={24}/>
+                    <FaRegCircle color='gray' size={28}/>
                   )}
                   { (!iVotedForIt(item.id) && !voteEnded )&& (
-                    <FaRegCircle color='black'  size={24}/>
+                    <FaRegCircle color='black'  size={28}/>
                   )}                                 
                 </button>                   
             </div>              

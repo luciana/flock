@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { useNavigate} from "react-router-dom";
 import { Button, Badge } from '..';
 import { LANGUAGES } from "../../Constants";
 import { AppContext } from "../../Contexts";
@@ -9,8 +8,6 @@ const Card = ({voteCounts, handleSignOut}) => {
 
   const { state } = useContext(AppContext);
   const { user } = state;
-
-  const navigate = useNavigate();
   return (
 
     
@@ -47,12 +44,8 @@ const Card = ({voteCounts, handleSignOut}) => {
             <span className="number">{voteCounts} <span className="follow">helped decisions</span></span> 
           </div>)
       }
-    <div className=" d-flex mt-2"> 
-    <Button text="Edit Profile"
-                disabled={false}
-                handler={()=> alert('Button not working yet, scrowdown the page to edit your profile')}
-                 />
-     <Button text="Sign Out"
+    <div className=" d-flex mt-2">    
+     <Button text={LANGUAGES[user.locale].Profile.SignOut }
                 disabled={false}                 
                 handler={handleSignOut}
                  />
