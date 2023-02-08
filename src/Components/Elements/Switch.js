@@ -178,7 +178,7 @@ const Switch = ({label,handleSwitch}) =>{
     },[]);
 
     return (
-    <div className="row mb-3 ">
+    <div className="row mx-3 ">
         <div className=" col-4 col-form-label-sm">
         {label}
         </div>

@@ -8,6 +8,8 @@ const Card = ({voteCounts, handleSignOut}) => {
 
   const { state } = useContext(AppContext);
   const { user } = state;
+
+  const userCount = (user.userTag) ? user.userTag.length : 1;
   return (
 
     
@@ -15,12 +17,12 @@ const Card = ({voteCounts, handleSignOut}) => {
   <div className="border border-1 mx-2 p-4"> 
     <div className=" image d-flex flex-column justify-content-center align-items-center"> 
     
-    <Badge count={user.userTag.length} />
+    <Badge count={userCount} />
    
     <span className="profile-name mt-1">{user.name}</span> 
-    <span className="idd">{user.email}</span>    
-    {user.userTag.length > 0 && (
-        <span className="idd">
+    <span className="">{user.email}</span>    
+    {user.userTag && user.userTag.length > 0 && (
+        <span className="">
         #{user.userTag}
         </span> 
     )}  
