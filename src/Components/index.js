@@ -13,3 +13,4 @@ export { default as HomeNav } from "./Navigation/HomeNav";
 export { default as Flags } from "./Flags";
 export { default as Badge } from "./Votes/Badge";
 export { default as Card } from "./Profile/Card";
+export { default as Switch } from "./Elements/Switch";

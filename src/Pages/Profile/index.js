@@ -185,13 +185,10 @@ export default function Profile() {
 
   const renderChangeName = () => (
     
-     <div class="card">
-    <div class="card-header">
-      Change Your Profile Name
-    </div>
-     <div class="card-body"> 
+     
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
+      <label className="form-label">{LANGUAGES[user.locale].Profile.YourName}</label>
       <Input
         type="text"
         placeholder={LANGUAGES[user.locale].Name}
@@ -205,8 +202,6 @@ export default function Profile() {
       />
     </div>
     </Form>
-    </div>
-    </div>
   );
 
   const renderCode = () => (
@@ -235,11 +230,11 @@ export default function Profile() {
 
   const renderChangePassword = () => (
 
-  <div class="card">
-    <div class="card-header">
-      Change Your Password
+  <div className="card">
+    <div className="card-header">
+    {LANGUAGES[user.locale].Profile.ChangePassword}
     </div>
-     <div class="card-body">  
+     <div className="card-body">  
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
         <Input
@@ -276,6 +271,7 @@ export default function Profile() {
   const renderChangeTag = () => (
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
+      <label className="form-label"> {LANGUAGES[user.locale].Profile.YourExpertise}</label>
         <Select value={tag} handler={setTag}>            
           {TAGS.map((l) => (
             <option key={l} value={l}>
@@ -295,6 +291,7 @@ export default function Profile() {
   const renderChangeLanguage = () => (
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
+      <label className="form-label">{LANGUAGES[user.locale].Profile.LanguagePreference}</label>
         <Select value={language} handler={setLanguage}>
           {Object.keys(LANGUAGES).map((l) => (
             <option key={l} value={l}>
@@ -320,12 +317,20 @@ export default function Profile() {
      
       <hr className="m-3"></hr>  
 
-      <h4 id="profile_edit">Edit Profile</h4>
-      <div className="grid sm:grid-cols-3 gap-2">              
-        {renderChangeName()}
-        {renderChangeTag()}
+      <div className="grid sm:grid-cols-3 gap-2">  
+       <div className="card">
+        <div className="card-header">
+          Change Your Profile Info
+        </div>
+        <div className="card-body">             
+          {renderChangeName()}
+          {renderChangeTag()}
+          {renderChangeLanguage()}
+        </div>
+        </div>
+
         {renderChangePassword()}
-        {renderChangeLanguage()}
+       
       </div>
           <hr className="m-0"></hr>                   
    </div>

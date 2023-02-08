@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
-import { Loading, Alert }  from '../../Components';
+import { Loading, Alert, Switch }  from '../../Components';
 import Queries from "../../Services/queries";
 import Mutations from "../../Services/mutations";
 import { AppContext} from '../../Contexts'; 
@@ -14,10 +14,11 @@ const Questions = () => {
     const [votedList, setVotedList] = useState([]);
     const [votedOptionsList, setVoteOptionsdList] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const [voteFileChecked, setVoteFileChecked] = useState(false);  
     const { state, dispatch } = useContext(AppContext);
     const { user } = state;
-    console.log("USER in Questions.js state", state);  
+    const [filterList, setFilterList]= useState([]);
+   // console.log("USER in Questions.js state", state);  
 
     useEffect(() => {
 
@@ -25,14 +26,22 @@ const Questions = () => {
         try{
           setLoading(true);       
           let q = await Queries.GetAllQuestions();
-          console.log("Get all Questions from db", q);
+          //console.log("Get all Questions from db", q);
           setBackendQuestions(q);
-         
+          setFilterList(q.filter(
+            (backendQuestion) => ((backendQuestion.parentID === null) )
+          ).sort(
+            (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          ))
+          console.log("load filter list question", filterList);
           setLoading(false);
         }catch(err){
           console.error("Questions.js Loading Questions from queries error", err);
+        
           setBackendQuestions([]);
           setLoading(false);
+          alert("Error getting all the questions from database");
         }
       };
     
@@ -51,6 +60,7 @@ const Questions = () => {
           console.error("Questions.js Loading Votes from queries error", err);
           setBackendQuestions([]);
           setLoading(false);
+          alert("Error getting question voltes from database");
         }
       };
 
@@ -61,14 +71,35 @@ const Questions = () => {
                       
       }, [user]);
 
-      const rootQuestions = backendQuestions.filter(
-        (backendQuestion) => ((backendQuestion.parentID === null) )
-        ).sort(
-          (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )  
-    
-      
+     
+      // const rootQuestions =  backendQuestions.filter(
+      //   (backendQuestion) => ((backendQuestion.parentID === null) )
+      // ).sort(
+      //   (a, b) =>
+      //   new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      // ); 
+
+        const handleVoteFilterSwitch = () => {     
+          setVoteFileChecked(!voteFileChecked);      
+          if (!voteFileChecked){        
+            const filteredList = backendQuestions.filter(
+              (backendQuestion) => (((new Date(backendQuestion.voteEndAt) - new Date() > 1 ) 
+                            && (backendQuestion.parentID === null)) )
+              ).sort(
+                (a, b) =>
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              );
+              console.log("filteredList true", filteredList);
+              console.log("compare question date ", new Date(backendQuestions[3].voteEndAt));
+              console.log("new Date(backendQuestion.voteEndAt) - new Date()", new Date(backendQuestions[3].voteEndAt) - new Date());
+              setFilterList(filteredList);
+          }else{
+            
+            console.log("filteredList false", backendQuestions);
+            setFilterList(backendQuestions);
+          }      
+         
+        }; 
                 
     
 
@@ -115,7 +146,7 @@ const Questions = () => {
             JSON.stringify(optionsInQuestion)
           );
 
-          const newA = [];
+          const newA = [];  
           newA.push(q);          
           const updatedBackendQuestions =  backendQuestions.map(obj => newA.find(o => o.id === obj.id) || obj);
           console.log("Questions.js updatedBackendQuestions result", updatedBackendQuestions);        
@@ -145,13 +176,7 @@ const Questions = () => {
           } catch (err){
             setLoading(false); 
             console.error("Error on deleteQuestion ", err);
-          }
-          //   QuestionService.deleteQuestion.then(() => {
-          //   const updatedBackendQuestions = backendQuestions.filter(
-          //     (backendQuestion) => backendQuestion.id !== questionId
-          //   );
-          //   setBackendQuestions(updatedBackendQuestions);
-          // });
+          }        
         }
       };
       const updateUserVotes = async (userVote) =>{        
@@ -198,6 +223,7 @@ const Questions = () => {
           return newArray;
         });        
       }
+
       const updateVotedOptionsList = (id) => {    
         setVotedList(votedOptionsList => {           
           const newArray = [...votedOptionsList];
@@ -205,18 +231,20 @@ const Questions = () => {
           return newArray;
         });        
       }
-
-
+      
+      const showNoQuestions = filterList.length === 0;
+      console.log("Switch", voteFileChecked);
       console.log("backendQuestion", backendQuestions);
-      console.log("root questions", rootQuestions);
+      console.log("filterList questions", filterList);
 
       return ( 
         <>
             {loading && <Loading />}
-            {( rootQuestions.length === 0 ) && <Alert type="warning" text="No questions retrieved. Start one!" link={ROUTES[state.lang].NEW_QUESTION} />}          
-            
+            {( !loading && showNoQuestions ) && <Alert type="warning" text="No questions retrieved. Start one!" link={ROUTES[state.lang].NEW_QUESTION} />}          
+            <Switch label={"Only open questions"}
+                    handleSwitch={handleVoteFilterSwitch}/>           
               <div id="all-questions" className=" border border-0 p-0 ">
-                  {rootQuestions.map((rootQuestion) => (
+                  {filterList.map((rootQuestion) => (
                       <Question 
                           key={rootQuestion.id}
                           question={rootQuestion}

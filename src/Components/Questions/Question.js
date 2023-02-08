@@ -28,7 +28,7 @@ function Question({
   });
 
  if (!question) return;
-  console.log("Question ", question);
+  //console.log("Question ", question);
   // //console.log("User ", user.votes);
   // console.log("votedList", votedList);
 
@@ -48,7 +48,8 @@ function Question({
 
   const isAReply = question.parentId != null;
   const canDelete = user.id === question.userID  && !isAReply; 
-  const canReply = user.id === question.userID && !isAReply && replies.length === 0;
+  //don't want to show the option to reply yet. setting bool to false 
+  const canReply = user.id === question.userID && !isAReply && replies.length === 0 && false;
   const createdAt = formatDateAndTime(question.createdAt);
   const replyId = parentId ? parentId : question.id;
   const voteEnded = new Date() - new Date(question.voteEndAt) > 1;

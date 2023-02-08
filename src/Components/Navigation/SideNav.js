@@ -24,7 +24,7 @@ function SideNav({ handleSignOut }) {
       },{
         route: "/Profile",
         icon: faUserCircle,
-        label: LANGUAGES[user.locale].Profile.Account
+        label: LANGUAGES[user.locale].Profile.Profile
       }]
 
   return(

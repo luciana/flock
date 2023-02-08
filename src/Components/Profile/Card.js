@@ -9,14 +9,13 @@ const Card = ({voteCounts, handleSignOut}) => {
 
   const { state } = useContext(AppContext);
   const { user } = state;
-  console.log("Profile Card user", user);
-  console.log("Profile Card vote counts", voteCounts);
+
   const navigate = useNavigate();
   return (
 
     
-<div className="container mt-4 mb-4 p-3 d-flex justify-content-center"> 
-  <div className="card p-4"> 
+<div className=" mt-4 mb-4 p-3 d-flex justify-content-center"> 
+  <div className="border border-1 mx-2 p-4"> 
     <div className=" image d-flex flex-column justify-content-center align-items-center"> 
     
     <Badge count={user.userTag.length} />
@@ -32,7 +31,7 @@ const Card = ({voteCounts, handleSignOut}) => {
       {/* TODO: do not display this just yet */}
     { false && (
         <div className="d-flex flex-row justify-content-center align-items-center gap-2"> 
-        <span className="idd1">{user.id}</span> 
+        <span className="">{user.id}</span> 
         <span><i className="fa fa-copy"></i></span> 
       </div> 
     )}
@@ -51,7 +50,7 @@ const Card = ({voteCounts, handleSignOut}) => {
     <div className=" d-flex mt-2"> 
     <Button text="Edit Profile"
                 disabled={false}
-                handler={()=>navigate("/profile#profile_edit")}
+                handler={()=> alert('Button not working yet, scrowdown the page to edit your profile')}
                  />
      <Button text="Sign Out"
                 disabled={false}                 

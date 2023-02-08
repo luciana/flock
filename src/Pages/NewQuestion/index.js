@@ -22,10 +22,7 @@ const NewQuestion = (props) => {
 return (
   
   <div className="container grid sm:grid-cols-3 gap-2">  
-      <Title
-      text={LANGUAGES[user.locale].Questions.NewQuestionTitle}
-      back={ROUTES[user.locale].MAIN}
-    />
+     
       <Alert type={alert?.type} text={alert?.text} />
                                                
         <div id="question-form">

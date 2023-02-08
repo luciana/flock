@@ -76,7 +76,7 @@ function QuestionModalDialog(
       <div className="p-2 row align-items-start"> 
             <div className="col-2 px-1 d-grid  "> <Avatar size="42" name={user.name} className=" img-profile rounded-circle mx-auto mb-0" alt="{Luciana Bruscino}" /></div>
             <div className="col-10 d-grid  py-3">
-                <div className="text-small lh-1"><span>{user.name} </span><span aria-hidden="true"> · </span> <span> 1/6/2023 at 1:53 pm </span></div>                                                                   
+                <div className="text-small lh-1"><span>Hi {user.name} </span> </div>                                                                   
             </div>  
             <Button handler={initModal}
                     text={LANGUAGES[user.locale].Questions.EnterNewQuestion}
