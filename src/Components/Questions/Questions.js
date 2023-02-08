@@ -44,7 +44,7 @@ const Questions = () => {
         
           setBackendQuestions([]);
           setLoading(false);
-          alert("Error getting all the questions from database");
+         // alert("Error getting all the questions from database");
         }
       };
     
@@ -63,7 +63,7 @@ const Questions = () => {
           console.error("Questions.js Loading Votes from queries error", err);
           setBackendQuestions([]);
           setLoading(false);
-          alert("Error getting question voltes from database");
+          //alert("Error getting question voltes from database");
         }
       };
 

@@ -47,7 +47,7 @@ export default function Layout() {
         });
       } catch (error) {
         console.error("Layout.js Main error in isUserLoggedIn", error);
-        alert("Error loading user", error);
+        //alert("Error loading user", error);
         navigate(ROUTES[state.lang].SIGN_IN);
       }
     };

@@ -2,6 +2,7 @@ import { Auth as AmplifyAuth } from "aws-amplify";
 
 const SignUp = async (email, password, name, locale) => {
   console.log("Auth Signup - about to call Amplify signup with ", email, locale, name);
+  //some users getting an error here-> Client.js:102          POST https://cognito-idp.us-east-1.amazonaws.com/ 400 
   await AmplifyAuth.signUp({
     username: email,
     password,
