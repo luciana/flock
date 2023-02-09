@@ -54,6 +54,9 @@ const pt_br_lang = {
       Password: "Senha Incorreta.",
       NewPassword: "Verifique as regras para senha",
       AttemptLimit: "Attempt limit exceeded, please try after some time.",
+      RepeatPassword:"Senha inválida. Tente novamente.",
+      InvalidEmail:"E-mail iinválido. Tente novamente.",
+      InvalidName:"Insira seu nome.",
     },
     Auth: {
       SignInTitle: "Entrar",

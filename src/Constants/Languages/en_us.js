@@ -52,6 +52,9 @@ const en_us_lang = {
       Password: "Incorrect Password.",
       NewPassword: "Password did not conform with policy.",
       AttemptLimit: "Attempt limit exceeded, please try after some time.",
+      RepeatPassword:"Passwords must match",
+      InvalidEmail:"Email is not valid",
+      InvalidName:"Name is required",
     },
     Auth: {
       SignInTitle: "Sign In",

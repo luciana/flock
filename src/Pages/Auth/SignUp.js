@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { Button, AuthLink, AuthTitle, Input } from "../../Components";
+import { AuthLink, AuthTitle, Input } from "../../Components";
 import { AppContext } from "../../Contexts";
 import { LANGUAGES, ROUTES } from "../../Constants";
 
@@ -36,48 +36,89 @@ export default function SignUp() {
     pwd !== repeat ||
     accept === false    
 
+    const handlePassword = (p) =>{
+      setPwd(p);
+      console.log("checking password", p);
+      if(!isValidPassword(p)){
+       setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.NewPassword});  
+      }else{
+        setAlert();
+      }    
+    }
+
+    const handleRepeatPassword = (r) =>{
+      setRepeat(r);
+      console.log("checking repead password", r);
+      if( r === "" || pwd !== r ){
+        setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.RepeatPassword});  
+      }else{
+        setAlert();
+      }    
+    }
+
+    const handleEmail = (e) =>{
+      setEmail(e);
+      console.log("checking email", e);
+      if(!isValidEmail(e)){
+        setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.InvalidEmail});  
+      }else{
+        setAlert();
+      }   
+    }
+
+    const handleName = (n) =>{
+      setName(n);
+      console.log("checking name", n);
+      if(n === ""){
+        setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.InvalidName});  
+      }else{
+        setAlert();
+      }   
+    }
+
   return (
     <form className="form-control needs-validation novalidate">
     <AuthTitle text={LANGUAGES[state.lang].Auth.SignUpTitle} />  
       <div className="mb-4">
+      <label className="form-label">{LANGUAGES[state.lang].Name} <span className="req">*</span></label>
         <Input
           type="text"
-          label="Name"     
-          placeholder="Name"
+          label={LANGUAGES[state.lang].Name}      
+          placeholder={LANGUAGES[state.lang].Name} 
           value={name}
-          handler={setName}         
-        /> <span class="req">* Required</span>
+          handler={handleName}         
+        /> 
       </div>
       <div className="mb-4">
+      <label className="form-label">{LANGUAGES[state.lang].Email} <span className="req">*</span></label>
         <Input
           type="email"
           label={LANGUAGES[state.lang].Email}     
           placeholder={LANGUAGES[state.lang].Email}
           value={email}
-          handler={setEmail}         
-        />
-        <span class="req">* Required</span>
+          handler={handleEmail}         
+        />       
       </div>
       <div className="mb-4">
+      <label className="form-label">{LANGUAGES[state.lang].Password} <span className="req">*</span></label>
         <Input
           type="password"
           label={LANGUAGES[state.lang].Password}
           placeholder={LANGUAGES[state.lang].Password}
           value={pwd}
-          handler={setPwd}          
+          handler={handlePassword}          
           showTooltip         
-        />
-        <span class="req">* Required. See requirements below.</span>
+        />    
       </div>      
       <div className="mb-4">
+      <label className="form-label">{LANGUAGES[state.lang].Auth.RepeatPassword} <span className="req">*</span></label>
         <Input
           type="password"
           label={LANGUAGES[state.lang].Auth.RepeatPassword}
           placeholder={LANGUAGES[state.lang].Auth.RepeatPassword}
           value={repeat}
-          handler={setRepeat}         
-        />
-        <span class="req">* Required. Must match password</span>
+          handler={handleRepeatPassword}         
+        />       
       </div>
       <div className="py-2 my-2">
           <div><strong>Password Requirements:</strong></div>
@@ -98,16 +139,15 @@ export default function SignUp() {
         className="form-check-input h-4 w-4 border border-gray-300 rounded-sm "
       />
       <label className="form-check-label" htmlFor="invalidCheck">
-        {LANGUAGES[state.lang].Auth.TermsandConditions}
-        <span class="req">*</span>
+        {LANGUAGES[state.lang].Auth.TermsandConditions} <span className="req">*</span>
       </label>     
     </div>
       <button       
         disabled={disabled()}
         className="btn btn-outline-primary rounded-pill "
         type="submit"
-        //onClick={() => signUp(email, pwd, name, repeat)}
-        onClick={() => alert('done')}
+        onClick={() => signUp(email, pwd, name, repeat)}
+        
       >{LANGUAGES[state.lang].Auth.SignUpButton} </button>
       <div className="w-full text-center mt-6">
         <AuthLink text={LANGUAGES[state.lang].Auth.GoToSignIn} to={ROUTES[state.lang].SIGN_IN} size="xl" />
