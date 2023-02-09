@@ -16,6 +16,7 @@ export default function Layout() {
   const [loading, setLoading] = useState(false);
 
   console.log("Layhout.js state", state);  
+
   const loadUser = useCallback(async ({force, email, locale, name}) => {      
     if (!state.user || force === true) {     
       let user = await Queries.GetUserByEmail(email);
@@ -43,7 +44,10 @@ export default function Layout() {
         await loadUser({
           email: attributes.email,
           locale: attributes.locale,
-          name: attributes.name,   
+          name: attributes.name,  
+          gender: attributes.gender,
+          zip: attributes.zip,
+          birthday: attributes.birthday,
         });
       } catch (error) {
         console.error("Layout.js Main error in isUserLoggedIn", error);

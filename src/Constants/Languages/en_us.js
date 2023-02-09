@@ -20,10 +20,10 @@ const en_us_lang = {
     },
     PasswordRules: {
       Chars: "Must have at least 8 chars",
-      Lowercase: "Requires Lowercase",
-      Uppercase: "Requires Uppercase",
-      Number: "Requires Number",
-      Symbol: "Requires Symbol",
+      Lowercase: "Requires at least 1 Lowercase",
+      Uppercase: "Requires at least 1 Uppercase",
+      Number: "Requires at least 1 Number",
+      Symbol: "Requires at least 1 Symbol",
     },
     Languages: {
       "en-US": "English",

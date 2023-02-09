@@ -94,7 +94,7 @@ export default function AuthLayout() {
     }
   };
 
-  const signUp = async (email, pwd, name) => {
+  const signUp = async (email, pwd, name, gender, zip, birthday) => {
     startLoading();
     try {
       console.log("AuthLayout.js signUp");

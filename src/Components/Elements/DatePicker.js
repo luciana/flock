@@ -10,10 +10,11 @@ const DatePicker = ({ name, label, placeholder, handler, required = false }) => 
     {required === true && (   <span className="req"> *</span> ) }
     </label> 
     <div className="input-group mb-3">     
-       
-            
-            <Form.Control type="date" name={name} placeholder={placeholder} />
-        
+       <Form.Control 
+        type="date" 
+        name={name} 
+        onChange={(e) => handler(e.target.value)}
+        placeholder={placeholder} />        
     </div>
     </div>
     </Form.Group>

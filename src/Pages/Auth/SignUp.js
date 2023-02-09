@@ -67,6 +67,11 @@ export default function SignUp() {
       }   
     }
 
+    const handleBirthday = (b) => {
+     
+      //convert 2023-02-23 to AWSDate format 1970-01-01Z
+      setBirtday(b+"Z");
+    }
     const handleZip = (z) => {
       setZip(z);
       
@@ -85,6 +90,7 @@ export default function SignUp() {
       }   
     }
 
+    console.log("birthday date selected", birthday);
   return (
     <>
     <form className=" form-control">
@@ -160,7 +166,7 @@ export default function SignUp() {
             placeholder={LANGUAGES[state.lang].Birth} 
             label={LANGUAGES[state.lang].Birth} 
             name={"dob"}
-            handler={setBirtday}
+            handler={handleBirthday}
             />          
         </div>
       </div>
@@ -185,7 +191,7 @@ export default function SignUp() {
           disabled={disabled()}
           className="btn btn-outline-primary rounded-pill "
           type="submit"
-          onClick={() => signUp(email, pwd, name, repeat)}
+          onClick={() => signUp(email, pwd, name, repeat, gender, zip, birthday)}
           
         >{LANGUAGES[state.lang].Auth.SignUpButton} </button>
       </div>
@@ -194,11 +200,11 @@ export default function SignUp() {
       <div className="py-4 my-4">
           <div><strong>Password Requirements:</strong></div>
             <ul className="list-group list-group-flush">
-              <li className="list-group-item">Minimum eight characters</li>
-              <li className="list-group-item">Have at least one uppercase letter</li>
-              <li className="list-group-item">Have at least one lowercase letter</li>            
-              <li className="list-group-item">Have at least one digit</li>
-              <li className="list-group-item">Have at least one one special character</li>              
+              <li className="list-group-item">{LANGUAGES[state.lang].PasswordRules.Chars}</li>
+              <li className="list-group-item">{LANGUAGES[state.lang].PasswordRules.Lowercase}</li>
+              <li className="list-group-item">{LANGUAGES[state.lang].PasswordRules.Uppercase}</li>            
+              <li className="list-group-item">{LANGUAGES[state.lang].PasswordRules.Number}</li>
+              <li className="list-group-item">{LANGUAGES[state.lang].PasswordRules.Symbol}</li>              
             </ul>            
       </div>
       <div className="w-full text-center">
