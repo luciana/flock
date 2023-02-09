@@ -10,6 +10,8 @@ export const getUser = /* GraphQL */ `
       name
       userTag
       birthdate
+      gender
+      Zip
       votes
       createdAt
       updatedAt
@@ -39,6 +41,8 @@ export const listUsers = /* GraphQL */ `
         name
         userTag
         birthdate
+        gender
+        Zip
         votes
         createdAt
         updatedAt
@@ -119,6 +123,8 @@ export const userByEmail = /* GraphQL */ `
         name
         userTag
         birthdate
+        gender
+        Zip
         votes
         createdAt
         updatedAt

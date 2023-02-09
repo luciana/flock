@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
-import { isValidEmail } from "../../Helpers";
+import { isValidEmail, isValidZip, isValidPassword } from "../../Helpers";
 import { AuthLink, AuthTitle, Input, Title, Select, DatePicker } from "../../Components";
 import { AppContext } from "../../Contexts";
 import { LANGUAGES, ROUTES, GENDER } from "../../Constants";
@@ -23,11 +23,11 @@ export default function SignUp() {
 
   }, [location?.state?.alert, setAlert]);
 
-  const isValidPassword =  (pwd) => {
-    const re = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[=+\-^$*.\[\]{}()?"!@#%&/\\,><':;|_~`])\S{8,99}$/);
-    const isOk = re.test(pwd);
-    return isOk;
-  }
+  // const isValidPassword =  (pwd) => {
+  //   const re = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[=+\-^$*.\[\]{}()?"!@#%&/\\,><':;|_~`])\S{8,99}$/);
+  //   const isOk = re.test(pwd);
+  //   return isOk;
+  // }
   
   const disabled = () =>
     email === "" ||
@@ -67,15 +67,14 @@ export default function SignUp() {
       }   
     }
 
-    const handleBirthday = (b) => {
-     
+    const handleBirthday = (b) => {     
       //convert 2023-02-23 to AWSDate format 1970-01-01Z
       setBirtday(b+"Z");
     }
     const handleZip = (z) => {
       setZip(z);
       
-      if(z && z.length < 5){
+      if(!isValidZip(zip, state.lang)){
         setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.InvalidZip}); 
       }else{
         setAlert();
@@ -89,8 +88,6 @@ export default function SignUp() {
         setAlert();
       }   
     }
-
-    console.log("birthday date selected", birthday);
   return (
     <>
     <form className=" form-control">

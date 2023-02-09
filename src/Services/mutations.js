@@ -1,7 +1,7 @@
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
 
-const CreateUser = async (email, locale,  name) => {
+const CreateUser = async (email, locale,  name, birthday, gender, zip) => {
   const {
     data: { createUser },
   } = await API.graphql(
@@ -10,7 +10,7 @@ const CreateUser = async (email, locale,  name) => {
   return createUser;
 };
 
-const UpdateUser = async ({ id, email, locale }) => {
+const UpdateUser = async ( id, email, locale ) => {
   const {
     data: { updateUser },
   } = await API.graphql(
@@ -21,12 +21,56 @@ const UpdateUser = async ({ id, email, locale }) => {
   return updateUser;
 };
 
-const UpdateUserTag = async ({ id, userTag }) => {
+const UpdateUserTag = async ( id, userTag ) => {
   const {
     data: { updateUser },
   } = await API.graphql(
     graphqlOperation(mutations.updateUser, {
       input: { id, userTag },
+    })
+  );
+  return updateUser;
+};
+
+const UpdateUserZip = async ( id, zip ) => {
+  const {
+    data: { updateUser },
+  } = await API.graphql(
+    graphqlOperation(mutations.updateUser, {
+      input: { id, zip },
+    })
+  );
+  return updateUser;
+};
+
+const UpdateUserBirthday = async ( id, birthday ) => {
+  const {
+    data: { updateUser },
+  } = await API.graphql(
+    graphqlOperation(mutations.updateUser, {
+      input: { id, birthday },
+    })
+  );
+  return updateUser;
+};
+
+const UpdateUserGender = async ( id, gender ) => {
+  const {
+    data: { updateUser },
+  } = await API.graphql(
+    graphqlOperation(mutations.updateUser, {
+      input: { id, gender },
+    })
+  );
+  return updateUser;
+};
+
+const UpdateUserName = async ( id, name ) => {
+  const {
+    data: { updateUser },
+  } = await API.graphql(
+    graphqlOperation(mutations.updateUser, {
+      input: { id, name },
     })
   );
   return updateUser;
@@ -105,6 +149,10 @@ const Mutations = {
   UpdateQuestionOptions,
   UpdateUserVotes,
   UpdateUserTag,
+  UpdateUserGender,
+  UpdateUserZip,
+  UpdateUserBirthday,
+  UpdateUserName,
 };
 
 export default Mutations;   

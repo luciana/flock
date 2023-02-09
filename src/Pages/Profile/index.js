@@ -2,12 +2,12 @@
 
 import { useEffect, useState, useContext } from "react";
 import { useOutletContext, useNavigate} from "react-router-dom";
-import { LANGUAGES, ROUTES, TAGS } from "../../Constants";
+import { LANGUAGES, ROUTES, TAGS, GENDER } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import Auth from "../../Services/auth";
 import Mutations from "../../Services/mutations";
 import { Alert, Button, Form, Input, Select, Title, Card } from "../../Components";
-import { isValidEmail } from "../../Helpers";
+import { isValidEmail, isValidZip } from "../../Helpers";
 
 export default function Profile() {
   const { state } = useContext(AppContext);
@@ -18,6 +18,9 @@ export default function Profile() {
   const [showCode, setShowCode] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [zip, setZip] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [gender, setGender] = useState("");
   const [code, setCode] = useState("");
   const [tag, setTag] = useState("");
   const [voteCounts, setVoteCounts] = useState("");
@@ -27,6 +30,7 @@ export default function Profile() {
   const [language, setLanguage] = useState(user.locale);
 
   //const disabled = () => email === "" || !isValidEmail(email);
+  
 
   useEffect(() => {
     user && setEmail(user?.email) 
@@ -68,17 +72,6 @@ export default function Profile() {
     loading();
     try {
       await Auth.ChangeEmail(email);
-      setShowCode(true);
-    } catch (error) {
-      handleErrors(error.message);
-    }
-    setLoading(false);
-  };
-
-  const handleChangeName = async () => {
-    loading();
-    try {
-      await Auth.ChangeName(name);
       setShowCode(true);
     } catch (error) {
       handleErrors(error.message);
@@ -130,11 +123,70 @@ export default function Profile() {
     setLoading(false);
   };
 
+
+  const handleChangeName = async () => {
+    loading();
+    try {
+      const authResponse = await Auth.ChangeName(name);
+      console.log("authResponse to change name", authResponse);
+      const mutationResponse = await Mutations.UpdateUserName( user.id, name );
+      console.log("mutations response to change name", mutationResponse);
+      loadUser({ force: true, email: user.email });
+      navigate(ROUTES[language].PROFILE);
+    } catch (error) {
+      console.error("error with handling change name", error);
+      setAlert({ type: "error", text: error.message });
+    }
+    setLoading(false);
+  };
+
+  const handleChangeGender = async () => {
+    console.log("handleChangeGender");
+    loading();
+    try {
+      await Auth.ChangeGender(gender);
+      console.log("Auth.ChangeGender", gender);
+      await Mutations.UpdateUserGender({ id: user.id,  gender: gender });
+      console.log("Mutations.UpdateUserGender", gender);
+      loadUser({ force: true, email: user.email });
+      navigate(ROUTES[language].PROFILE);
+    } catch (error) {
+      setAlert({ type: "error", text: error.message });
+    }
+    setLoading(false);
+  };
+
+  const handleChangeZip = async () => {
+    loading();
+    try {    
+      await Auth.ChangeZip(zip); 
+      await Mutations.UpdateUserZip({ id: user.id, zip: zip });
+      loadUser({ force: true, email: user.email });
+      navigate(ROUTES[language].PROFILE);
+    } catch (error) {
+      setAlert({ type: "error", text: error.message });
+    }
+    setLoading(false);
+  };
+
   const handleUserTag = async () => {
     loading();
     try {    
       console.log("handleUserTag");
       await Mutations.UpdateUserTag({ id: user.id, userTag: tag });
+      loadUser({ force: true, email: user.email });
+      navigate(ROUTES[language].PROFILE);
+    } catch (error) {
+      setAlert({ type: "error", text: error.message });
+    }
+    setLoading(false);
+  };
+
+  const handleChangeBirthday = async () => {
+    loading();
+    try {    
+      console.log("handleChangeBirthday", birthday);
+      await Mutations.UpdateUserBirthday({ id: user.id, birthday: birthday });
       loadUser({ force: true, email: user.email });
       navigate(ROUTES[language].PROFILE);
     } catch (error) {
@@ -152,12 +204,17 @@ export default function Profile() {
 
   const disabledTag = () => tag === user.userTag;
 
+  const disabledZip = () => zip === "" || !isValidZip(zip, user.locale);
+
+
   const disabledPassword = () =>
     !currentPassword ||
     newPassword !== repeatPassword ||
     newPassword.length < 8;
 
   const disabledLanguage = () => language === user.locale;
+  const disabledGender = () => gender === user.gender;
+  const disabledBirthday = () => birthday === user.birthday;
 
   const userVoteCount = () => {
    
@@ -185,20 +242,58 @@ export default function Profile() {
 
   const renderChangeName = () => (
     
-     
     <Form>
-      <div className="mb-4 w-full flex flex-col gap-4 justify-center">
-      <label className="form-label">{LANGUAGES[user.locale].Profile.YourName}</label>
+     <div className="mb-4 w-full flex flex-col gap-4 justify-center">
       <Input
         type="text"
         placeholder={LANGUAGES[user.locale].Name}
         value={name}
         handler={setName}
-      />
+        label={LANGUAGES[user.locale].Profile.YourName}
+      />   
       <Button
         text={LANGUAGES[user.locale].Profile.ChangeName}
         disabled={disabledName()}
         handler={() => handleChangeName()}
+      />
+    </div>
+  </Form>
+  );
+
+  const renderChangeZip = () => (         
+    <Form>
+      <div className="mb-4 w-full flex flex-col gap-4 justify-center">      
+      <Input
+        type="text"
+        placeholder={LANGUAGES[user.locale].ZipCode}
+        value={zip}
+        handler={setZip}
+        label={LANGUAGES[user.locale].Profile.YourZipCode}
+      />
+      <Button
+        text={LANGUAGES[user.locale].Profile.ChangeZip}
+        disabled={disabledZip()}
+        handler={() => handleChangeZip()}
+      />
+    </div>
+    </Form>
+  );
+
+  const renderChangeBirthday = () => (         
+    <Form>
+      <div className="mb-4 w-full flex flex-col gap-4 justify-center">
+     
+      <Input
+        type="text"
+        placeholder={LANGUAGES[user.locale].Birth}
+        value={zip}
+        handler={setZip}
+        label={LANGUAGES[user.locale].Profile.YourBirthday}
+      />
+      <Button
+        text={LANGUAGES[user.locale].Profile.ChangeBirthday}
+        disabled={disabledBirthday()}
+        handler={() => handleChangeBirthday()}
       />
     </div>
     </Form>
@@ -289,7 +384,7 @@ export default function Profile() {
   );
 
   const renderChangeLanguage = () => (
-    <Form>
+    <Form>     
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
       <label className="form-label">{LANGUAGES[user.locale].Profile.LanguagePreference}</label>
         <Select value={language} handler={setLanguage}>
@@ -307,6 +402,27 @@ export default function Profile() {
       </div>
     </Form>
   );
+
+  const renderChangeGender = () => (
+    <Form>     
+      <div className="mb-4 w-full flex flex-col gap-4 justify-center">
+      <label className="form-label">{LANGUAGES[user.locale].Profile.YourGender}</label>
+        <Select value={gender} handler={setGender}>
+          {GENDER.map((l) => (
+            <option key={l} value={l}>
+              {LANGUAGES[user.locale].Genders[l]}
+            </option>
+          ))}
+        </Select>
+        <Button
+          text={LANGUAGES[user.locale].Profile.ChangeGender}
+          disabled={disabledGender()}
+          handler={() => handleChangeGender()}
+        />
+      </div>
+    </Form>
+  );
+
   console.log("User from profile", user);
 
   return (
@@ -315,25 +431,43 @@ export default function Profile() {
       <Card voteCounts={voteCounts} 
           handleSignOut={handleSignOut} />
      
-      <hr className="m-3"></hr>  
+      <hr className="m-3"></hr> 
 
       <div className="grid sm:grid-cols-3 gap-2">  
        <div className="card">
         <div className="card-header">
           Change Your Profile Info
         </div>
-        <div className="card-body">             
-          {renderChangeName()}
-          {renderChangeTag()}
-          {renderChangeLanguage()}
-        </div>
-        </div>
-
-        {renderChangePassword()}
-       
+        <div className="card-body">   
+        
+        <div className="row">               
+          <div className="col-md-4">
+            {renderChangeName()}
+          </div>
+          <div className="col-md-4">  
+            {renderChangeTag()}
+          </div>
+         
+          <div className="col-md-4">  
+            {renderChangeGender()}
+          </div>
+               
+          <div className="col-md-4">  
+            {renderChangeBirthday()}
+          </div>
+          <div className="col-md-4">  
+            {renderChangeZip()}
+          </div>
+          <div className="col-md-4">  
+            {renderChangeLanguage()}
+          </div>
       </div>
-          <hr className="m-0"></hr>                   
-   </div>
+      </div>
+      </div>
+        {renderChangePassword()}
+        <hr className="m-0" />                  
+      </div>
+      </div>
   
   );
 }

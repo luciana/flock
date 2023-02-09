@@ -17,11 +17,11 @@ export default function Layout() {
 
   console.log("Layhout.js state", state);  
 
-  const loadUser = useCallback(async ({force, email, locale, name}) => {      
+  const loadUser = useCallback(async ({force, email, locale, name, zip, birthday, gender}) => {      
     if (!state.user || force === true) {     
       let user = await Queries.GetUserByEmail(email);
       console.log("Layout.js queries.GetUserByEmail result", user);   
-      if (!user) user = await Mutations.CreateUser(email, locale, name);    
+      if (!user) user = await Mutations.CreateUser(email, locale, name, zip, birthday, gender);    
       console.log("Layout.js create user in mutation", user);
       dispatch({ type: TYPES.UPDATE_LANG, payload: locale || user.locale });
       dispatch({ type: TYPES.UPDATE_USER, payload: user });
@@ -65,7 +65,7 @@ export default function Layout() {
       {loading && <Loading />}
       <SideNav handleSignOut={handleSignOut} />
       <div className="">
-        <Outlet context={{ loadUser, setLoading }} />
+        <Outlet context={{ loadUser, setLoading, handleSignOut }} />
       </div>     
     </section>
   );

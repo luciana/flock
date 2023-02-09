@@ -98,13 +98,11 @@ const Badge = (count) => {
         if(count > 950 ) return 12;
     }
 
-    let selectBadge = badges;  
-    console.log("badge count", count);
+    let selectBadge = badges;     
     if (count){
         const userCount = count.count;  
         if (userCount){
-        const id = translateToBadgeId(userCount);
-            console.log("badge id", id);
+        const id = translateToBadgeId(userCount);        
             selectBadge = badges.filter((l) => l.id === id)
         }
     }

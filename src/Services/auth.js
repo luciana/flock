@@ -58,7 +58,24 @@ const ChangeEmail = async (email) => {
 
 const ChangeName = async (name) => {
   const user = await AmplifyAuth.currentAuthenticatedUser();
-  await AmplifyAuth.updateUserAttributes(user, { name: name });
+  return await AmplifyAuth.updateUserAttributes(user, { name: name });
+};
+
+const ChangeZip = async (zip) => {
+  const user = await AmplifyAuth.currentAuthenticatedUser();
+  await AmplifyAuth.updateUserAttributes(user, { zip: zip });
+};
+
+const ChangeBirthday = async (birthday) => {
+  const user = await AmplifyAuth.currentAuthenticatedUser();
+  await AmplifyAuth.updateUserAttributes(user, { birthday: birthday });
+};
+
+const ChangeGender = async (gender) => {
+  console.log("Auth.ChangeGender started", gender);
+  const user = await AmplifyAuth.currentAuthenticatedUser();
+  console.log("Auth.ChangeGender started user authed", user);
+  await AmplifyAuth.updateUserAttributes(user, { gender: gender });
 };
 
 const ConfirmChangeEmail = async (code) => {
@@ -94,7 +111,10 @@ const Auth = {
   ConfirmChangeEmail,
   ChangePassword,
   ChangeLanguage,
-  GetCredentials
+  GetCredentials,
+  ChangeGender,
+  ChangeZip,
+  ChangeBirthday,
 };
 
 export default Auth;
