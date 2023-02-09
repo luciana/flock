@@ -79,6 +79,7 @@ const pt_br_lang = {
       ResendConfirmationSuccess: "Código enviado, verifique seu email",
       ConfirmRegistrationSuccess: "Confirmação realizada com sucesso!",
       ConfirmRegistrationButton: "Confirmar",
+      TermsandConditions: " Concordo com termos",
     },
     Profile: {
       Profile: "Perfil",

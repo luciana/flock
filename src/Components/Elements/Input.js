@@ -20,8 +20,8 @@ const Input = ({ type, placeholder, value, handler, showTooltip, error }) => {
         className={`form-control block w-full px-4 py-2 font-normal border border-1  rounded transition ease-in-out m-0 focus:border-2 focus:outline-none ${!error ? 'border-gray-300' : 'border-danger'}`}
         placeholder={placeholder}
       />
-      {type === "password" && (            
-         <button className="btn btn-outline-secondary" onClick={() => handleChangeInputType()} type="button" ><RiEyeLine /></button>      
+      {type === "password" && (         
+          <button className="btn btn-outline-secondary" onClick={() => handleChangeInputType()} type="button" ><RiEyeLine /></button>      
       )}
     </div>
   );

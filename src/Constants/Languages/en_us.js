@@ -77,6 +77,7 @@ const en_us_lang = {
       ResendConfirmationSuccess: "Code Resent, Check your Email",
       ConfirmRegistrationSuccess: "Confirmation successful!",
       ConfirmRegistrationButton: "Confirm",
+      TermsandConditions: " Agree to terms and conditions",
     },
     Profile: {
       Profile: "Profile",

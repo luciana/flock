@@ -10,6 +10,10 @@
 .text-small{
   font-size: .875rem;
 }
+.req{
+  color: red;
+  font-size: .875rem;
+}
 
 .App-logo {
   height: 40vmin;
