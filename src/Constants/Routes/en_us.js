@@ -8,6 +8,7 @@ const en_us_routes = {
     HOME: "/",
     PROFILE: "/profile",
     NEW_QUESTION: "/new",
+    TERMS: "/terms",
   };
   
   export default en_us_routes;

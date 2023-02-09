@@ -15,6 +15,7 @@ const ConfirmSignUp = lazy(() => import("./Pages/Auth/ConfirmSignUp"));
 const Layout = lazy(() => import("./Pages/Layout/Layout"));
 const Main = lazy(() => import("./Pages/Main"));
 const Home = lazy(() => import("./Pages/Home"));
+const Terms = lazy(() => import("./Pages/Terms"));
 const Profile = lazy(() => import("./Pages/Profile"));
 const NewQuestion = lazy(() => import("./Pages/NewQuestion"));
 
@@ -34,6 +35,7 @@ function App() {
         
         
         <Route path={ROUTES[state.lang].HOME} element={<Home />} />
+        <Route path={ROUTES[state.lang].TERMS} element={<Terms />} />
         <Route element={<AuthLayout />}>
           <Route path={ROUTES[state.lang].SIGN_IN} element={<SignIn />} />
           <Route path={ROUTES[state.lang].FORGOT_PASSWORD} element={<ForgotPassword />} />

@@ -6,6 +6,9 @@ const pt_br_lang = {
     Code: "Código",
     Home: "Inicial",
     Confirm: "Confirmar",
+    Gender: "Gênero",
+    Birth: "Data de Aniversário",
+    ZipCode: "Cep",
     Questions:{
       Questions: "Perguntas",
       NewQuestion: "Nova Pergunta",
@@ -25,6 +28,11 @@ const pt_br_lang = {
     Languages: {
       "en-US": "Inglês",
       "pt-BR": "Português",
+    },
+    Genders: {
+      "female": "Feminino",
+      "male": "Masculino",
+      "non-binary": "Não-Binário",
     },
     Badges: {
       Initiator: "Iniciador",
@@ -57,6 +65,7 @@ const pt_br_lang = {
       RepeatPassword:"Senha inválida. Tente novamente.",
       InvalidEmail:"E-mail iinválido. Tente novamente.",
       InvalidName:"Insira seu nome.",
+      InvalidZip: "Insira um cep válido.",
     },
     Auth: {
       SignInTitle: "Entrar",
@@ -82,7 +91,7 @@ const pt_br_lang = {
       ResendConfirmationSuccess: "Código enviado, verifique seu email",
       ConfirmRegistrationSuccess: "Confirmação realizada com sucesso!",
       ConfirmRegistrationButton: "Confirmar",
-      TermsandConditions: " Concordo com termos",
+      TermsandConditions: " Concordo com termos",   
     },
     Profile: {
       Profile: "Perfil",
@@ -119,6 +128,7 @@ const pt_br_lang = {
       financial_analyst: "#financial_analyst",
       doctor: "#medico",
       nurse: "#enfermeiro",
+
     }
   };
   

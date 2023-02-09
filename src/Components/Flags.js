@@ -27,8 +27,8 @@ export default function Flags() {
 
   function showLanguageName(lang){
     if (lang === "pt-BR") 
-      return <span className="text-small">Português</span>;
-    return <span className="text-small">English</span>;
+      return <span className="text-sm">Português</span>;
+    return <span className="text-sm">English</span>;
   }
 
   function handleChangeLanguage(lang) {

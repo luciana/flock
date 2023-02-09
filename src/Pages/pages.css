@@ -7,11 +7,15 @@
 .white-bg {
   background-color: #fff;
 }
-.text-small{
+.text-sm{
   font-size: .875rem;
 }
+
+.text-color-gray {
+  color:  var(--bs-gray-600);
+}
 .req{
-  color:red;
+  color: var(--bs-red);
   font-size: .875rem;
 }
 

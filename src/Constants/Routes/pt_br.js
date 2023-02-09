@@ -7,7 +7,8 @@ const pt_br_routes = {
     MAIN: "/main",
     HOME: "/",
     PROFILE: "/profile",
-    NEW_QUESTION: "/new"
+    NEW_QUESTION: "/new",
+    TERMS: "/terms",
   };
   
   export default pt_br_routes;

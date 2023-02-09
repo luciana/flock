@@ -109,8 +109,8 @@ function Question({
         <div className="p-2 row align-items-start"> 
             <div className="col-2"> <Avatar size="42" name={question.userName} className=" img-profile rounded-circle mx-auto mb-0" alt="{question.userName}" /></div>
             <div className="col-8">
-              <div className="text-small lh-1"><span>{question.userName} </span><span aria-hidden="true"> · </span> <span> {createdAt} </span></div>
-              <div className="text-small">
+              <div className="text-sm lh-1"><span>{question.userName} </span><span aria-hidden="true"> · </span> <span> {createdAt} </span></div>
+              <div className="text-sm">
                 {!isAReply && voteEnded && (<span > Voting closed <FaCircle /> </span>)}
                 {!isAReply && !voteEnded && (<span> Voting Open < FaCircleNotch /> until {formatDateAndTime(question.voteEndAt)}</span>)}
                 {isAReply && (<span><FaCircle color="green"/> {question.sentiment}</span>)}
@@ -183,7 +183,7 @@ function Question({
             ))}
           </div>
         )} */}
-         <div className=" border border-0 bg-light text-small lh-3">    
+         <div className=" border border-0 bg-light text-sm lh-3">    
         { expertNeeded && (       
           <span className="p-2"><FaPhoneVolume /> Special call out for #<strong>{question.questionTag}</strong></span>
         )}
@@ -194,7 +194,7 @@ function Question({
         </div> 
       
       { alreadyVotedForQuestionListBool && (       
-       <div className="container  text-small lh-3">
+       <div className="container  text-sm lh-3">
         <span className="p-2">You helped {question.userName} <FaGrinHearts /></span>
       </div>   )}
       </div>

@@ -6,6 +6,9 @@ const en_us_lang = {
     Code: "Code",
     Home: "Home",
     Confirm: "Confirm",
+    Gender: "Gender",
+    Birth: "Date of Birth",
+    ZipCode: "Zip",
     Questions:{
       Questions: "Questions",
       NewQuestion: "New Question",
@@ -25,6 +28,11 @@ const en_us_lang = {
     Languages: {
       "en-US": "English",
       "pt-BR": "Portuguese",
+    },
+    Genders: {
+      "female": "Female",
+      "male": "Male",
+      "non-binary": "Non-Binary",
     },
     Badges: {
       Initiator: "Initiator",
@@ -52,9 +60,10 @@ const en_us_lang = {
       Password: "Incorrect Password.",
       NewPassword: "Password did not conform with policy.",
       AttemptLimit: "Attempt limit exceeded, please try after some time.",
-      RepeatPassword:"Passwords must match",
-      InvalidEmail:"Email is not valid",
-      InvalidName:"Name is required",
+      RepeatPassword:"Passwords must match.",
+      InvalidEmail:"Email is not valid.",
+      InvalidName:"Name is required.",
+      InvalidZip: "Enter a valid zip code.",
     },
     Auth: {
       SignInTitle: "Sign In",
@@ -80,7 +89,7 @@ const en_us_lang = {
       ResendConfirmationSuccess: "Code Resent, Check your Email",
       ConfirmRegistrationSuccess: "Confirmation successful!",
       ConfirmRegistrationButton: "Confirm",
-      TermsandConditions: " Agree to terms and conditions",
+      TermsandConditions: " Agree to terms and conditions",     
     },
     Profile: {
       Profile: "Profile",

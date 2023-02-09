@@ -33,4 +33,10 @@ export const TAGS = [
   "lawyer",
   "life_coach",
   "financial_analyst",
-]
+];
+
+export const GENDER = [
+  "female",
+  "male",
+  "non-binary",
+];

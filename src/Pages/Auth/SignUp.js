@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../Helpers";
-import { AuthLink, AuthTitle, Input } from "../../Components";
+import { AuthLink, AuthTitle, Input, Title, Select, DatePicker } from "../../Components";
 import { AppContext } from "../../Contexts";
-import { LANGUAGES, ROUTES } from "../../Constants";
+import { LANGUAGES, ROUTES, GENDER } from "../../Constants";
 
 export default function SignUp() {
   const location = useLocation();
@@ -14,6 +14,9 @@ export default function SignUp() {
   const [pwd, setPwd] = useState("");
   const [repeat, setRepeat] = useState("");
   const [accept, setAccept] = useState(false);
+  const [zip, setZip] = useState("");
+  const [birthday, setBirtday] = useState("");
+  const [gender, setGender] = useState("female");
 
   useEffect(() => {
     setAlert(location?.state?.alert);
@@ -47,8 +50,7 @@ export default function SignUp() {
     }
 
     const handleRepeatPassword = (r) =>{
-      setRepeat(r);
-      console.log("checking repead password", r);
+      setRepeat(r);     
       if( r === "" || pwd !== r ){
         setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.RepeatPassword});  
       }else{
@@ -57,8 +59,7 @@ export default function SignUp() {
     }
 
     const handleEmail = (e) =>{
-      setEmail(e);
-      console.log("checking email", e);
+      setEmail(e);     
       if(!isValidEmail(e)){
         setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.InvalidEmail});  
       }else{
@@ -66,9 +67,17 @@ export default function SignUp() {
       }   
     }
 
+    const handleZip = (z) => {
+      setZip(z);
+      
+      if(z && z.length < 5){
+        setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.InvalidZip}); 
+      }else{
+        setAlert();
+      }
+    }
     const handleName = (n) =>{
-      setName(n);
-      console.log("checking name", n);
+      setName(n);     
       if(n === ""){
         setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.InvalidName});  
       }else{
@@ -77,50 +86,112 @@ export default function SignUp() {
     }
 
   return (
-    <form className="form-control needs-validation novalidate">
+    <>
+    <form className=" form-control">
     <AuthTitle text={LANGUAGES[state.lang].Auth.SignUpTitle} />  
-      <div className="mb-4">
-      <label className="form-label">{LANGUAGES[state.lang].Name} <span className="req">*</span></label>
+      <div className="mb-4">      
         <Input
           type="text"
           label={LANGUAGES[state.lang].Name}      
           placeholder={LANGUAGES[state.lang].Name} 
           value={name}
-          handler={handleName}         
+          handler={handleName}  
+          required={true}       
         /> 
       </div>
-      <div className="mb-4">
-      <label className="form-label">{LANGUAGES[state.lang].Email} <span className="req">*</span></label>
+      <div className="mb-4">      
         <Input
           type="email"
           label={LANGUAGES[state.lang].Email}     
           placeholder={LANGUAGES[state.lang].Email}
           value={email}
-          handler={handleEmail}         
+          handler={handleEmail}  
+          required={true}            
         />       
       </div>
-      <div className="mb-4">
-      <label className="form-label">{LANGUAGES[state.lang].Password} <span className="req">*</span></label>
+      <div className="mb-4">      
         <Input
           type="password"
           label={LANGUAGES[state.lang].Password}
           placeholder={LANGUAGES[state.lang].Password}
           value={pwd}
           handler={handlePassword}          
-          showTooltip         
+          showTooltip      
+          required={true}        
         />    
       </div>      
-      <div className="mb-4">
-      <label className="form-label">{LANGUAGES[state.lang].Auth.RepeatPassword} <span className="req">*</span></label>
+      <div className="mb-4">      
         <Input
           type="password"
           label={LANGUAGES[state.lang].Auth.RepeatPassword}
           placeholder={LANGUAGES[state.lang].Auth.RepeatPassword}
           value={repeat}
-          handler={handleRepeatPassword}         
+          handler={handleRepeatPassword}  
+          required={true}            
         />       
       </div>
-      <div className="py-2 my-2">
+     
+
+      <div className="form-control">
+        <Title text={"If you care to share"}
+               size={"text-sm"}
+               color={"text-color-gray"} />
+      
+      <div className="row">               
+        <div className="col">
+          <Input 
+            type={"number"}
+            label={LANGUAGES[state.lang].ZipCode}
+            placeholder={LANGUAGES[state.lang].ZipCode}
+            handler={handleZip} />          
+        </div>
+        <div className="col">        
+          <label className="form-label py-1">{LANGUAGES[state.lang].Gender} </label> 
+          <Select  value={gender} handler={setGender}>         
+            {GENDER.map((l) => (            
+             <option key={l} value={l}>
+               {LANGUAGES[state.lang].Genders[l]}
+            </option>
+            ))}
+        </Select>        
+        </div>
+        <div className="col">
+          <DatePicker 
+            placeholder={LANGUAGES[state.lang].Birth} 
+            label={LANGUAGES[state.lang].Birth} 
+            name={"dob"}
+            handler={setBirtday}
+            />          
+        </div>
+      </div>
+      </div>
+
+      <div className="form-check my-3">    
+        <input
+          type="checkbox"       
+          id="invalidCheck" 
+          checked={accept}       
+          onChange={() => setAccept(!accept)}
+          className="form-check-input h-4 w-4 border border-gray-300 rounded-sm "
+        />
+        <label className="form-check-label" htmlFor="invalidCheck">          
+          <AuthLink text={LANGUAGES[state.lang].Auth.TermsandConditions} to={ROUTES[state.lang].TERMS} />
+          <span className="req">*</span>
+        </label>     
+      </div>
+
+      <div>
+        <button       
+          disabled={disabled()}
+          className="btn btn-outline-primary rounded-pill "
+          type="submit"
+          onClick={() => signUp(email, pwd, name, repeat)}
+          
+        >{LANGUAGES[state.lang].Auth.SignUpButton} </button>
+      </div>
+
+
+      <div className="py-4 my-4">
           <div><strong>Password Requirements:</strong></div>
             <ul className="list-group list-group-flush">
               <li className="list-group-item">Minimum eight characters</li>
@@ -130,28 +201,11 @@ export default function SignUp() {
               <li className="list-group-item">Have at least one one special character</li>              
             </ul>            
       </div>
-    <div className="form-check my-3">    
-      <input
-        type="checkbox"       
-        id="invalidCheck" 
-        checked={accept}       
-        onChange={() => setAccept(!accept)}
-        className="form-check-input h-4 w-4 border border-gray-300 rounded-sm "
-      />
-      <label className="form-check-label" htmlFor="invalidCheck">
-        {LANGUAGES[state.lang].Auth.TermsandConditions} <span className="req">*</span>
-      </label>     
-    </div>
-      <button       
-        disabled={disabled()}
-        className="btn btn-outline-primary rounded-pill "
-        type="submit"
-        onClick={() => signUp(email, pwd, name, repeat)}
-        
-      >{LANGUAGES[state.lang].Auth.SignUpButton} </button>
-      <div className="w-full text-center mt-6">
+      <div className="w-full text-center">
         <AuthLink text={LANGUAGES[state.lang].Auth.GoToSignIn} to={ROUTES[state.lang].SIGN_IN} size="xl" />
       </div>
     </form>
+    <div className="py-4"><hr className="my-4" /></div>
+    </>
   );
 }

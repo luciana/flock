@@ -59,13 +59,13 @@ const QuestionForm2 = ({
               </div>
               <div className="col-auto">
                 <div className="form-check form-check-inline">
-                    <input type="radio" onChange={handleChange} className="form-check-input" id="10" name="votePeriod" value="10" checked={votePeriod === "10"} /><label className="form-check-label text-small "  htmlFor="10">10 min</label>
+                    <input type="radio" onChange={handleChange} className="form-check-input" id="10" name="votePeriod" value="10" checked={votePeriod === "10"} /><label className="form-check-label text-sm "  htmlFor="10">10 min</label>
                 </div>
                 <div className="form-check form-check-inline">
-                    <input type="radio" onChange={handleChange} className="form-check-input" id="120" name="votePeriod" value="120" checked={votePeriod === "120"}/><label className="form-check-label text-small " htmlFor="120">2 hours</label>
+                    <input type="radio" onChange={handleChange} className="form-check-input" id="120" name="votePeriod" value="120" checked={votePeriod === "120"}/><label className="form-check-label text-sm " htmlFor="120">2 hours</label>
                 </div>
                 <div className="form-check form-check-inline">
-                  <input type="radio" onChange={handleChange} className="form-check-input" id="480" name="votePeriod" value="480" checked={votePeriod === "480"} /><label className="form-check-label text-small " htmlFor="480">8 hours</label>
+                  <input type="radio" onChange={handleChange} className="form-check-input" id="480" name="votePeriod" value="480" checked={votePeriod === "480"} /><label className="form-check-label text-sm " htmlFor="480">8 hours</label>
                 </div>
               </div>             
             </div>           
@@ -73,7 +73,7 @@ const QuestionForm2 = ({
           <div>          
             <div className="row g-3 align-items-center">
               <div className="col-auto">
-                <label htmlFor="expertTag" className="col-form-label text-small " data-bs-toggle="tooltip" data-bs-placement="top" title=" an expert opinion will weigh more">Expert Tag</label>
+                <label htmlFor="expertTag" className="col-form-label text-sm " data-bs-toggle="tooltip" data-bs-placement="top" title=" an expert opinion will weigh more">Expert Tag</label>
               </div>
               <div className="col-auto">
                 <input type="expertTag" id="expertTag" className="form-control lh-1" placeholder="i.e #designer" value="" />

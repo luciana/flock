@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RiEyeLine } from 'react-icons/ri';
 
-const Input = ({ type, placeholder, value, handler, showTooltip, error }) => {
+const Input = ({ type, label, placeholder, value, handler, showTooltip, error, required = false }) => {
   const [inputType, setInputType] = useState(type);
 
   function handleChangeInputType() {
@@ -11,8 +11,12 @@ const Input = ({ type, placeholder, value, handler, showTooltip, error }) => {
 
   return (
 
-
-<div className="input-group mb-3">
+    <div className=" mb-3">
+    <label className="form-label py-1"> {label}  
+    {required === true && (   <span className="req"> *</span> ) }
+    </label> 
+    <div className="input-group mb-3">
+     
       <input
         type={inputType}
         value={value}
@@ -23,6 +27,7 @@ const Input = ({ type, placeholder, value, handler, showTooltip, error }) => {
       {type === "password" && (         
           <button className="btn btn-outline-secondary" onClick={() => handleChangeInputType()} type="button" ><RiEyeLine /></button>      
       )}
+    </div>
     </div>
   );
 };
