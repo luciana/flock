@@ -5,7 +5,7 @@ const CreateUser = async (email, locale,  name, birthday, gender, zip) => {
   const {
     data: { createUser },
   } = await API.graphql(
-    graphqlOperation(mutations.createUser, { input: { email, locale, name } })
+    graphqlOperation(mutations.createUser, { input: { email, locale, name, birthday, gender, zip } })
   );
   return createUser;
 };
@@ -16,6 +16,19 @@ const UpdateUser = async ( id, email, locale ) => {
   } = await API.graphql(
     graphqlOperation(mutations.updateUser, {
       input: { id, email, locale },
+    })
+  );
+  return updateUser;
+};
+
+
+const UpdateUserName = async ( id, name ) => {
+  console.log("UpdateUserName mutation inputs", id, name);
+  const {
+    data: { updateUser },
+  } = await API.graphql(
+    graphqlOperation(mutations.updateUser, {
+      input: { id, name },
     })
   );
   return updateUser;
@@ -65,16 +78,7 @@ const UpdateUserGender = async ( id, gender ) => {
   return updateUser;
 };
 
-const UpdateUserName = async ( id, name ) => {
-  const {
-    data: { updateUser },
-  } = await API.graphql(
-    graphqlOperation(mutations.updateUser, {
-      input: { id, name },
-    })
-  );
-  return updateUser;
-};
+
 
 const UpdateUserVotes = async ( id, votes ) => {
   //votes = [{\"optionId\":3942,\"questionId\":\"7998615d-88dd-427a-a20f-1a2851d009b3\"}]  

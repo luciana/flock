@@ -366,7 +366,7 @@ export default function Profile() {
   const renderChangeTag = () => (
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
-      <label className="form-label"> {LANGUAGES[user.locale].Profile.YourExpertise}</label>
+      <label className="form-label py-1"> {LANGUAGES[user.locale].Profile.YourExpertise}</label>
         <Select value={tag} handler={setTag}>            
           {TAGS.map((l) => (
             <option key={l} value={l}>
@@ -374,6 +374,7 @@ export default function Profile() {
             </option>
           ))}
         </Select>
+       
         <Button
           text={LANGUAGES[user.locale].Profile.ChangeTag}
           disabled={disabledTag()}
@@ -386,7 +387,7 @@ export default function Profile() {
   const renderChangeLanguage = () => (
     <Form>     
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
-      <label className="form-label">{LANGUAGES[user.locale].Profile.LanguagePreference}</label>
+      <label className="form-label py-1">{LANGUAGES[user.locale].Profile.LanguagePreference}</label>
         <Select value={language} handler={setLanguage}>
           {Object.keys(LANGUAGES).map((l) => (
             <option key={l} value={l}>
@@ -406,7 +407,7 @@ export default function Profile() {
   const renderChangeGender = () => (
     <Form>     
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
-      <label className="form-label">{LANGUAGES[user.locale].Profile.YourGender}</label>
+      <label className="form-label py-1">{LANGUAGES[user.locale].Profile.YourGender}</label>
         <Select value={gender} handler={setGender}>
           {GENDER.map((l) => (
             <option key={l} value={l}>
@@ -463,7 +464,9 @@ export default function Profile() {
           </div>
       </div>
       </div>
+      
       </div>
+      <hr className="m-2" /> 
         {renderChangePassword()}
         <hr className="m-0" />                  
       </div>

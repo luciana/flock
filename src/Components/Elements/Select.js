@@ -1,4 +1,5 @@
 const Select = ({ value, handler, children }) => (
+  <div className=" mb-3">
     <select
       value={value}
       onChange={(e) => handler(e.target.value)}
@@ -7,6 +8,8 @@ const Select = ({ value, handler, children }) => (
     >
       {children}
     </select>
+
+  </div>
   );
   
   export default Select;
