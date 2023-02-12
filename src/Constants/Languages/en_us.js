@@ -35,13 +35,16 @@ const en_us_lang = {
       "non-binary": "Non-Binary",
     },
     Badges: {
-      Initiator: "Initiator",
-      Support: "Support",
-      Jungler: "Jungler",
-      Community: "Community",
-      Solid:"Solid",
-      Charged: "Charged",
-      Award: "Award"
+      Level1: "Bee Hummingbird",
+      Level2: "Spotted Pardarole",
+      Level3: "American Goldfinch",
+      Level4: "Green-headed Tanager",
+      Level5: "Tree Swallow",
+      Level6: "Blue Grosbeak",
+      Level7: "Dunlin",
+      Level8: "Atlantic Puffin",
+      Level9: "Scarlet Makaw",
+      Level10: "Common Ostrich",
     },
     NotFound: {
       Sorry: "Sorry",
