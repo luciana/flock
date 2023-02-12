@@ -121,7 +121,8 @@ export default function Profile() {
       loadUser({ force: true, email: user.email });
       navigate(ROUTES[language].PROFILE);
     } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      console.error("handleChangeLanguage error", error);
+      setAlert({ type: "error", text: LANGUAGES[user.locale].CommonError.UpdateUser});
     }
     setLoading(false);
   };
@@ -132,13 +133,13 @@ export default function Profile() {
     try {
       const authResponse = await Auth.ChangeName(name);
       console.log("authResponse to change name", authResponse);
-      const mutationResponse = await Mutations.UpdateUserName( user.id, name );
+      const mutationResponse = await Mutations.UpdateUserName( { id: user.id,  name: name } );
       console.log("mutations response to change name", mutationResponse);
       loadUser({ force: true, email: user.email });
       navigate(ROUTES[language].PROFILE);
     } catch (error) {
       console.error("error with handling change name", error);
-      setAlert({ type: "error", text: error.message });
+      setAlert({ type: "error", text: LANGUAGES[user.locale].CommonError.UpdateUser });
     }
     setLoading(false);
   };
@@ -160,7 +161,7 @@ export default function Profile() {
       }
     } catch (error) {
       console.error("handleChangeGender error", error);
-      setAlert({ type: "error", text: error });
+      setAlert({ type: "error", text: "An error occurred, try it again later." });
     }
     setLoading(false);
   };
@@ -173,7 +174,7 @@ export default function Profile() {
       loadUser({ force: true, email: user.email });
       navigate(ROUTES[language].PROFILE);
     } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      setAlert({ type: "error", text: LANGUAGES[user.locale].CommonError.UpdateUser });
     }
     setLoading(false);
   };
@@ -186,7 +187,7 @@ export default function Profile() {
       loadUser({ force: true, email: user.email });
       navigate(ROUTES[language].PROFILE);
     } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      setAlert({ type: "error", text: LANGUAGES[user.locale].CommonError.UpdateUser });
     }
     setLoading(false);
   };
@@ -195,7 +196,7 @@ export default function Profile() {
     loading();
     try {    
       console.log("handleChangeBirthdate", birthdate);
-      const authResult = await Auth.ChangeGender(birthdate);
+      const authResult = await Auth.ChangeBirthdate(birthdate);
       console.log("Auth.Birthdate auth result", authResult);
       if(authResult){
       await Mutations.UpdateUserBirthdate({ id: user.id, birthdate: birthdate });
@@ -203,7 +204,7 @@ export default function Profile() {
       navigate(ROUTES[language].PROFILE);
       }
     } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      setAlert({ type: "error", text: LANGUAGES[user.locale].CommonError.UpdateUser });
     }
     setLoading(false);
   };

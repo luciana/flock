@@ -56,13 +56,21 @@ const ChangeEmail = async (email) => {
 };
 
 const ChangeName = async (name) => {
-  const user = await AmplifyAuth.currentAuthenticatedUser();
-  return await AmplifyAuth.updateUserAttributes(user, { name: name });
+  try{ 
+    const user = await AmplifyAuth.currentAuthenticatedUser();
+    return await AmplifyAuth.updateUserAttributes(user, { name: name });
+  }catch(error){
+    return null;    
+  }
 };
 
 const ChangeZip = async (address) => {
-  const user = await AmplifyAuth.currentAuthenticatedUser();
-  await AmplifyAuth.updateUserAttributes(user, { address: address });
+  try{ 
+    const user = await AmplifyAuth.currentAuthenticatedUser();
+    await AmplifyAuth.updateUserAttributes(user, { address: address });
+  }catch(error){
+    return null;    
+  }
 };
 
 const ChangeBirthdate = async (birthdate) => {
@@ -71,10 +79,9 @@ const ChangeBirthdate = async (birthdate) => {
   console.log("Change ChangeBirthdate input", ChangeBirthdate);
   const user = await AmplifyAuth.currentAuthenticatedUser();    
   console.log("Change ChangeBirthdate for user", user);
-  return await AmplifyAuth.updateUserAttributes(user, { 'birthdate': birthdate });
+  return await AmplifyAuth.updateUserAttributes(user, { birthdate: birthdate });
   }catch(error){
-    return null;
-    //console.error("Auth.ChangeGender gender attribute  update error",error);
+    return null;    
   }
 };
 

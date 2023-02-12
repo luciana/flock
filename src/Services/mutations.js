@@ -10,7 +10,7 @@ const CreateUser = async (email, locale,  name, birthdate, gender, address) => {
   return createUser;
 };
 
-const UpdateUser = async ( id, email, locale ) => {
+const UpdateUser = async ( {id, email, locale} ) => {
   const {
     data: { updateUser },
   } = await API.graphql(
@@ -22,7 +22,7 @@ const UpdateUser = async ( id, email, locale ) => {
 };
 
 
-const UpdateUserName = async ( id, name ) => {
+const UpdateUserName = async ( {id, name} ) => {
   console.log("UpdateUserName mutation inputs", id, name);
   const {
     data: { updateUser },
@@ -34,7 +34,8 @@ const UpdateUserName = async ( id, name ) => {
   return updateUser;
 };
 
-const UpdateUserTag = async ( id, userTag ) => {
+const UpdateUserTag = async ( {id, userTag} ) => {
+  console.log("Mutation UpdateUserTag", id, userTag);
   const {
     data: { updateUser },
   } = await API.graphql(
@@ -45,18 +46,20 @@ const UpdateUserTag = async ( id, userTag ) => {
   return updateUser;
 };
 
-const UpdateUserZip = async ( id, address ) => {
+const UpdateUserZip = async ( {id, address} ) => {
   const {
     data: { updateUser },
   } = await API.graphql(
-    graphqlOperation(mutations.updateUser, {
+    graphqlOperation(
+      mutations.updateUser, {
       input: { id, address },
     })
   );
   return updateUser;
 };
 
-const UpdateUserBirthdate = async ( id, birthdate ) => {
+const UpdateUserBirthdate = async ({ id, birthdate} ) => {
+  console.log("Mutation UpdateUserBirthdate", id, birthdate);
   const {
     data: { updateUser },
   } = await API.graphql(
@@ -67,7 +70,8 @@ const UpdateUserBirthdate = async ( id, birthdate ) => {
   return updateUser;
 };
 
-const UpdateUserGender = async ( id, gender ) => {
+const UpdateUserGender = async ({ id, gender} ) => {
+  console.log("Mutation UpdateUserGender", id, gender);
   const {
     data: { updateUser },
   } = await API.graphql(

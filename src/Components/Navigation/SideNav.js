@@ -7,7 +7,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { Nav, NavItem} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-
+import Flags  from '../Flags';
 
 function SideNav({ handleSignOut }) {
     const { state } = useContext(AppContext);
@@ -101,8 +101,11 @@ function SideNav({ handleSignOut }) {
                       <button onClick={() => handleSignOut()} className="btn nav-link js-scroll-trigger">
                         {LANGUAGES[user.locale].Profile.SignOut}
                       </button>
-                      </li>                
+                      </li>       
+                    <hr className='my-4' />     
+                    <li className="nav-item"><Flags /></li>      
                 </ul>
+         
             </div>
         </nav>
       </>
