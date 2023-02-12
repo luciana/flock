@@ -302,7 +302,8 @@ export default function Profile() {
             label={LANGUAGES[user.locale].Birth} 
             name={"dob"}
             handler={setBirthdate}
-            locale={user.locale}         
+            locale={user.locale}    
+            value={user.birthdate}     
         />   
 
       <Button

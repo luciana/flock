@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from 'react-bootstrap';
 
-const DatePicker = ({ name, label, placeholder, handler, required = false, locale }) => {      
+const DatePicker = ({ name, label, placeholder, handler, required = false, locale, value }) => {      
 
 
   return (
@@ -16,7 +16,7 @@ const DatePicker = ({ name, label, placeholder, handler, required = false, local
         name={name} 
         onChange={(e) => handler(e.target.value)}
         placeholder={placeholder}
-       // defaultValue={"2000-01-01"}
+        defaultValue={value}
      />        
     </div>
     </div>
