@@ -292,20 +292,20 @@ export default function Profile() {
     </Form>
   );
 
-  const renderChangebirthdate = () => (         
+  const renderChangeBirthdate = () => (         
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
 
       <DatePicker 
-            placeholder={LANGUAGES[state.lang].Birth} 
-            label={LANGUAGES[state.lang].Birth} 
+            placeholder={LANGUAGES[user.locale].Birth} 
+            label={LANGUAGES[user.locale].Birth} 
             name={"dob"}
             handler={setBirthdate}
             locale={user.locale}         
         />   
 
       <Button
-        text={LANGUAGES[user.locale].Profile.Changebirthdate}
+        text={LANGUAGES[user.locale].Profile.ChangeBirthdate}
         disabled={disabledBirthdate()}
         handler={() => handleChangeBirthdate()}
       />
@@ -468,7 +468,7 @@ export default function Profile() {
           </div>
                
           <div className="col-md-4">  
-            {renderChangebirthdate()}
+            {renderChangeBirthdate()}
           </div>
           <div className="col-md-4">  
             {renderChangeZip()}

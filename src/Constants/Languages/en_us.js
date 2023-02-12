@@ -98,7 +98,7 @@ const en_us_lang = {
       ChangeName: "Change Name",
       ChangeZip: "Change Zip",
       ChangeGender: "Change Gender",
-      ChangeBirthday: "Change Birthday",
+      ChangeBirthdate: "Change Birthday",
       YourZipCode: "Your Zip Code",
       YourGender: "Your Gender",
       YourBirthday: "Your Birthday",     

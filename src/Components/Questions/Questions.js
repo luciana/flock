@@ -14,7 +14,8 @@ const Questions = () => {
     const [votedList, setVotedList] = useState([]);
     const [votedOptionsList, setVoteOptionsdList] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [voteFileChecked, setVoteFileChecked] = useState(false);  
+    const [isVoteFilterChecked, setIsVoteFilterChecked] = useState(false);  
+    const [isQuestionFilterChecked, setIsQuestionFilterChecked] = useState(false);     
     const { state, dispatch } = useContext(AppContext);
     const { user } = state;
     const [filterList, setFilterList]= useState([]);
@@ -27,17 +28,22 @@ const Questions = () => {
           setLoading(true);       
           let q = await Queries.GetAllQuestions();
           //console.log("Get all Questions from db", q);
-          setBackendQuestions(q.sort(
+          setBackendQuestions(q.filter(
+              (backendQuestion) => ((backendQuestion.parentID === null) )
+            ).sort(
             (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           ));
-          setFilterList(q.filter(
-            (backendQuestion) => ((backendQuestion.parentID === null) )
-          ).sort(
+          
+          // initial setFilter list is the same as backendquestions retrieved from the server.
+            setFilterList(q.filter(
+              (backendQuestion) => ((backendQuestion.parentID === null) )
+            ).sort(
             (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          ))
-          console.log("load filter list question", filterList);
+          ));
+          
+          
           setLoading(false);
         }catch(err){
           console.error("Questions.js Loading Questions from queries error", err);
@@ -72,7 +78,7 @@ const Questions = () => {
         loadVotes();
         
                       
-      }, [user]);
+      }, [user, setFilterList]);
 
      
       // const rootQuestions =  backendQuestions.filter(
@@ -82,28 +88,134 @@ const Questions = () => {
       //   new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       // ); 
 
-        const handleVoteFilterSwitch = () => {     
-          setVoteFileChecked(!voteFileChecked);      
-          if (!voteFileChecked){        
-            const filteredList = backendQuestions.filter(
-              (backendQuestion) => (((new Date(backendQuestion.voteEndAt) - new Date() > 1 ) 
-                            && (backendQuestion.parentID === null)) )
+        const handleVoteFilterSwitch = () => {               
+          setIsVoteFilterChecked(!isVoteFilterChecked);  
+         
+         
+          if(!isVoteFilterChecked){
+            const voteFilteredList = filterList.filter(
+             (backendQuestion) => (((new Date(backendQuestion.voteEndAt) - new Date() > 1 ) 
+                           && (backendQuestion.parentID === null)) )
+             ).sort(
+               (a, b) =>
+               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+             ); 
+             console.log("handleVoteFilterSwitch question ",isQuestionFilterChecked ); 
+             console.log("handleVoteFilterSwitch vote ",isVoteFilterChecked, voteFilteredList );             
+           setFilterList(voteFilteredList); 
+
+           //both swithes are on
+           if(isQuestionFilterChecked){
+            console.log("both switches are on");
+           // setFilterList([...new Set([...voteFilteredList,...filterList])]);
+          }else{
+            //only this switch is on
+            console.log("only vote swich is on");
+            
+          }
+          setFilterList(voteFilteredList); 
+         }else{
+          setFilterList(backendQuestions); 
+         }
+          
+          
+                 
+        }; 
+
+        const handleQuestionFilterSwitch =() => {    
+          setIsQuestionFilterChecked(!isQuestionFilterChecked);   
+        
+          if(!isQuestionFilterChecked){
+            const id = user.id;
+            console.log("Questions.js checkFilteredList for question looking for user ",id );
+            const questionFilteredList = filterList.filter(
+              (backendQuestion) => ((backendQuestion.parentID === null) && 
+                                    ( backendQuestion.userID === id) )
               ).sort(
                 (a, b) =>
                 new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
               );
-              console.log("filteredList true", filteredList);
-              console.log("compare question date ", new Date(backendQuestions[3].voteEndAt));
-              console.log("new Date(backendQuestion.voteEndAt) - new Date()", new Date(backendQuestions[3].voteEndAt) - new Date());
-              setFilterList(filteredList);
+            console.log("handleQuestionFilterSwitch question ",isQuestionFilterChecked, questionFilteredList ); 
+            console.log("handleQuestionFilterSwitch vote ",isVoteFilterChecked );     
+
+            //both swithes are on
+            if(isVoteFilterChecked){
+              console.log("both switches are on");
+             // setFilterList([...new Set([...questionFilteredList,...filterList])]);
+            }else{
+              //only this switch is on
+              console.log("only question swich is on");
+             
+            }
+            setFilterList(questionFilteredList); 
           }else{
-            
-            console.log("filteredList false", backendQuestions);
-            setFilterList(backendQuestions);
-          }      
+           setFilterList(backendQuestions); 
+          }         
+        }
          
-        }; 
-                
+        // console.log("checkFilteredList isVoteFilterChecked init", isVoteFilterChecked);
+        // console.log("checkFilteredList isQuestionFilterChecked init", isQuestionFilterChecked);
+      
+      const checkFilteredList = () => {
+
+        let questionFilteredList =[];
+        let voteFilteredList =[];
+        let showVote = false;
+        let showQuestion = false;
+        console.log("checkFilteredList isVoteFilterChecked", isVoteFilterChecked);
+        console.log("checkFilteredList isQuestionFilterChecked", isQuestionFilterChecked);
+        if(!isVoteFilterChecked){
+           voteFilteredList = backendQuestions.filter(
+            (backendQuestion) => (((new Date(backendQuestion.voteEndAt) - new Date() > 1 ) 
+                          && (backendQuestion.parentID === null)) )
+            ).sort(
+              (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            ); 
+          console.log("Questions.js checkFilteredList for vote ",voteFilteredList );
+          showVote = true;
+          console.log("Questions.js checkFilteredList showVote ",showVote );
+        }
+
+        if(!isQuestionFilterChecked){
+          const id = user.id;
+          console.log("Questions.js checkFilteredList for question looking for user ",id );
+          questionFilteredList = backendQuestions.filter(
+            (backendQuestion) => ((backendQuestion.parentID === null) && 
+                                  ( backendQuestion.userID === id) )
+            ).sort(
+              (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+          console.log("Questions.js checkFilteredList for question ",questionFilteredList );
+          showQuestion = true;
+          console.log("Questions.js checkFilteredList showQuestion ",showQuestion );
+        }
+
+
+        if ( !showQuestion && !showVote){
+          console.log("Questions.js checkFilteredList 0 0", backendQuestions);
+          return backendQuestions;           
+        }
+
+        if (!showQuestion && showVote ) {
+          console.log("Questions.js checkFilteredList 0 1", voteFilteredList);    
+          return voteFilteredList;
+        }
+
+        if (showQuestion && !showVote ) {
+          console.log("Questions.js checkFilteredList 1 0", questionFilteredList);
+          return questionFilteredList;
+        }
+
+        if (showQuestion && showVote ) {
+          console.log("Questions.js checkFilteredList 1 1");
+          return [...new Set([...questionFilteredList,...voteFilteredList])];
+        }
+
+
+      }
+           
     
 
       const addQuestion = (text) => {
@@ -236,16 +348,24 @@ const Questions = () => {
       }
       
       const showNoQuestions = filterList.length === 0;
-      console.log("Switch", voteFileChecked);
-      console.log("backendQuestion", backendQuestions);
-      console.log("filterList questions", filterList);
+
+      // console.log("backendQuestion", backendQuestions);
+      // console.log("filterList questions", filterList);      
 
       return ( 
         <>
             {loading && <Loading />}
             {( !loading && showNoQuestions ) && <Alert type="warning" text="No questions retrieved. Start one!" link={ROUTES[state.lang].NEW_QUESTION} />}          
-            <Switch label={"Only open questions"}
-                    handleSwitch={handleVoteFilterSwitch}/>           
+            <div className="row border border-1 ">
+              <div className=" col-md-4">
+                 <Switch label={"Only open questions"}
+                    handleSwitch={handleVoteFilterSwitch}/> 
+              </div>
+              <div className=" col-md-4">                
+                  <Switch label={"Only my questions"}
+                    handleSwitch={handleQuestionFilterSwitch}/>   
+              </div>
+              </div>     
               <div id="all-questions" className=" border border-0 p-0 ">
                   {filterList.map((rootQuestion) => (
                       <Question 

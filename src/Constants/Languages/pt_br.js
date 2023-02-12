@@ -100,7 +100,7 @@ const pt_br_lang = {
       ChangeName: "Alterar Nome",
       ChangeZip: "Alterar Cep",
       ChangeGender: "Alterar Gênero",
-      ChangeBirthday: "Alterar Data de Nascimento",
+      ChangeBirthdate: "Alterar Data de Nascimento",
       YourZipCode: "Seu Cep",
       YourGender: "Seu Gênero",
       YourBirthday: "Sua data de nascimento",
