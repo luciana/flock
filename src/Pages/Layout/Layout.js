@@ -26,7 +26,7 @@ export default function Layout() {
       console.log("Layout.js create user in mutation", user);
       dispatch({ type: TYPES.UPDATE_LANG, payload: locale || user.locale });
       dispatch({ type: TYPES.UPDATE_USER, payload: user });
-    }
+    } 
   }, [dispatch, state.user]);
 
   const handleSignOut = async () => {
@@ -52,8 +52,8 @@ export default function Layout() {
         });
       } catch (error) {
         console.error("Layout.js Main error in isUserLoggedIn", error);
-        
-        //navigate(ROUTES[state.lang].SIGN_IN);
+
+        navigate(ROUTES[state.lang].SIGN_IN);
       }
     };
 

@@ -4,7 +4,7 @@ input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONL
 
 # 1 User has many Votes
 type User @model @auth(rules: [
-      { allow: owner }
+      { allow: owner, ownerField: "id", operations: [ read, create, update, delete]}
       { allow: private, operations: [create, read, update] }   
       ]) 
    @aws_cognito_user_pools {
