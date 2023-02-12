@@ -1,11 +1,11 @@
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
 
-const CreateUser = async (email, locale,  name, birthdate, gender, address) => {
+const CreateUser = async (email, locale,  name, address, birthdate, gender) => {
   const {
     data: { createUser },
   } = await API.graphql(
-    graphqlOperation(mutations.createUser, { input: { email, locale, name, birthdate, gender, address } })
+    graphqlOperation(mutations.createUser, { input: { email, locale, name, address, birthdate, gender } })
   );
   return createUser;
 };

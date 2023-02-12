@@ -22,6 +22,7 @@ export default function Layout() {
     if (!state.user || force === true) {     
       let user = await Queries.GetUserByEmail(email);
       console.log("Layout.js queries.GetUserByEmail result", user);   
+     
       if (!user) user = await Mutations.CreateUser(email, locale, name, address, birthdate, gender);    
       console.log("Layout.js create user in mutation", user);
       dispatch({ type: TYPES.UPDATE_LANG, payload: locale || user.locale });

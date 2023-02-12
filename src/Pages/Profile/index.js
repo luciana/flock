@@ -161,7 +161,7 @@ export default function Profile() {
       }
     } catch (error) {
       console.error("handleChangeGender error", error);
-      setAlert({ type: "error", text: "An error occurred, try it again later." });
+      setAlert({ type: "error", text: LANGUAGES[user.locale].CommonError.UpdateUser});
     }
     setLoading(false);
   };
@@ -424,7 +424,7 @@ export default function Profile() {
     <Form>     
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
       <label className="form-label py-1">{LANGUAGES[user.locale].Profile.YourGender}</label>
-        <Select value={gender} handler={setGender}>
+        <Select value={(!gender)?"":gender} handler={setGender}>
           {GENDER.map((l) => (
             <option key={l} value={l}>
               {LANGUAGES[user.locale].Genders[l]}
