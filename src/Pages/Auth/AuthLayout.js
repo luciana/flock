@@ -94,11 +94,11 @@ export default function AuthLayout() {
     }
   };
 
-  const signUp = async (email, pwd, name, gender, zip, birthday) => {
+  const signUp = async (email, pwd, name, gender, address, birthdate) => {
     startLoading();
     try {
-      console.log("AuthLayout.js signUp");
-      await Auth.SignUp(email, pwd, name, state.lang);
+      console.log("AuthLayout.js signUp", email, name, gender, address, birthdate);
+      await Auth.SignUp(email, pwd, name, gender, address, birthdate,state.lang );
       stopLoading();
       navigate(ROUTES[state.lang].CONFIRM_SIGN_UP, {
         state: {
@@ -108,9 +108,10 @@ export default function AuthLayout() {
             text: LANGUAGES[state.lang].Auth.SignUpSuccess,
           },
         },
-      });
+     });
     } catch (err) {
-      stopLoading();
+      stopLoading();    
+      console.log("Auth Layout.js Signup error", err);
       setAlert({
         type: "error",
         text: LANGUAGES[state.lang].CommonError.SignUp,
@@ -173,8 +174,6 @@ export default function AuthLayout() {
         setLoading(false);
         navigate(ROUTES[state.lang].MAIN);
       } catch (error) {
-
-        console.error("AuthLayout.js useeffect loadUser error", error);
         // setAlert({
         //   type: "error",
         //   text: LANGUAGES[state.lang].CommonError.SignUpAuthentication,

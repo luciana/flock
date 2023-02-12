@@ -6,20 +6,20 @@ import { LANGUAGES, ROUTES, TAGS, GENDER } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import Auth from "../../Services/auth";
 import Mutations from "../../Services/mutations";
-import { Alert, Button, Form, Input, Select, Title, Card } from "../../Components";
+import { Alert, Button, DatePicker, Form, Input, Select, Title, Card } from "../../Components";
 import { isValidEmail, isValidZip } from "../../Helpers";
 
 export default function Profile() {
   const { state } = useContext(AppContext);
   const { user } = state;
   const navigate = useNavigate();
-  const { loadUser, setLoading, handleSignOut } = useOutletContext();
+  const { loadUser, setLoading  } = useOutletContext();
   const [alert, setAlert] = useState();
   const [showCode, setShowCode] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [zip, setZip] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [address, setAddress] = useState("");
+  const [birthdate, setBirthdate] = useState("");
   const [gender, setGender] = useState("");
   const [code, setCode] = useState("");
   const [tag, setTag] = useState("");
@@ -36,6 +36,9 @@ export default function Profile() {
     user && setEmail(user?.email) 
     user && setName(user?.name)   
     user && setTag(user?.userTag === null ? "" : user.userTag)
+    user && setGender(user?.gender)  
+    user && user.birthday && setBirthdate(user?.birthdate)  
+    user && user.address && setAddress(user?.address)  
     userVoteCount();
   }, [user]);
 
@@ -140,18 +143,24 @@ export default function Profile() {
     setLoading(false);
   };
 
+
   const handleChangeGender = async () => {
     console.log("handleChangeGender");
     loading();
     try {
-      await Auth.ChangeGender(gender);
-      console.log("Auth.ChangeGender", gender);
-      await Mutations.UpdateUserGender({ id: user.id,  gender: gender });
-      console.log("Mutations.UpdateUserGender", gender);
-      loadUser({ force: true, email: user.email });
-      navigate(ROUTES[language].PROFILE);
+      const authResult = await Auth.ChangeGender(gender);
+      console.log("Auth.ChangeGender auth result", authResult);
+      if(authResult){
+        console.log("Auth.ChangeGender mutation input with", user.id, gender);
+        const mutationResult = await Mutations.UpdateUserGender({ id: user.id,  gender: gender });
+        console.log("Auth.ChangeGender mutation result", mutationResult);
+        loadUser({ force: true, email: user.email });
+        console.log("Mutations.UpdateUserGender", gender);
+        navigate(ROUTES[language].PROFILE);
+      }
     } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      console.error("handleChangeGender error", error);
+      setAlert({ type: "error", text: error });
     }
     setLoading(false);
   };
@@ -159,8 +168,8 @@ export default function Profile() {
   const handleChangeZip = async () => {
     loading();
     try {    
-      await Auth.ChangeZip(zip); 
-      await Mutations.UpdateUserZip({ id: user.id, zip: zip });
+      await Auth.ChangeZip(address); 
+      await Mutations.UpdateUserZip({ id: user.id, address: address });
       loadUser({ force: true, email: user.email });
       navigate(ROUTES[language].PROFILE);
     } catch (error) {
@@ -182,13 +191,17 @@ export default function Profile() {
     setLoading(false);
   };
 
-  const handleChangeBirthday = async () => {
+  const handleChangeBirthdate = async () => {
     loading();
     try {    
-      console.log("handleChangeBirthday", birthday);
-      await Mutations.UpdateUserBirthday({ id: user.id, birthday: birthday });
+      console.log("handleChangeBirthdate", birthdate);
+      const authResult = await Auth.ChangeGender(birthdate);
+      console.log("Auth.Birthdate auth result", authResult);
+      if(authResult){
+      await Mutations.UpdateUserBirthdate({ id: user.id, birthdate: birthdate });
       loadUser({ force: true, email: user.email });
       navigate(ROUTES[language].PROFILE);
+      }
     } catch (error) {
       setAlert({ type: "error", text: error.message });
     }
@@ -204,7 +217,7 @@ export default function Profile() {
 
   const disabledTag = () => tag === user.userTag;
 
-  const disabledZip = () => zip === "" || !isValidZip(zip, user.locale);
+  const disabledZip = () => address === "" || !isValidZip(address, user.locale);
 
 
   const disabledPassword = () =>
@@ -214,7 +227,7 @@ export default function Profile() {
 
   const disabledLanguage = () => language === user.locale;
   const disabledGender = () => gender === user.gender;
-  const disabledBirthday = () => birthday === user.birthday;
+  const disabledBirthdate = () => birthdate === user.birthdate;
 
   const userVoteCount = () => {
    
@@ -266,8 +279,8 @@ export default function Profile() {
       <Input
         type="text"
         placeholder={LANGUAGES[user.locale].ZipCode}
-        value={zip}
-        handler={setZip}
+        value={address}
+        handler={setAddress}
         label={LANGUAGES[user.locale].Profile.YourZipCode}
       />
       <Button
@@ -279,21 +292,22 @@ export default function Profile() {
     </Form>
   );
 
-  const renderChangeBirthday = () => (         
+  const renderChangebirthdate = () => (         
     <Form>
       <div className="mb-4 w-full flex flex-col gap-4 justify-center">
-     
-      <Input
-        type="text"
-        placeholder={LANGUAGES[user.locale].Birth}
-        value={zip}
-        handler={setZip}
-        label={LANGUAGES[user.locale].Profile.YourBirthday}
-      />
+
+      <DatePicker 
+            placeholder={LANGUAGES[state.lang].Birth} 
+            label={LANGUAGES[state.lang].Birth} 
+            name={"dob"}
+            handler={setBirthdate}
+            locale={user.locale}         
+        />   
+
       <Button
-        text={LANGUAGES[user.locale].Profile.ChangeBirthday}
-        disabled={disabledBirthday()}
-        handler={() => handleChangeBirthday()}
+        text={LANGUAGES[user.locale].Profile.Changebirthdate}
+        disabled={disabledBirthdate()}
+        handler={() => handleChangeBirthdate()}
       />
     </div>
     </Form>
@@ -430,7 +444,7 @@ export default function Profile() {
    <div className="container">     
       <Alert type={alert?.type} text={alert?.text} />
       <Card voteCounts={voteCounts} 
-          handleSignOut={handleSignOut} />
+           />
      
       <hr className="m-3"></hr> 
 
@@ -454,7 +468,7 @@ export default function Profile() {
           </div>
                
           <div className="col-md-4">  
-            {renderChangeBirthday()}
+            {renderChangebirthdate()}
           </div>
           <div className="col-md-4">  
             {renderChangeZip()}

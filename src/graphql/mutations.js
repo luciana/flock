@@ -14,7 +14,7 @@ export const createUser = /* GraphQL */ `
       userTag
       birthdate
       gender
-      Zip
+      address
       votes
       createdAt
       updatedAt
@@ -35,7 +35,7 @@ export const updateUser = /* GraphQL */ `
       userTag
       birthdate
       gender
-      Zip
+      address
       votes
       createdAt
       updatedAt
@@ -56,7 +56,7 @@ export const deleteUser = /* GraphQL */ `
       userTag
       birthdate
       gender
-      Zip
+      address
       votes
       createdAt
       updatedAt

@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { Button, Badge } from '..';
+import { Badge } from '..';
 import { LANGUAGES } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import './Card.css';
 
-const Card = ({voteCounts, handleSignOut}) => {
+const Card = ({voteCounts}) => {
 
   const { state } = useContext(AppContext);
   const { user } = state;
@@ -13,7 +13,7 @@ const Card = ({voteCounts, handleSignOut}) => {
   return (
 
     
-<div className=" mt-4 mb-4 p-3 d-flex justify-content-center"> 
+<div className=" mt-1 mb-1 p-3 d-flex justify-content-center"> 
   <div className="border border-1 mx-2 p-4"> 
     <div className=" image d-flex flex-column justify-content-center align-items-center"> 
     
@@ -46,12 +46,7 @@ const Card = ({voteCounts, handleSignOut}) => {
             <span className="number">{voteCounts} <span className="follow">helped decisions</span></span> 
           </div>)
       }
-    <div className=" d-flex mt-2">    
-     <Button text={LANGUAGES[user.locale].Profile.SignOut }
-                disabled={false}                 
-                handler={handleSignOut}
-                 />
-    </div>    
+    
     <div className=" px-2  mt-4  "> 
         <span className="join">Joined {user.createdAt}</span> 
     </div> 

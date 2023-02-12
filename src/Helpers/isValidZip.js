@@ -4,7 +4,7 @@ const isValidZip = (zip,locale) => {
   if (locale === "pt_BR"){   
     re = new RegExp(/^\d{5}-?\d{3}$/);
   }   
-  return re.test(zip);
+  return re.test(zip) || zip.length===0;
 };
 
 export default isValidZip;

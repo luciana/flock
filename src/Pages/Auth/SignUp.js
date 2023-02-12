@@ -14,9 +14,9 @@ export default function SignUp() {
   const [pwd, setPwd] = useState("");
   const [repeat, setRepeat] = useState("");
   const [accept, setAccept] = useState(false);
-  const [zip, setZip] = useState("");
-  const [birthday, setBirtday] = useState("");
-  const [gender, setGender] = useState("female");
+  const [address, setAddress] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [gender, setGender] = useState("");
 
   useEffect(() => {
     setAlert(location?.state?.alert);
@@ -40,8 +40,7 @@ export default function SignUp() {
     accept === false    
 
     const handlePassword = (p) =>{
-      setPwd(p);
-      console.log("checking password", p);
+      setPwd(p);      
       if(!isValidPassword(p)){
        setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.NewPassword});  
       }else{
@@ -67,14 +66,14 @@ export default function SignUp() {
       }   
     }
 
-    const handleBirthday = (b) => {     
+    const handleBirthdate = (b) => {     
       //convert 2023-02-23 to AWSDate format 1970-01-01Z
-      setBirtday(b+"Z");
+      setBirthdate(b);
     }
-    const handleZip = (z) => {
-      setZip(z);
+    const handleAddress = (z) => {
+      setAddress(z); //right now, address is only zip
       
-      if(!isValidZip(zip, state.lang)){
+      if(!isValidZip(address, state.lang)){
         setAlert({ type: "error", text:LANGUAGES[state.lang].CommonError.InvalidZip}); 
       }else{
         setAlert();
@@ -87,7 +86,7 @@ export default function SignUp() {
       }else{
         setAlert();
       }   
-    }
+    }    
   return (
     <>
     <form className=" form-control">
@@ -146,7 +145,7 @@ export default function SignUp() {
             type={"number"}
             label={LANGUAGES[state.lang].ZipCode}
             placeholder={LANGUAGES[state.lang].ZipCode}
-            handler={handleZip} />          
+            handler={handleAddress} />          
         </div>
         <div className="col">        
           <label className="form-label py-1">{LANGUAGES[state.lang].Gender} </label> 
@@ -163,7 +162,8 @@ export default function SignUp() {
             placeholder={LANGUAGES[state.lang].Birth} 
             label={LANGUAGES[state.lang].Birth} 
             name={"dob"}
-            handler={handleBirthday}
+            handler={handleBirthdate}
+            locale={state.lang}         
             />          
         </div>
       </div>
@@ -187,8 +187,8 @@ export default function SignUp() {
         <button       
           disabled={disabled()}
           className="btn btn-outline-primary rounded-pill "
-          type="submit"
-          onClick={() => signUp(email, pwd, name, repeat, gender, zip, birthday)}
+          type="button"
+          onClick={() => signUp(email, pwd, name, gender, address, birthdate)}
           
         >{LANGUAGES[state.lang].Auth.SignUpButton} </button>
       </div>

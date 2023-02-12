@@ -1,11 +1,11 @@
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "../graphql/mutations";
 
-const CreateUser = async (email, locale,  name, birthday, gender, zip) => {
+const CreateUser = async (email, locale,  name, birthdate, gender, address) => {
   const {
     data: { createUser },
   } = await API.graphql(
-    graphqlOperation(mutations.createUser, { input: { email, locale, name, birthday, gender, zip } })
+    graphqlOperation(mutations.createUser, { input: { email, locale, name, birthdate, gender, address } })
   );
   return createUser;
 };
@@ -45,23 +45,23 @@ const UpdateUserTag = async ( id, userTag ) => {
   return updateUser;
 };
 
-const UpdateUserZip = async ( id, zip ) => {
+const UpdateUserZip = async ( id, address ) => {
   const {
     data: { updateUser },
   } = await API.graphql(
     graphqlOperation(mutations.updateUser, {
-      input: { id, zip },
+      input: { id, address },
     })
   );
   return updateUser;
 };
 
-const UpdateUserBirthday = async ( id, birthday ) => {
+const UpdateUserBirthdate = async ( id, birthdate ) => {
   const {
     data: { updateUser },
   } = await API.graphql(
     graphqlOperation(mutations.updateUser, {
-      input: { id, birthday },
+      input: { id, birthdate },
     })
   );
   return updateUser;
@@ -75,8 +75,10 @@ const UpdateUserGender = async ( id, gender ) => {
       input: { id, gender },
     })
   );
+  
   return updateUser;
 };
+
 
 
 
@@ -155,7 +157,7 @@ const Mutations = {
   UpdateUserTag,
   UpdateUserGender,
   UpdateUserZip,
-  UpdateUserBirthday,
+  UpdateUserBirthdate,
   UpdateUserName,
 };
 

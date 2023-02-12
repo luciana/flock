@@ -17,11 +17,12 @@ export default function Layout() {
 
   console.log("Layhout.js state", state);  
 
-  const loadUser = useCallback(async ({force, email, locale, name, zip, birthday, gender}) => {      
+  const loadUser = useCallback(async ({force, email, locale, name, address, birthdate, gender}) => {      
+      console.log("Layout.js loadUser input", email, locale, name, address, birthdate, gender);
     if (!state.user || force === true) {     
       let user = await Queries.GetUserByEmail(email);
       console.log("Layout.js queries.GetUserByEmail result", user);   
-      if (!user) user = await Mutations.CreateUser(email, locale, name, zip, birthday, gender);    
+      if (!user) user = await Mutations.CreateUser(email, locale, name, address, birthdate, gender);    
       console.log("Layout.js create user in mutation", user);
       dispatch({ type: TYPES.UPDATE_LANG, payload: locale || user.locale });
       dispatch({ type: TYPES.UPDATE_USER, payload: user });
@@ -46,8 +47,8 @@ export default function Layout() {
           locale: attributes.locale,
           name: attributes.name,  
           gender: attributes.gender,
-          zip: attributes.zip,
-          birthday: attributes.birthday,
+          address: attributes.address,
+          birthdate: attributes.birthdate,
         });
       } catch (error) {
         console.error("Layout.js Main error in isUserLoggedIn", error);
@@ -65,7 +66,7 @@ export default function Layout() {
       {loading && <Loading />}
       <SideNav handleSignOut={handleSignOut} />
       <div className="">
-        <Outlet context={{ loadUser, setLoading, handleSignOut }} />
+        <Outlet context={{ loadUser, setLoading }} />
       </div>     
     </section>
   );

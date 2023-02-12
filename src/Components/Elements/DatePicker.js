@@ -1,7 +1,8 @@
 import React from "react";
 import { Form } from 'react-bootstrap';
 
-const DatePicker = ({ name, label, placeholder, handler, required = false }) => {
+const DatePicker = ({ name, label, placeholder, handler, required = false, locale }) => {      
+
 
   return (
     <Form.Group controlId="dob">
@@ -14,7 +15,9 @@ const DatePicker = ({ name, label, placeholder, handler, required = false }) => 
         type="date" 
         name={name} 
         onChange={(e) => handler(e.target.value)}
-        placeholder={placeholder} />        
+        placeholder={placeholder}
+       // defaultValue={"2000-01-01"}
+     />        
     </div>
     </div>
     </Form.Group>

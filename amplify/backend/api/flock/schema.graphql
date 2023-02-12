@@ -14,7 +14,7 @@ type User @model @auth(rules: [
   userTag: String @index(name: "byUserTag", sortKeyFields: ["id"])  
   birthdate: AWSDate
   gender: String
-  zip: Int
+  address: String
   votes: AWSJSON #make it empty [] at creation
 }
 

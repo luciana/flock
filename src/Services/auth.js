@@ -1,12 +1,11 @@
 import { Auth as AmplifyAuth } from "aws-amplify";
 
-const SignUp = async (email, password, name, gender, zip, birthday, locale) => {
-  console.log("Auth Signup - about to call Amplify signup with ", email, locale, name);
-  //some users getting an error here-> Client.js:102          POST https://cognito-idp.us-east-1.amazonaws.com/ 400 
-  await AmplifyAuth.signUp({
+const SignUp = async (email, password, name, gender, address, birthdate, locale) => {
+  console.log("Auth Sign up");
+  return await AmplifyAuth.signUp({
     username: email,
     password,
-    attributes: { email, locale, name, gender, zip, birthday},
+    attributes: { email, locale, name, gender, address, birthdate},
   });
 };
 
@@ -61,21 +60,38 @@ const ChangeName = async (name) => {
   return await AmplifyAuth.updateUserAttributes(user, { name: name });
 };
 
-const ChangeZip = async (zip) => {
+const ChangeZip = async (address) => {
   const user = await AmplifyAuth.currentAuthenticatedUser();
-  await AmplifyAuth.updateUserAttributes(user, { zip: zip });
+  await AmplifyAuth.updateUserAttributes(user, { address: address });
 };
 
-const ChangeBirthday = async (birthday) => {
-  const user = await AmplifyAuth.currentAuthenticatedUser();
-  await AmplifyAuth.updateUserAttributes(user, { birthday: birthday });
+const ChangeBirthdate = async (birthdate) => {
+
+  try{ 
+  console.log("Change ChangeBirthdate input", ChangeBirthdate);
+  const user = await AmplifyAuth.currentAuthenticatedUser();    
+  console.log("Change ChangeBirthdate for user", user);
+  return await AmplifyAuth.updateUserAttributes(user, { 'birthdate': birthdate });
+  }catch(error){
+    return null;
+    //console.error("Auth.ChangeGender gender attribute  update error",error);
+  }
 };
 
 const ChangeGender = async (gender) => {
-  console.log("Auth.ChangeGender started", gender);
-  const user = await AmplifyAuth.currentAuthenticatedUser();
-  console.log("Auth.ChangeGender started user authed", user);
-  await AmplifyAuth.updateUserAttributes(user, { gender: gender });
+  try{   
+    console.log("Change Gender input", gender);
+    const user = await AmplifyAuth.currentAuthenticatedUser();    
+    console.log("Change Gender for user", user);
+    //return await AmplifyAuth.updateUserAttributes(user, { 'gender': gender });   
+    return await AmplifyAuth.updateUserAttributes(user, {
+      'gender': gender
+    });
+  }catch(error){
+    return null;
+    //console.error("Auth.ChangeGender gender attribute  update error",error);
+  }
+
 };
 
 const ConfirmChangeEmail = async (code) => {
@@ -97,6 +113,10 @@ const GetCredentials = async () => {
   return credentials;
 }
 
+const DeleteUser =  async () => {
+  return await Auth.deleteUser();  
+}
+
 const Auth = {
   SignUp,
   ResendConfirmationCode,
@@ -114,7 +134,8 @@ const Auth = {
   GetCredentials,
   ChangeGender,
   ChangeZip,
-  ChangeBirthday,
+  ChangeBirthdate,
+  DeleteUser,
 };
 
 export default Auth;
