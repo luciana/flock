@@ -12,7 +12,7 @@ function updateLang(state, payload) {
 }
 
 function updateUser(state, payload) {
-  localStorage.removeItem(STATENAME);
+  //localStorage.removeItem(STATENAME);
   const newState = { ...state, user: payload };
   saveState(newState);
   console.log("App reducer update user" , state);
