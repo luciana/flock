@@ -12,7 +12,7 @@ function Main() {
   return (
     <div className="App  ">      
        
-        {(!user.name || !user.userTag) && <Alert type="warning" text="Please, complete the Profile!" link="/Profile" />}
+        {(!user.name || !user.userTag || !user.gender || !user.address || !user.birthdate) && <Alert type="warning" text="Please, complete the Profile!" link="/Profile" />}
         <div className="white-bg container border border-1 p-2 ">
                 <Questions />
         </div>               
