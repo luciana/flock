@@ -92,7 +92,7 @@ const Questions = () => {
 
         const handleVoteFilterSwitch = () => {               
           setIsVoteFilterChecked(!isVoteFilterChecked);  
-         
+         console.log("when the user clicks vote filter, the filtered list is ", filterList);
          
           if(!isVoteFilterChecked){
             const v = filterList.filter(
@@ -105,20 +105,20 @@ const Questions = () => {
              setVoteFilteredList(v);
              console.log("handleVoteFilterSwitch question ",isQuestionFilterChecked ); 
              console.log("handleVoteFilterSwitch vote ",isVoteFilterChecked, v );             
-            setFilterList(v); 
+           
 
            //both swithes are on
            if(isQuestionFilterChecked){
-            console.log("both switches are on");
-           // setFilterList([...new Set([...voteFilteredList,...filterList])]);
-          }else{
-            //only this switch is on
-            console.log("only vote swich is on");
-            
-          }
-          setFilterList(voteFilteredList); 
+              console.log("both switches are on");
+            // setFilterList([...new Set([...voteFilteredList,...filterList])]);
+            }else{
+              //only this switch is on
+              console.log("only vote swich is on"); 
+                     
+            }        
+            setFilterList(v); 
          }else{
-
+          //vote switch is off
           if(isQuestionFilterChecked){
             console.log("question switch is on and vote switch is off");
            // setFilterList([...new Set([...questionFilteredList,...filterList])]);
