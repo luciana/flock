@@ -111,12 +111,17 @@ const Questions = () => {
            if(isQuestionFilterChecked){
               console.log("both switches are on");
             // setFilterList([...new Set([...voteFilteredList,...filterList])]);
+              const filterFromTwoArrays = questionFilteredList.some(item => v.includes(item));
+              console.log("combine both vote and question list", filterFromTwoArrays);
+              if(filterFromTwoArrays)
+                setFilterList(filterFromTwoArrays); 
+              setFilterList([]);
             }else{
               //only this switch is on
-              console.log("only vote swich is on"); 
-                     
+              console.log("only vote swich is on");  
+              setFilterList(v);                     
             }        
-            setFilterList(v); 
+           
          }else{
           //vote switch is off
           if(isQuestionFilterChecked){
@@ -128,10 +133,7 @@ const Questions = () => {
             setFilterList(backendQuestions); 
           }
   
-         }
-          
-          
-                 
+         }                                   
         }; 
 
         const handleQuestionFilterSwitch =() => {    
@@ -155,18 +157,22 @@ const Questions = () => {
             if(isVoteFilterChecked){
               console.log("both switches are on");
              // setFilterList([...new Set([...questionFilteredList,...filterList])]);
+             const filterFromTwoArrays = voteFilteredList.some(item => q.includes(item));
+             if(filterFromTwoArrays)
+                setFilterList(filterFromTwoArrays); 
+              setFilterList([]);
             }else{
               //only this switch is on
               console.log("only question swich is on");
-             
+              setFilterList(q); 
             }
-            setFilterList(q); 
+           
           }else{
            
             if(isVoteFilterChecked){
               console.log("question switch is off and vote switch is on");
              // setFilterList([...new Set([...questionFilteredList,...filterList])]);
-             setFilterList(questionFilteredList);
+             setFilterList(voteFilteredList);
             }else{
               //both switches are off
               setFilterList(backendQuestions); 
@@ -371,7 +377,7 @@ const Questions = () => {
       const showNoQuestions = filterList.length === 0;
 
       // console.log("backendQuestion", backendQuestions);
-      // console.log("filterList questions", filterList);      
+      console.log("filterList questions", filterList);      
 
       return ( 
         <>
