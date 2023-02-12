@@ -15,7 +15,9 @@ const Questions = () => {
     const [votedOptionsList, setVoteOptionsdList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [isVoteFilterChecked, setIsVoteFilterChecked] = useState(false);  
-    const [isQuestionFilterChecked, setIsQuestionFilterChecked] = useState(false);     
+    const [isQuestionFilterChecked, setIsQuestionFilterChecked] = useState(false);   
+    const [questionFilteredList, setQuestionFilteredList] =    useState([]);
+    const [voteFilteredList, setVoteFilteredList] =    useState([]);
     const { state, dispatch } = useContext(AppContext);
     const { user } = state;
     const [filterList, setFilterList]= useState([]);
@@ -93,16 +95,17 @@ const Questions = () => {
          
          
           if(!isVoteFilterChecked){
-            const voteFilteredList = filterList.filter(
+            const v = filterList.filter(
              (backendQuestion) => (((new Date(backendQuestion.voteEndAt) - new Date() > 1 ) 
                            && (backendQuestion.parentID === null)) )
              ).sort(
                (a, b) =>
                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
              ); 
+             setVoteFilteredList(v);
              console.log("handleVoteFilterSwitch question ",isQuestionFilterChecked ); 
-             console.log("handleVoteFilterSwitch vote ",isVoteFilterChecked, voteFilteredList );             
-           setFilterList(voteFilteredList); 
+             console.log("handleVoteFilterSwitch vote ",isVoteFilterChecked, v );             
+            setFilterList(v); 
 
            //both swithes are on
            if(isQuestionFilterChecked){
@@ -115,7 +118,16 @@ const Questions = () => {
           }
           setFilterList(voteFilteredList); 
          }else{
-          setFilterList(backendQuestions); 
+
+          if(isQuestionFilterChecked){
+            console.log("question switch is on and vote switch is off");
+           // setFilterList([...new Set([...questionFilteredList,...filterList])]);
+           setFilterList(questionFilteredList);
+          }else{
+            //both switches are off
+            setFilterList(backendQuestions); 
+          }
+  
          }
           
           
@@ -128,14 +140,15 @@ const Questions = () => {
           if(!isQuestionFilterChecked){
             const id = user.id;
             console.log("Questions.js checkFilteredList for question looking for user ",id );
-            const questionFilteredList = filterList.filter(
+            const q = filterList.filter(
               (backendQuestion) => ((backendQuestion.parentID === null) && 
                                     ( backendQuestion.userID === id) )
               ).sort(
                 (a, b) =>
                 new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
               );
-            console.log("handleQuestionFilterSwitch question ",isQuestionFilterChecked, questionFilteredList ); 
+            setQuestionFilteredList(q);
+            console.log("handleQuestionFilterSwitch question ",isQuestionFilterChecked, q ); 
             console.log("handleQuestionFilterSwitch vote ",isVoteFilterChecked );     
 
             //both swithes are on
@@ -147,74 +160,82 @@ const Questions = () => {
               console.log("only question swich is on");
              
             }
-            setFilterList(questionFilteredList); 
+            setFilterList(q); 
           }else{
-           setFilterList(backendQuestions); 
+           
+            if(isVoteFilterChecked){
+              console.log("question switch is off and vote switch is on");
+             // setFilterList([...new Set([...questionFilteredList,...filterList])]);
+             setFilterList(questionFilteredList);
+            }else{
+              //both switches are off
+              setFilterList(backendQuestions); 
+            }
           }         
         }
          
         // console.log("checkFilteredList isVoteFilterChecked init", isVoteFilterChecked);
         // console.log("checkFilteredList isQuestionFilterChecked init", isQuestionFilterChecked);
       
-      const checkFilteredList = () => {
+      // const checkFilteredList = () => {
 
-        let questionFilteredList =[];
-        let voteFilteredList =[];
-        let showVote = false;
-        let showQuestion = false;
-        console.log("checkFilteredList isVoteFilterChecked", isVoteFilterChecked);
-        console.log("checkFilteredList isQuestionFilterChecked", isQuestionFilterChecked);
-        if(!isVoteFilterChecked){
-           voteFilteredList = backendQuestions.filter(
-            (backendQuestion) => (((new Date(backendQuestion.voteEndAt) - new Date() > 1 ) 
-                          && (backendQuestion.parentID === null)) )
-            ).sort(
-              (a, b) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            ); 
-          console.log("Questions.js checkFilteredList for vote ",voteFilteredList );
-          showVote = true;
-          console.log("Questions.js checkFilteredList showVote ",showVote );
-        }
+      //   let questionFilteredList =[];
+      //   let voteFilteredList =[];
+      //   let showVote = false;
+      //   let showQuestion = false;
+      //   console.log("checkFilteredList isVoteFilterChecked", isVoteFilterChecked);
+      //   console.log("checkFilteredList isQuestionFilterChecked", isQuestionFilterChecked);
+      //   if(!isVoteFilterChecked){
+      //      voteFilteredList = backendQuestions.filter(
+      //       (backendQuestion) => (((new Date(backendQuestion.voteEndAt) - new Date() > 1 ) 
+      //                     && (backendQuestion.parentID === null)) )
+      //       ).sort(
+      //         (a, b) =>
+      //         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      //       ); 
+      //     console.log("Questions.js checkFilteredList for vote ",voteFilteredList );
+      //     showVote = true;
+      //     console.log("Questions.js checkFilteredList showVote ",showVote );
+      //   }
 
-        if(!isQuestionFilterChecked){
-          const id = user.id;
-          console.log("Questions.js checkFilteredList for question looking for user ",id );
-          questionFilteredList = backendQuestions.filter(
-            (backendQuestion) => ((backendQuestion.parentID === null) && 
-                                  ( backendQuestion.userID === id) )
-            ).sort(
-              (a, b) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            );
-          console.log("Questions.js checkFilteredList for question ",questionFilteredList );
-          showQuestion = true;
-          console.log("Questions.js checkFilteredList showQuestion ",showQuestion );
-        }
-
-
-        if ( !showQuestion && !showVote){
-          console.log("Questions.js checkFilteredList 0 0", backendQuestions);
-          return backendQuestions;           
-        }
-
-        if (!showQuestion && showVote ) {
-          console.log("Questions.js checkFilteredList 0 1", voteFilteredList);    
-          return voteFilteredList;
-        }
-
-        if (showQuestion && !showVote ) {
-          console.log("Questions.js checkFilteredList 1 0", questionFilteredList);
-          return questionFilteredList;
-        }
-
-        if (showQuestion && showVote ) {
-          console.log("Questions.js checkFilteredList 1 1");
-          return [...new Set([...questionFilteredList,...voteFilteredList])];
-        }
+      //   if(!isQuestionFilterChecked){
+      //     const id = user.id;
+      //     console.log("Questions.js checkFilteredList for question looking for user ",id );
+      //     questionFilteredList = backendQuestions.filter(
+      //       (backendQuestion) => ((backendQuestion.parentID === null) && 
+      //                             ( backendQuestion.userID === id) )
+      //       ).sort(
+      //         (a, b) =>
+      //         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      //       );
+      //     console.log("Questions.js checkFilteredList for question ",questionFilteredList );
+      //     showQuestion = true;
+      //     console.log("Questions.js checkFilteredList showQuestion ",showQuestion );
+      //   }
 
 
-      }
+      //   if ( !showQuestion && !showVote){
+      //     console.log("Questions.js checkFilteredList 0 0", backendQuestions);
+      //     return backendQuestions;           
+      //   }
+
+      //   if (!showQuestion && showVote ) {
+      //     console.log("Questions.js checkFilteredList 0 1", voteFilteredList);    
+      //     return voteFilteredList;
+      //   }
+
+      //   if (showQuestion && !showVote ) {
+      //     console.log("Questions.js checkFilteredList 1 0", questionFilteredList);
+      //     return questionFilteredList;
+      //   }
+
+      //   if (showQuestion && showVote ) {
+      //     console.log("Questions.js checkFilteredList 1 1");
+      //     return [...new Set([...questionFilteredList,...voteFilteredList])];
+      //   }
+
+
+      // }
            
     
 
