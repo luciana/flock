@@ -52,7 +52,8 @@ export default function Layout() {
         });
       } catch (error) {
         console.error("Layout.js Main error in isUserLoggedIn", error);
-        navigate(ROUTES[state.lang].SIGN_IN);
+        
+        //navigate(ROUTES[state.lang].SIGN_IN);
       }
     };
 
