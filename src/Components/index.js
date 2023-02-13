@@ -15,3 +15,4 @@ export { default as Badge } from "./Votes/Badge";
 export { default as Card } from "./Profile/Card";
 export { default as Switch } from "./Elements/Switch";
 export { default as DatePicker } from "./Elements/DatePicker";
+export { default as Friends } from "./Friends";

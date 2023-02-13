@@ -237,6 +237,7 @@ export default function Profile() {
     }
    
   }
+ 
 
   const renderEmail = () => (
     <>
@@ -448,8 +449,7 @@ export default function Profile() {
       <Card voteCounts={voteCounts} 
            />
      
-      <hr className="m-3"></hr> 
-
+      <hr className="m-3"></hr>     
       <div className="grid sm:grid-cols-3 gap-2">  
        <div className="card">
         <div className="card-header">

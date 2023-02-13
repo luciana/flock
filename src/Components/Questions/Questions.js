@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
-import { Loading, Alert, Switch }  from '../../Components';
+import { Loading, Alert, Switch, Friends }  from '../../Components';
 import Queries from "../../Services/queries";
 import Mutations from "../../Services/mutations";
 import { AppContext} from '../../Contexts'; 
@@ -21,6 +21,7 @@ const Questions = () => {
     const { state, dispatch } = useContext(AppContext);
     const { user } = state;
     const [filterList, setFilterList]= useState([]);
+    const [userFriends, setUserFriends]= useState([]);
    // console.log("USER in Questions.js state", state);  
 
     useEffect(() => {
@@ -61,6 +62,8 @@ const Questions = () => {
           if(user.votes) {
             let votes = JSON.parse(user.votes);
             setVotedList(votes);
+            console.log("list of question backendQuestions", backendQuestions);
+         
             const newArray = [];            
             for (let i = 0; i < votes.length; i++) {
               newArray.push(votes[i].optionId);
@@ -75,9 +78,34 @@ const Questions = () => {
         }
       };
 
+      const getUsersYouHelped = () => {
+        console.log("Questions that user voted ", votedList);     
+        const listOfQuestionsAnswered =  votedList.map((votedList)=> votedList.questionId);
+        console.log("List of questions id that user voted ", listOfQuestionsAnswered);
+      //   [
+      //     "72a986c9-d35e-4fbf-a96f-c7a610a601e2",
+      //     "1ae7b3c4-9f9e-4776-bfb4-4251c1c22651",
+      //     "f5b0936d-d418-424e-8a06-2cf4f8baef02",
+      //     "c57a605a-0e81-4253-a11e-f6da052eceb9",
+      //     "049cd46a-d8cb-40a9-9b50-1c734eca1cd2",
+      //     "0866a047-396c-48cf-b7a3-d684d7976489",
+      //     "70c880eb-a99e-4702-82f5-bc9bbc930428",
+      //     "5bf62d05-c186-4a02-9611-9a66a8e2b5a2"
+      // ]
+              
+        const t =  backendQuestions.filter(
+          (backendQuestion) => ((listOfQuestionsAnswered[0] === backendQuestion.questionId) )
+        );
+        console.log("List of users you helped with votes ", t, listOfQuestionsAnswered[0], backendQuestions);
+        setUserFriends(t);
+        
+            
+      }
+
 
         loadQuestions();
         loadVotes();
+        getUsersYouHelped();
         
                       
       }, [user, setFilterList]);
@@ -89,6 +117,10 @@ const Questions = () => {
       //   (a, b) =>
       //   new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       // ); 
+
+    
+
+     
 
         const handleVoteFilterSwitch = () => {               
           setIsVoteFilterChecked(!isVoteFilterChecked);  
@@ -377,7 +409,7 @@ const Questions = () => {
       const showNoQuestions = filterList.length === 0;
 
       // console.log("backendQuestion", backendQuestions);
-      console.log("filterList questions", filterList);      
+      //console.log("filterList questions", filterList);      
 
       return ( 
         <>
@@ -391,8 +423,9 @@ const Questions = () => {
               <div className=" col-md-4">                
                   <Switch label={"Only my questions"}
                     handleSwitch={handleQuestionFilterSwitch}/>   
-              </div>
-              </div>     
+              </div>              
+            </div>     
+            <div><Friends userFriends={userFriends} /></div>
               <div id="all-questions" className=" border border-0 p-0 ">
                   {filterList.map((rootQuestion) => (
                       <Question 
