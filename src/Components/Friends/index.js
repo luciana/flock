@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React from "react";
 import { Title } from './../../Components';
 import { findCounts } from './../../Helpers';
 import Avatar from 'react-avatar';

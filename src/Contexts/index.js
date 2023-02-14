@@ -11,8 +11,7 @@ const getState = () => {
   if (typeof(Storage) !== "undefined") {
       let s =  localStorage.getItem(STATENAME)
       ? JSON.parse(localStorage.getItem(STATENAME))
-      : initial;
-      console.log('Context get State', s);
+      : initial;     
       return s;
     } else {
     // No web storage Support.

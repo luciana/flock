@@ -28,7 +28,6 @@ function App() {
       dispatch({ type: TYPES.UPDATE_LANG, payload: searchParams.get("lang") });
     }, [dispatch, searchParams]);
 
-  console.log("App.js state context", state);
   return (
     <Suspense fallback={<Loading />}>
       <Routes>

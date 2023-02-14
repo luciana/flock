@@ -29,15 +29,11 @@ export default function AuthLayout() {
     startLoading();
     try {
       const { attributes } = await Auth.SignIn(email, pwd, remember);
-      console.log("AuthLayout.js signIn Auth attributes", attributes);
-      //TODO: the hard code "en-US"  in this function should
-      //be changed to attributes.locale.
-      //however, I am not getting the locale attribute from cognito login
-      //api call even though the cognito user at aws shows the locale
-      dispatch({ type: TYPES.UPDATE_LANG, payload: "en-US" });
+      console.log("AuthLayout.js signIn Auth attributes", attributes);     
+      dispatch({ type: TYPES.UPDATE_LANG, payload: attributes.locale });
       stopLoading();
-      console.log("Navigate to ROUTES[en-US].MAIN", ROUTES["en-US"].MAIN);
-      navigate(ROUTES["en-US"].MAIN);
+      console.log("Navigate to ROUTES[en-US].MAIN", ROUTES[attributes.locale].MAIN);
+      navigate(ROUTES[attributes.locale].MAIN);
     } catch (err) {
       stopLoading();
       console.error("AuthLayout.js signIn error calling Auth.Signin", err);

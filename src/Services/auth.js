@@ -55,51 +55,51 @@ const ChangeEmail = async (email) => {
   await AmplifyAuth.updateUserAttributes(user, { email: email });
 };
 
-const ChangeName = async (name) => {
-  try{ 
-    const user = await AmplifyAuth.currentAuthenticatedUser();
-    return await AmplifyAuth.updateUserAttributes(user, { name: name });
-  }catch(error){
-    return null;    
-  }
-};
+//TODO:Not updating the Cognito standard attributes since it requires a different level of authentication
+//To be resolved later. For now, only updating the GraphQL fields.
+//https://stackoverflow.com/questions/53149091/what-does-the-aws-cognito-signin-user-admin-scope-mean-in-amazon-cognito
+// const ChangeName = async (name) => {
+//   try{ 
+//     const user = await AmplifyAuth.currentAuthenticatedUser();
+//     return await AmplifyAuth.updateUserAttributes(user, { name: name });
+//   }catch(error){
+//     return null;    
+//   }
+// };
 
-const ChangeZip = async (address) => {
-  try{ 
-    const user = await AmplifyAuth.currentAuthenticatedUser();
-    await AmplifyAuth.updateUserAttributes(user, { address: address });
-  }catch(error){
-    return null;    
-  }
-};
+// const ChangeZip = async (address) => {
+//   try{ 
+//     const user = await AmplifyAuth.currentAuthenticatedUser();
+//     await AmplifyAuth.updateUserAttributes(user, { address: address });
+//   }catch(error){
+//     return null;    
+//   }
+// };
 
-const ChangeBirthdate = async (birthdate) => {
+// const ChangeBirthdate = async (birthdate) => {
 
-  try{ 
-  console.log("Change ChangeBirthdate input", ChangeBirthdate);
-  const user = await AmplifyAuth.currentAuthenticatedUser();    
-  console.log("Change ChangeBirthdate for user", user);
-  return await AmplifyAuth.updateUserAttributes(user, { birthdate: birthdate });
-  }catch(error){
-    return null;    
-  }
-};
+//   try{ 
+//   const user = await AmplifyAuth.currentAuthenticatedUser();    
+//   console.log("Change ChangeBirthdate for user", user);
+//   return await AmplifyAuth.updateUserAttributes(user, { birthdate: birthdate });
+//   }catch(error){
+//     return null;    
+//   }
+// };
 
-const ChangeGender = async (gender) => {
-  try{   
-    console.log("Change Gender input", gender);
-    const user = await AmplifyAuth.currentAuthenticatedUser();    
-    console.log("Change Gender for user", user);
-    //return await AmplifyAuth.updateUserAttributes(user, { 'gender': gender });   
-    return await AmplifyAuth.updateUserAttributes(user, {
-      'gender': gender
-    });
-  }catch(error){
-    return null;
-    //console.error("Auth.ChangeGender gender attribute  update error",error);
-  }
+// const ChangeGender = async (gender) => {
+//   try{   
+  
+//     const user = await AmplifyAuth.currentAuthenticatedUser();    
+//     const v =  await AmplifyAuth.updateUserAttributes(user, {
+//       'gender': gender
+//     });
+//   }catch(error){    
+//     console.error("Auth.ChangeGender gender attribute  update error",error);
+//     return null;
+//   }
 
-};
+// };
 
 const ConfirmChangeEmail = async (code) => {
   await AmplifyAuth.verifyCurrentUserAttributeSubmit("email", code);
@@ -134,14 +134,14 @@ const Auth = {
   GetUser,
   SignOut,
   ChangeEmail,
-  ChangeName,
   ConfirmChangeEmail,
   ChangePassword,
   ChangeLanguage,
   GetCredentials,
-  ChangeGender,
-  ChangeZip,
-  ChangeBirthdate,
+  // ChangeName,
+  // ChangeGender,
+  // ChangeZip,
+  // ChangeBirthdate,
   DeleteUser,
 };
 

@@ -2,15 +2,37 @@ import React from 'react';
 import { Header, Footer } from '../../Components/Shared/index';
 import '../pages.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useContext } from "react";
-import { AppContext} from '../../Contexts';
+import { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../Contexts";
+import { ROUTES } from "../../Constants";
 import {HomeNav} from '../../Components';
 import Badge from '../../Components/Votes/Badge';
 
 function Home() {
     const { state } = useContext(AppContext);
+    const navigate = useNavigate();
     const { user } = state;
-    console.log("user from home", user);  
+
+    useEffect(() => {
+        const isUserLoggedIn = async () => {
+          try {
+            if( user ){
+                console.log("Home.js user exists in state (FlockAppState)", user);
+                navigate(ROUTES[state.lang].MAIN);
+            }else {
+                console.log("Home.js no user exist in state (FlockAppState)", user);               
+            }
+           
+          } catch (error) {
+            console.error("Home.js error checking if user exists in state(FlockAppState)", error);    
+            navigate(ROUTES[state.lang].SIGN_IN);
+          }
+        };
+    
+        isUserLoggedIn();
+      }, [navigate, user]);
+
   return (
     <div className="App">
         <HomeNav />
