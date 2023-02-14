@@ -21,7 +21,7 @@ const Questions = () => {
     const { state, dispatch } = useContext(AppContext);
     const { user } = state;
     const [filterList, setFilterList]= useState([]);
-    const [userFriends, setUserFriends]= useState([]);
+    //const [userFriends, setUserFriends]= useState([]);
    // console.log("USER in Questions.js state", state);  
 
     useEffect(() => {
@@ -61,9 +61,7 @@ const Questions = () => {
         try{
           if(user.votes) {
             let votes = JSON.parse(user.votes);
-            setVotedList(votes);
-            console.log("list of question backendQuestions", backendQuestions);
-         
+            setVotedList(votes);                    
             const newArray = [];            
             for (let i = 0; i < votes.length; i++) {
               newArray.push(votes[i].optionId);
@@ -78,37 +76,13 @@ const Questions = () => {
         }
       };
 
-      const getUsersYouHelped = () => {
-        console.log("Questions that user voted ", votedList);     
-        const listOfQuestionsAnswered =  votedList.map((votedList)=> votedList.questionId);
-        console.log("List of questions id that user voted ", listOfQuestionsAnswered);
-      //   [
-      //     "72a986c9-d35e-4fbf-a96f-c7a610a601e2",
-      //     "1ae7b3c4-9f9e-4776-bfb4-4251c1c22651",
-      //     "f5b0936d-d418-424e-8a06-2cf4f8baef02",
-      //     "c57a605a-0e81-4253-a11e-f6da052eceb9",
-      //     "049cd46a-d8cb-40a9-9b50-1c734eca1cd2",
-      //     "0866a047-396c-48cf-b7a3-d684d7976489",
-      //     "70c880eb-a99e-4702-82f5-bc9bbc930428",
-      //     "5bf62d05-c186-4a02-9611-9a66a8e2b5a2"
-      // ]
-              
-        const t =  backendQuestions.filter(
-          (backendQuestion) => ((listOfQuestionsAnswered[0] === backendQuestion.questionId) )
-        );
-        console.log("List of users you helped with votes ", t, listOfQuestionsAnswered[0], backendQuestions);
-        setUserFriends(t);
-        
-            
-      }
-
-
+      
         loadQuestions();
         loadVotes();
-        getUsersYouHelped();
+        
         
                       
-      }, [user, setFilterList]);
+      }, [user,  setFilterList ]);
 
      
       // const rootQuestions =  backendQuestions.filter(
@@ -119,9 +93,37 @@ const Questions = () => {
       // ); 
 
     
+      // const getUsersYouHelped = () => {
+      //   console.log("Questions that user voted ", votedList);     
+      //   const listOfQuestionsAnswered =  votedList.map((votedList)=> votedList.questionId);
+      //   console.log("List of questions id that user voted ", listOfQuestionsAnswered);
+      // //   [
+      // //     "72a986c9-d35e-4fbf-a96f-c7a610a601e2",
+      // //     "1ae7b3c4-9f9e-4776-bfb4-4251c1c22651",
+      // //     "f5b0936d-d418-424e-8a06-2cf4f8baef02",
+      // //     "c57a605a-0e81-4253-a11e-f6da052eceb9",
+      // //     "049cd46a-d8cb-40a9-9b50-1c734eca1cd2",
+      // //     "0866a047-396c-48cf-b7a3-d684d7976489",
+      // //     "70c880eb-a99e-4702-82f5-bc9bbc930428",
+      // //     "5bf62d05-c186-4a02-9611-9a66a8e2b5a2"
+      // // ]
+              
+      //   const t =  backendQuestions.filter(
+      //     (backendQuestion) => ((listOfQuestionsAnswered.includes(backendQuestion.questionId) ))
+      //   );
 
+      //   const thirdArray = backendQuestions.filter((questions) => {
+      //     return votedList.some((voted) => {
+      //     return voted.questionId === questions.id&& voted.questionId === questions.id;
+      //       });
+      //     });
+
+      //   console.log("List of users you helped with votes ", thirdArray, listOfQuestionsAnswered[0], backendQuestions);
+      //   setUserFriends(thirdArray);
+        
+            
+      // }
      
-
         const handleVoteFilterSwitch = () => {               
           setIsVoteFilterChecked(!isVoteFilterChecked);  
          console.log("when the user clicks vote filter, the filtered list is ", filterList);
@@ -211,69 +213,7 @@ const Questions = () => {
             }
           }         
         }
-         
-        // console.log("checkFilteredList isVoteFilterChecked init", isVoteFilterChecked);
-        // console.log("checkFilteredList isQuestionFilterChecked init", isQuestionFilterChecked);
-      
-      // const checkFilteredList = () => {
-
-      //   let questionFilteredList =[];
-      //   let voteFilteredList =[];
-      //   let showVote = false;
-      //   let showQuestion = false;
-      //   console.log("checkFilteredList isVoteFilterChecked", isVoteFilterChecked);
-      //   console.log("checkFilteredList isQuestionFilterChecked", isQuestionFilterChecked);
-      //   if(!isVoteFilterChecked){
-      //      voteFilteredList = backendQuestions.filter(
-      //       (backendQuestion) => (((new Date(backendQuestion.voteEndAt) - new Date() > 1 ) 
-      //                     && (backendQuestion.parentID === null)) )
-      //       ).sort(
-      //         (a, b) =>
-      //         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      //       ); 
-      //     console.log("Questions.js checkFilteredList for vote ",voteFilteredList );
-      //     showVote = true;
-      //     console.log("Questions.js checkFilteredList showVote ",showVote );
-      //   }
-
-      //   if(!isQuestionFilterChecked){
-      //     const id = user.id;
-      //     console.log("Questions.js checkFilteredList for question looking for user ",id );
-      //     questionFilteredList = backendQuestions.filter(
-      //       (backendQuestion) => ((backendQuestion.parentID === null) && 
-      //                             ( backendQuestion.userID === id) )
-      //       ).sort(
-      //         (a, b) =>
-      //         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      //       );
-      //     console.log("Questions.js checkFilteredList for question ",questionFilteredList );
-      //     showQuestion = true;
-      //     console.log("Questions.js checkFilteredList showQuestion ",showQuestion );
-      //   }
-
-
-      //   if ( !showQuestion && !showVote){
-      //     console.log("Questions.js checkFilteredList 0 0", backendQuestions);
-      //     return backendQuestions;           
-      //   }
-
-      //   if (!showQuestion && showVote ) {
-      //     console.log("Questions.js checkFilteredList 0 1", voteFilteredList);    
-      //     return voteFilteredList;
-      //   }
-
-      //   if (showQuestion && !showVote ) {
-      //     console.log("Questions.js checkFilteredList 1 0", questionFilteredList);
-      //     return questionFilteredList;
-      //   }
-
-      //   if (showQuestion && showVote ) {
-      //     console.log("Questions.js checkFilteredList 1 1");
-      //     return [...new Set([...questionFilteredList,...voteFilteredList])];
-      //   }
-
-
-      // }
+        
            
     
 
@@ -408,8 +348,9 @@ const Questions = () => {
       
       const showNoQuestions = filterList.length === 0;
 
-      // console.log("backendQuestion", backendQuestions);
-      //console.log("filterList questions", filterList);      
+    console.log("backendQuestion", backendQuestions);
+    console.log("filterList questions", filterList);      
+    console.log("votedList", votedList); 
 
       return ( 
         <>
@@ -425,7 +366,8 @@ const Questions = () => {
                     handleSwitch={handleQuestionFilterSwitch}/>   
               </div>              
             </div>     
-            <div><Friends userFriends={userFriends} /></div>
+            <div>{(!loading) && <Friends votedList={votedList} backendQuestions={backendQuestions} />}
+              </div>
               <div id="all-questions" className=" border border-0 p-0 ">
                   {filterList.map((rootQuestion) => (
                       <Question 
