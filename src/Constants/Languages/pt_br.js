@@ -8,7 +8,9 @@ const pt_br_lang = {
     Confirm: "Confirmar",
     Gender: "Gênero",
     Birth: "Data de Nascimento",
+    Expertise: "Especialidade",
     ZipCode: "Cep",
+    BadgesLabel: "Distintivos",
     Questions:{
       Questions: "Perguntas",
       NewQuestion: "Nova Pergunta",

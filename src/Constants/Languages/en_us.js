@@ -8,7 +8,9 @@ const en_us_lang = {
     Confirm: "Confirm",
     Gender: "Gender",
     Birth: "Date of Birth",
+    Expertise: "Expertise",
     ZipCode: "Zip",
+    BadgesLabel: "Badges",
     Questions:{
       Questions: "Questions",
       NewQuestion: "New Question",
