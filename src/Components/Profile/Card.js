@@ -3,6 +3,8 @@ import { Badge } from '..';
 import { LANGUAGES } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import './Card.css';
+import { isOwner } from "../../Helpers/owner";
+import WebNotification from "../Notification/WebNotification";
 
 const Card = ({voteCounts}) => {
 
@@ -10,6 +12,8 @@ const Card = ({voteCounts}) => {
   const { user } = state;
 
   const userCount = (user.userTag) ? user.userTag.length : 1;
+
+  const canSeePushButton = isOwner(user.email);
   return (
 
     
@@ -18,7 +22,8 @@ const Card = ({voteCounts}) => {
       <div className="border border-1 d-flex p-3 my-2">
        
         <div className="row" >           
-          <div className="">{user.email}</div>
+          <div className="">{user.email} 
+            {canSeePushButton && (<span><WebNotification /></span>)}</div>
           <div className="fw-bolder"> 
           {user.userTag && user.userTag.length > 0 && (
                 <span className="">

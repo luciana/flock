@@ -4,7 +4,7 @@ import { Configuration, OpenAIApi } from "openai";
 const Open = async () => {
     const [response, setResponse] = useState("");
     const configuration = new Configuration({
-        apiKey: process.env.OPENAI_API_KEY, 
+        apiKey: process.env.REACT_APP_OPEN_AI, 
       });
     const openai = new OpenAIApi(configuration);
     try{

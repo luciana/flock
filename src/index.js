@@ -7,6 +7,7 @@ import App from './App';
 import { AppProvider } from "./Contexts";
 import reportWebVitals from './reportWebVitals';
 import awsconfig from './aws-exports';
+import Firebase from "./Services/firebase";
 //https://www.linkedin.com/pulse/part-3-complete-login-flow-using-react-aws-amplify-s3-jos%C3%A9-augusto/?trk=pulse-article_more-articles_related-content-card
 //https://github.com/gugazimmermann/amplify-login/blob/v1.7/src/pages/home/Layout.jsx
 Amplify.configure(awsconfig);

@@ -6,7 +6,7 @@ import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../Contexts";
 import { ROUTES } from "../../Constants";
-import {HomeNav} from '../../Components';
+import { HomeNav, WebNotification } from '../../Components';
 import Badge from '../../Components/Votes/Badge';
 
 function Home() {
@@ -35,8 +35,10 @@ function Home() {
 
   return (
     <div className="App">
+        <WebNotification />
         <HomeNav />
-        <Header></Header>          
+        <Header></Header>    
+      
         <section className="App-header content-section  text-white text-center" id="services">
             <div className="container px-2 px-lg-2">
                 <div className="content-section-heading">

@@ -8,14 +8,12 @@ import './../profile-nav.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Queries from "../../Services/queries";
 import Mutations from "../../Services/mutations";
-import { SideNav, Loading } from "../../Components";
+import { SideNav, Loading} from "../../Components";
 
 export default function Layout() {
   const { state, dispatch } = useContext(AppContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  
 
   const loadUser = useCallback(async ({force, email, locale, name, address, birthdate, gender, userTag}) => {      
      // console.log("Layout.js loadUser input", email, locale, name, address, birthdate, gender);
@@ -97,10 +95,12 @@ export default function Layout() {
   return (
     <section className="App profile mx-auto max-w-screen-lg h-screen">
       {loading && <Loading />}
+      
       <SideNav handleSignOut={handleSignOut} />
       <div className="">
         <Outlet context={{ loadUser, setLoading }} />
       </div>     
+     
     </section>
   );
 }
