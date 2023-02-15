@@ -190,10 +190,11 @@ export default function AuthLayout() {
      
       {loading && <Loading />}
       <div className="container my-4">
+      
         <div className="h-full flex flex-col-reverse md:flex-row items-center justify-evenly">         
           <div className="w-10/12 md:w-5/12 lg:w-4/12"></div>
-              <Alert type={alert?.type} text={alert?.text} />
-                <Outlet
+              <Alert type={alert?.type} text={alert?.text} />           
+              <Outlet
                   context={{            
                     setAlert,
                     signIn,

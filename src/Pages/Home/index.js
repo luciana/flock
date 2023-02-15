@@ -6,7 +6,7 @@ import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../Contexts";
 import { ROUTES } from "../../Constants";
-import { HomeNav, WebNotification } from '../../Components';
+import { HomeNav, WebNotification} from '../../Components';
 import Badge from '../../Components/Votes/Badge';
 
 function Home() {
@@ -34,7 +34,7 @@ function Home() {
       }, [navigate, user]);
 
   return (
-    <div className="App">
+    <div className="App">    
         <WebNotification />
         <HomeNav />
         <Header></Header>    

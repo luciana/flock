@@ -4,19 +4,28 @@ importScripts('https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js')
 // importScripts('https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js')
 // importScripts('https://www.gstatic.com/firebasejs/9.17.1/firebase-messaging.js')
 
-console.log("Firebase provider service worker");
+
+
+const c = JSON.parse(new URL(location).searchParams.get("firebaseConfig"));
+console.log("Service Worker started", c);
+
 const firebaseConfig = {
   apiKey: "AIzaSyCg7YYpq7Uz-tVHft-_oRvAn8g9GYLMds0",
   authDomain: "flock-71ac2.firebaseapp.com",
-  projectId: "flock-71ac2",
+   projectId: "flock-71ac2",
   storageBucket: "flock-71ac2.appspot.com",
   messagingSenderId: "899073372499",
-  appId: "1:899073372499:web:c99c2daac89bcee503f1a6"
+  appId: "1:899073372499:web:c99c2daac89bcee503f1a6",
 };
 
-firebase.initializeApp(firebaseConfig)
+if(c){
+  console.log("c is set");
+}else{
+  console.log("c is not set");
+}
+firebase.initializeApp(firebaseConfig);
 
-const messaging = firebase.messaging()
+const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
