@@ -63,7 +63,7 @@ export default function Layout() {
     dispatch({ type: TYPES.UPDATE_LANG, payload: state.user.locale });
     dispatch({ type: TYPES.UPDATE_USER, payload: null });
     console.log("Cleared user data in state");
-    navigate(ROUTES[state.lang].SIGN_IN);
+    navigate(ROUTES[state.lang].HOME);
   };
 
   useEffect(() => {
