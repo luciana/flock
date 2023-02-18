@@ -56,7 +56,7 @@ export default function Stats() {
             userAddress: "52057",
             userBirthdate: "01/22/1973",
             userGen: "Generation X",
-            userLanguage: "pt_BR",
+            userLanguage: "pt-BR",
         },
         {
             optionId: 219,
@@ -115,6 +115,8 @@ export default function Stats() {
   const isThereEnoughStats = data && data.options && data.stats && data.stats.length > minStatVoteCount ;
 
   const questionCallOut = data.questionTag ? data.questionTag : "none";
+
+  const statListFor = (optionId) => (data.stats).filter((i) => i.optionId === optionId);
   const expertsTags = findCounts(data.stats, "userTag", "userTag")
                         .sort((a, b) => b.count - a.count)
                         .filter((item, idx) => idx < maxNumberOfExpertTags);
@@ -124,11 +126,21 @@ export default function Stats() {
     // 2: {userTag: 'cook', count: 1}
     // 3: {userTag: 'parent', count: 1}
 
+  const expertsTagsFor = (optionId) => (findCounts(statListFor(optionId), "userTag", "userTag")
+                                    .sort((a, b) => b.count - a.count)
+                                    .filter((item, idx) => idx < maxNumberOfExpertTags));
+
   const addressList = findCounts(data.stats, "userAddress", "userAddress")
                         .sort((a, b) => b.userAddress - a.userAddress)
                         .sort((a, b) => b.count - a.count)                        
                         .filter((item, idx) => idx < maxNumberOfAddress);
-  //console.log("addressList", addressList);
+  
+  const addressListFor = (optionId) => (findCounts(statListFor(optionId), "userAddress", "userAddress")
+                    .sort((a, b) => b.userAddress - a.userAddress)
+                    .sort((a, b) => b.count - a.count)                        
+                    .filter((item, idx) => idx < maxNumberOfAddress));
+
+
   const allMaleGender = (data.stats).filter((i) => i.userGender === 'male').length;
   const allFemaleGender = (data.stats).filter((i) => i.userGender === 'female').length;
   const allNonBinaryGender = (data.stats).filter((i) => i.userGender === 'non-binary').length;
@@ -139,6 +151,9 @@ export default function Stats() {
 
   const allEnglishSpeaker = (data.stats).filter((i) => i.userLanguage === 'en-US').length;
   const allPortugueseSpeaker = (data.stats).filter((i) => i.userLanguage === 'pt-BR').length;
+
+  const englishSpeakerFor = ((optionId) =>( data.stats).filter((i) => i.optionId === optionId && i.userLanguage === 'en-US').length);
+  const portugueseSpeakerFor = ((optionId) =>( data.stats).filter((i) => i.optionId === optionId && i.userLanguage === 'pt-BR').length);
 
   const winningOption = Math.max(...optionList.map((o) => o.votes));  
   const wininingOptionItem = optionList.filter((i) => i.votes === winningOption ); 
@@ -158,10 +173,19 @@ export default function Stats() {
             .sort((a, b) => b.userGen - a.userGen)
             .sort((a, b) => b.count - a.count);  
 
+  const generationListFor = (optionId) => (findCounts(statListFor(optionId), "userGen", "userGen")
+            .sort((a, b) => b.userGen - a.userGen)
+            .sort((a, b) => b.count - a.count));  
+ 
   const ageList = findCounts(data.stats, "userAge", "userAge")
             .sort((a, b) => b.userAge - a.userAge)
             .sort((a, b) => b.count - a.count)           
             .filter((item, idx) => idx < maxNumberOfAge);
+  
+  const ageListFor = (optionId) => (findCounts(statListFor(optionId), "userAge", "userAge")
+            .sort((a, b) => b.userAge - a.userAge)
+            .sort((a, b) => b.count - a.count)           
+            .filter((item, idx) => idx < maxNumberOfAge));
             
             
 
@@ -196,18 +220,58 @@ export default function Stats() {
                     <div className="my-2">Female Votes: {femaleGenderListFor(option.id)} </div>
                     <div className="my-2">Non-Binary Votes: {nonBinaryGenderListFor(option.id)} </div>  
                 </div>
+                <div className="col-md-4">
+                    <h5>Language:</h5>
+                    <div className="my-2"> English Speakers: {englishSpeakerFor(option.id)}</div>    
+                    <div className="my-2"> Portuguese Speakers: {portugueseSpeakerFor(option.id)}</div>                                          
+                </div>
+                <div className="col-md-4">
+                <h5>Experts who answered:</h5>
+                    {expertsTagsFor(option.id).map((ex,index) => (                      
+                        <ul key={index} className="align-items-center">                        
+                            <li className=" lh-1 col">  {ex.userTag ? ex.userTag : 'not an expert'}: <span>{ex.count}</span></li>
+                        </ul>
+                    ))}
+                </div>  
+            </div>
+            <div className="row my-3">           
+                <div className="col-md-4">
+                    <h5>Location:</h5>                 
+                    {addressListFor(option.id).map((ex,index) => (                      
+                    <ul key={index} className="align-items-center">                        
+                        <li className=" lh-1 col">  {ex.userAddress ? ex.userAddress : 'No data'}: <span>{ex.count}</span></li>
+                    </ul>
+                    ))}
+                </div>
+                <div className="col-md-4">
+                    <h5>Generations:</h5>
+                        {generationListFor(option.id).map((ex,index) => (                      
+                        <ul key={index} className="align-items-center">                        
+                            <li className=" lh-1 col">  {ex.userGen ? ex.userGen : 'No data'}: <span>{ex.count}</span></li>
+                        </ul>
+                        ))}            
+                </div>
+                <div className="col-md-4">
+                    <h5>Age:</h5>
+                      {ageListFor(option.id).map((ex,index) => (                      
+                        <ul key={index} className="align-items-center">                        
+                            <li className=" lh-1 col">  {ex.userAge ? ex.userAge : 'No data'}: <span>{ex.count}</span></li>
+                        </ul>
+                        ))} 
+                    
+                </div>
             </div>
         </div>
     </div>
   );
-
+  
   const renderQuestionLevelStats = () => (
     <div className="card">
     <div className="card-header"> {data.text}</div>
     <div className="card-body">      
         <div className="row">    
             <div className="col-md-8">
-            {checkOptionsListExists && (<div className="my-2">The options for your questions:</div>)}
+            {checkOptionsListExists && (<div className="my-2">The options:</div>)}
             {optionList.map((u) => (
                 <ul key={u.id} className="col-sm-4 align-items-center">                        
                 <li className=" lh-1 col"> {u.text}</li>
@@ -253,7 +317,7 @@ export default function Stats() {
                     ))}
                 </div>
                 <div className="col-md-4">
-                    <h5>Generations</h5>
+                    <h5>Generations:</h5>
                         {generationList.map((ex,index) => (                      
                         <ul key={index} className="align-items-center">                        
                             <li className=" lh-1 col">  {ex.userGen ? ex.userGen : 'No data'}: <span>{ex.count}</span></li>
@@ -261,7 +325,7 @@ export default function Stats() {
                         ))}            
                 </div>
                 <div className="col-md-4">
-                    <h5>Age</h5>
+                    <h5>Age:</h5>
                       {ageList.map((ex,index) => (                      
                         <ul key={index} className="align-items-center">                        
                             <li className=" lh-1 col">  {ex.userAge ? ex.userAge : 'No data'}: <span>{ex.count}</span></li>
