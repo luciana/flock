@@ -12,9 +12,11 @@ const RedefinePassword = lazy(() => import("./Pages/Auth/RedefinePassword"));
 const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
 const ConfirmSignUp = lazy(() => import("./Pages/Auth/ConfirmSignUp"));
 
+
 const Layout = lazy(() => import("./Pages/Layout/Layout"));
 const Main = lazy(() => import("./Pages/Main"));
 const Home = lazy(() => import("./Pages/Home"));
+const Stats = lazy(() => import("./Pages/Stats"));
 const Terms = lazy(() => import("./Pages/Terms"));
 const Profile = lazy(() => import("./Pages/Profile"));
 const NewQuestion = lazy(() => import("./Pages/NewQuestion"));
@@ -35,6 +37,8 @@ function App() {
         
         <Route path={ROUTES[state.lang].HOME} element={<Home />} />
         <Route path={ROUTES[state.lang].TERMS} element={<Terms />} />
+       
+        
         <Route element={<AuthLayout />}>
           <Route path={ROUTES[state.lang].SIGN_IN} element={<SignIn />} />
           <Route path={ROUTES[state.lang].FORGOT_PASSWORD} element={<ForgotPassword />} />
@@ -46,6 +50,8 @@ function App() {
          
           <Route path={ROUTES[state.lang].MAIN} element={<Main />} />
           <Route path={ROUTES[state.lang].PROFILE} element={<Profile />} />
+          <Route path={ROUTES[state.lang].STATS} element={<Stats />} />
+         
           <Route path={ROUTES[state.lang].NEW_QUESTION} element={<NewQuestion />} />
         </Route>
         <Route path="*" element={<NotFound />} />
