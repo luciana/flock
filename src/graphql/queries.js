@@ -64,6 +64,7 @@ export const getQuestion = /* GraphQL */ `
       parentID
       questionTag
       options
+      stats
       createdAt
       updatedAt
     }
@@ -94,6 +95,7 @@ export const listQuestions = /* GraphQL */ `
         parentID
         questionTag
         options
+        stats
         createdAt
         updatedAt
       }
@@ -159,6 +161,7 @@ export const questionByUserId = /* GraphQL */ `
         parentID
         questionTag
         options
+        stats
         createdAt
         updatedAt
       }

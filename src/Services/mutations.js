@@ -100,12 +100,12 @@ const UpdateUserVotes = async ( id, votes ) => {
 
 // updateQuestion(input: {id: "b35d6d5e-4160-40d2-951d-6444d7fe90a2"
 //   options:"[{\"votes\":1,\"id\":1,\"text\":\"reactjs\"},{\"votes\":0,\"id\":2,\"text\":\"vuejs\"}]"})
-const UpdateQuestionOptions = async ( id, options ) => { 
+const UpdateQuestionOptions = async ( id, options, stats ) => { 
   const {
     data: { updateQuestion },
   } = await API.graphql(
     graphqlOperation(mutations.updateQuestion, {
-      input: { id, options },
+      input: { id, options, stats },
     })
   );
   return updateQuestion;

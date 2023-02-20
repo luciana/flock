@@ -11,6 +11,10 @@ const en_us_lang = {
     Expertise: "Expertise",
     ZipCode: "Zip",
     BadgesLabel: "Badges",
+    Stats: {
+      QuestionStats: "Question Stats",
+      Results: "Your Results",
+    },
     Questions:{
       Questions: "Questions",
       NewQuestion: "New Question",

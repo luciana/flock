@@ -7,8 +7,9 @@ import { AppContext } from "../../Contexts";
 import { Alert, Loading } from "../../Components";
 import { findCounts } from './../../Helpers';
 import { Pie } from './../../Components/Chart';
+import { RiContactsBookLine } from "react-icons/ri";
 
-export default function Stats() {
+export default function Stats(dataInput) {
   const { state } = useContext(AppContext);
   const { user } = state;
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function Stats() {
     // totalVotes();
   }, [user]);
 
-
+    console.log("data input", data);
  
 
   const data = {
@@ -145,17 +146,20 @@ export default function Stats() {
   const allMaleGender = (data.stats).filter((i) => i.userGender === 'male').length;
   const allFemaleGender = (data.stats).filter((i) => i.userGender === 'female').length;
   const allNonBinaryGender = (data.stats).filter((i) => i.userGender === 'non-binary').length;
+  const allNoneGender = (data.stats).filter((i) => i.userGender === '').length;
 
   const pieAllGenderData = [
     { value: allMaleGender, name: 'male' },
     { value: allFemaleGender, name: 'female' },
     { value: allNonBinaryGender, name: 'non-binary' },
+    { value: allNoneGender, name: 'not given' },
 ];
 
 
   const maleGenderListFor = (optionId) => ((data.stats).filter((i) => i.optionId === optionId && i.userGender === 'male').length);
   const femaleGenderListFor = (optionId) => ((data.stats).filter((i) => i.optionId === optionId && i.userGender === 'female').length);
   const nonBinaryGenderListFor = (optionId) => ((data.stats).filter((i) => i.optionId === optionId && i.userGender === 'non-binary').length);
+  const noneGenderListFor = (optionId) => ((data.stats).filter((i) => i.optionId === optionId && i.userGender === '').length);
 
   const allEnglishSpeaker = (data.stats).filter((i) => i.userLanguage === 'en-US').length;
   const allPortugueseSpeaker = (data.stats).filter((i) => i.userLanguage === 'pt-BR').length;
@@ -226,7 +230,8 @@ export default function Stats() {
                     <h5>Gender:</h5>                                                 
                     <div className="my-2">Male Votes: {maleGenderListFor(option.id)} </div>
                     <div className="my-2">Female Votes: {femaleGenderListFor(option.id)} </div>
-                    <div className="my-2">Non-Binary Votes: {nonBinaryGenderListFor(option.id)} </div>              
+                    <div className="my-2">Non-Binary Votes: {nonBinaryGenderListFor(option.id)} </div>  
+                    <div className="my-2">Not Entered: {noneGenderListFor(option.id)}</div>            
                 </div>
                 <div className="col-md-4">
                     <h5>Language:</h5>
@@ -298,7 +303,8 @@ export default function Stats() {
                 <h5>Gender:</h5>                                                 
                 <div className="my-2">Male Votes: {allMaleGender} </div>
                 <div className="my-2">Female Votes: {allFemaleGender} </div>
-                <div className="my-2">Non-Binary Votes: {allNonBinaryGender} </div>       
+                <div className="my-2">Non-Binary Votes: {allNonBinaryGender} </div>     
+                <div className="my-2">Not Entered: {noneGenderListFor}</div>  
                 <div><Pie data={pieAllGenderData} /></div>            
             </div>  
             <div className="col-md-4">
@@ -366,7 +372,6 @@ export default function Stats() {
                   <hr className="m-3"></hr>   
                 </div>
             ))}
-
 
             </>
         )}

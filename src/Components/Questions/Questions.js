@@ -1,11 +1,12 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, startTransition } from "react";
 import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
 import { Loading, Alert, Switch, Friends }  from '../../Components';
 import Queries from "../../Services/queries";
 import Mutations from "../../Services/mutations";
 import { AppContext} from '../../Contexts'; 
-import { ROUTES, TYPES } from "../../Constants";
+import { ROUTES, TYPES, GENERATIONS } from "../../Constants";
+import { findGeneration, findAge } from "../../Helpers";
 
 
 const Questions = () => {
@@ -85,45 +86,6 @@ const Questions = () => {
       }, [user,  setFilterList ]);
 
      
-      // const rootQuestions =  backendQuestions.filter(
-      //   (backendQuestion) => ((backendQuestion.parentID === null) )
-      // ).sort(
-      //   (a, b) =>
-      //   new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      // ); 
-
-    
-      // const getUsersYouHelped = () => {
-      //   console.log("Questions that user voted ", votedList);     
-      //   const listOfQuestionsAnswered =  votedList.map((votedList)=> votedList.questionId);
-      //   console.log("List of questions id that user voted ", listOfQuestionsAnswered);
-      // //   [
-      // //     "72a986c9-d35e-4fbf-a96f-c7a610a601e2",
-      // //     "1ae7b3c4-9f9e-4776-bfb4-4251c1c22651",
-      // //     "f5b0936d-d418-424e-8a06-2cf4f8baef02",
-      // //     "c57a605a-0e81-4253-a11e-f6da052eceb9",
-      // //     "049cd46a-d8cb-40a9-9b50-1c734eca1cd2",
-      // //     "0866a047-396c-48cf-b7a3-d684d7976489",
-      // //     "70c880eb-a99e-4702-82f5-bc9bbc930428",
-      // //     "5bf62d05-c186-4a02-9611-9a66a8e2b5a2"
-      // // ]
-              
-      //   const t =  backendQuestions.filter(
-      //     (backendQuestion) => ((listOfQuestionsAnswered.includes(backendQuestion.questionId) ))
-      //   );
-
-      //   const thirdArray = backendQuestions.filter((questions) => {
-      //     return votedList.some((voted) => {
-      //     return voted.questionId === questions.id&& voted.questionId === questions.id;
-      //       });
-      //     });
-
-      //   console.log("List of users you helped with votes ", thirdArray, listOfQuestionsAnswered[0], backendQuestions);
-      //   setUserFriends(thirdArray);
-        
-            
-      // }
-     
         const handleVoteFilterSwitch = () => {               
           setIsVoteFilterChecked(!isVoteFilterChecked);  
          console.log("when the user clicks vote filter, the filtered list is ", filterList);
@@ -143,8 +105,7 @@ const Questions = () => {
 
            //both swithes are on
            if(isQuestionFilterChecked){
-              console.log("both switches are on");
-            // setFilterList([...new Set([...voteFilteredList,...filterList])]);
+              console.log("both switches are on");       
               const filterFromTwoArrays = questionFilteredList.some(item => v.includes(item));
               console.log("combine both vote and question list", filterFromTwoArrays);
               if(filterFromTwoArrays)
@@ -159,8 +120,7 @@ const Questions = () => {
          }else{
           //vote switch is off
           if(isQuestionFilterChecked){
-            console.log("question switch is on and vote switch is off");
-           // setFilterList([...new Set([...questionFilteredList,...filterList])]);
+            console.log("question switch is on and vote switch is off");          
            setFilterList(questionFilteredList);
           }else{
             //both switches are off
@@ -238,6 +198,8 @@ const Questions = () => {
       const updateQuestion = async (question, option) => {
        
         if(! question.options) return; //TODO: alert
+
+        //Update Options
         let optionsInQuestion = JSON.parse(question.options);
         let optID = option.id;
        
@@ -255,9 +217,50 @@ const Questions = () => {
             }
           }
 
+        //Update Stats
+        let statsInQuestion = [];
+        if (question.stats) {
+          statsInQuestion = JSON.parse(question.stats);
+        };     
+         let stat ={};
+         stat.optionId = optID;
+         stat.userTag = user.userTag;
+         stat.userGender = user.gender;       
+         stat.userAddress = user.address;
+
+         if(user.birthdate){
+         stat.userBirthdate = user.birthdate;
+         stat.userAge =  findAge(new Date(user.birthdate));
+         stat.userGen = findGeneration(new Date(user.birthdate));
+        }else{
+          stat.userBirthdate = "";
+          stat.userAge =  "";
+          stat.userGen ="";
+        }
+         stat.userLanguage = user.locale;
+
+         console.log(" stat item result", stat);
+
+         const newStatsArray = [...statsInQuestion];
+         newStatsArray.push(stat);      
+         console.log("stats resultssss", newStatsArray);  
+
+
+        //   {
+        //     optionId: 219,
+        //     userTag: "",
+        //     userGender: "male",
+        //     userAge: "46",
+        //     userAddress: "44039",
+        //     userBirthdate: "01/22/1977",
+        //     userGen: "Generation X",
+        //     userLanguage: "en-US",
+        // }
+
           let q = await Mutations.UpdateQuestionOptions(
             question.id,
-            JSON.stringify(optionsInQuestion)
+            JSON.stringify(optionsInQuestion),
+            JSON.stringify(newStatsArray),
           );
 
           const newA = [];  
@@ -339,7 +342,7 @@ const Questions = () => {
       }
 
       const updateVotedOptionsList = (id) => {    
-        setVotedList(votedOptionsList => {           
+        setVoteOptionsdList(votedOptionsList => {           
           const newArray = [...votedOptionsList];
           newArray.push(id);
           return newArray;

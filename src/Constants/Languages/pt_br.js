@@ -11,6 +11,10 @@ const pt_br_lang = {
     Expertise: "Especialidade",
     ZipCode: "Cep",
     BadgesLabel: "Distintivos",
+    Stats: {
+      QuestionStats: "Estatisticas",
+      Results: "Resultado",
+    },
     Questions:{
       Questions: "Perguntas",
       NewQuestion: "Nova Pergunta",

@@ -37,5 +37,6 @@ type Question @model
   parentID: ID 
   questionTag: String  #@index(name: "byQuestionTag", sortKeyFields: ["id"])
   options: AWSJSON #need to make this mandatory
+  stats: AWSJSON
 }
  

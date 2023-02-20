@@ -79,6 +79,7 @@ export const onCreateQuestion = /* GraphQL */ `
       parentID
       questionTag
       options
+      stats
       createdAt
       updatedAt
     }
@@ -99,6 +100,7 @@ export const onUpdateQuestion = /* GraphQL */ `
       parentID
       questionTag
       options
+      stats
       createdAt
       updatedAt
     }
@@ -119,6 +121,7 @@ export const onDeleteQuestion = /* GraphQL */ `
       parentID
       questionTag
       options
+      stats
       createdAt
       updatedAt
     }

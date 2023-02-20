@@ -12,7 +12,7 @@ const findCounts = (arr,key, field) => {
          // If yes! then increase the occurrence by 1
          arr2.forEach((k)=>{
            if(k[key] === x[key]){ 
-             k["count"]++
+             k["value"]++
              k[field] = x[field]
            }
            
@@ -21,11 +21,11 @@ const findCounts = (arr,key, field) => {
        }else{
          // If not! Then create a new object initialize 
          // it with the present iteration key's value and 
-         // set the count to 1
+         // set the value to 1
          let a = {}
          a[key] = x[key]
          a[field] = x[field];
-         a["count"] = 1
+         a["value"] = 1
          arr2.push(a);
        }
     })

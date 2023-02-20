@@ -13,7 +13,7 @@ const Friends = ({votedList, backendQuestions}) => {
                 });
             });        
             countList = findCounts(votedOnQuestions, "userID", "userName")
-                            .sort((a, b) => b.count - a.count)
+                            .sort((a, b) => b.value - a.value)
                             .filter((item, idx) => idx < maxNumberOfFriends);
         
             console.log('counts ',countList);
@@ -21,12 +21,12 @@ const Friends = ({votedList, backendQuestions}) => {
     //      [{
     //         "userID": "0714e188-f988-4492-9ddf-6378059c438b",
     //         "userName": "Marcelo Toledo",
-    //         "count": 1
+    //         "value": 1
     //     },
     //     {
     //         "userID": "dc112cb7-8927-421c-9273-3b1626e4d791",
     //         "userName": "Atanas Dojcinovski",
-    //         "count": 3
+    //         "value": 3
     //     }
     // ]
         

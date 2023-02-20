@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import Vote from '../Votes/Vote';
-import { FaCircleNotch , FaSyncAlt, FaCircle, FaTrashAlt, FaGrinHearts, FaPhoneVolume} from 'react-icons/fa';
+import { FaCircleNotch , FaSyncAlt, FaCircle, FaTrashAlt, FaGrinHearts, FaPhoneVolume, FaChartPie} from 'react-icons/fa';
 //import { Tooltip } from 'bootstrap';
 import Avatar from 'react-avatar';
 import ReplyModalDialog from './ReplyModalDialog';
 import QuestionForm from './QuestionForm';
+import StatsDialog from '../Stats/StatsDialog';
 
 function Question({ 
   question, 
@@ -58,6 +59,10 @@ function Question({
     activeQuestion &&
     activeQuestion.id === question.id &&
     activeQuestion.type === "replying";
+
+  const minStatVoteCount = 2;
+  const isThereEnoughStats =  question && user.id === question.userID && question.options && question.stats && question.stats.length > minStatVoteCount ;
+
 
   let alreadyVotedForQuestionList = votedList.filter(
     (vote) => vote && vote.questionId === question.id
@@ -126,6 +131,11 @@ function Question({
               {canRepost && (
                 <button className="btn btn-sm  mx-1"  onClick={()=> alert("this will repost the question and reopen the vote, but functionality not done yet. Is this a good idea?")}>
                   <FaSyncAlt alt="Repost question" /></button>
+              )}
+
+              {isThereEnoughStats && (
+                <StatsDialog data={question}
+                            locale={user.locale}/>
               )}
             </div>
         </div>      
