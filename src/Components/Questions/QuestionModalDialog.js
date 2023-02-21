@@ -33,7 +33,6 @@ function QuestionModalDialog(
     return setShowQuestionModal(!false)
   }  
 
-  console.log('todos in question modal dialog', todos);
   const handleChange = e => {
     setInput(e.target.value);
   };
@@ -68,9 +67,8 @@ function QuestionModalDialog(
     });
 
     setShowOptionsModal(true);
-
   }
-
+  const disabledPublishButton =  todos.length < 2 || todos.length > 5;
   return (
     <>
       <div className="p-2 row align-items-start"> 
@@ -88,7 +86,7 @@ function QuestionModalDialog(
         <form  className=''>
         <Modal  fullscreen={true} show={showQuestionModal} >
               <Modal.Header closeButton onClick={() => {setShowQuestionModal(false)}}>
-                <Modal.Title>What is your question</Modal.Title>
+                <Modal.Title>{LANGUAGES[user.locale].Questions.WhatisYourQuestion}</Modal.Title>
               </Modal.Header>
               <Modal.Body >               
                   <textarea
@@ -148,8 +146,8 @@ function QuestionModalDialog(
 
                     <div className="mt-5 alert alert-warning alert-dismissible fade show text-sm" role="alert">
                     <div className="alert-heading" ><RiMagicLine size={24} /><strong>Pro Tip!</strong></div>
-                      <div>Use #flocks to list out the options for your question. Using #flocks will auto populate the list of options for you! </div>
-                     <div className="fst-italic"> i.e Most fun vacation spot with kids. #flocks beach, mountains. </div>                  
+                      <div>{LANGUAGES[user.locale].Questions.FlockTip} </div>
+                     <div className="fst-italic"> {LANGUAGES[user.locale].Questions.FlockTipExample} </div>                  
                     </div>
                                                        
               </Modal.Body>
@@ -174,9 +172,14 @@ function QuestionModalDialog(
 
         <Modal  fullscreen={true} show={showOptionsModal} >
               <Modal.Header closeButton onClick={() => {setShowOptionsModal(false)}}>
-                <Modal.Title>Enter the options</Modal.Title>
+                <Modal.Title>{LANGUAGES[user.locale].Questions.EnterOptions}</Modal.Title>
               </Modal.Header>
               <Modal.Body>
+                <div className="mb-5 alert alert-warning alert-dismissible fade show text-sm" role="alert">
+                  <div className="alert-heading" ><RiMagicLine size={24} /><strong>Pro Tip!</strong></div>
+                  <div>{LANGUAGES[user.locale].Questions.FlockOptionTip} </div>
+                  <div className="fst-italic"> {LANGUAGES[user.locale].Questions.FlockOptionTipExample} </div>                  
+                 </div>
                 <Item
                     todos={todos}           
                     removeTodo={removeTodo}
@@ -189,7 +192,7 @@ function QuestionModalDialog(
                
 
                  <Button handler={handlePublishQuestion} 
-                  disabled={false} 
+                  disabled={disabledPublishButton} 
                    text={LANGUAGES[user.locale].Questions.Publish} />
               </Modal.Footer>
         </Modal>

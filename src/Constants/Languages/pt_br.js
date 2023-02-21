@@ -23,6 +23,12 @@ const pt_br_lang = {
       EnterNewQuestion: "Insira sua Nova Pergunta",
       Next: "Proxima",
       Publish: "Postar Pergunta",
+      WhatisYourQuestion: "Qual a sua pergunta?",
+      FlockTip: "Use #flocks para monstrar as opção de sua pergunta. Usando #flocks ira automaticamente mostrar a sua list!",
+      FlockTipExample: "Por example: Qual a melhor férias com crianças? #flocks praia, piscina",
+      EnterOptions: "Quais as suas opções?",
+      FlockOptionTip: "Insira todas as opções que voce gostaria que as pessoas votassem ( min 2, max 5 )",
+      FlockOptionTipExample: "Por example, se a sua pergunta foi: Indo de férias para o exterior, product uma praia ou neve? Nesse caso as suas opções são praia e neve",
     },
     PasswordRules: {
       Chars: "Pelo menos 8 caracteres",

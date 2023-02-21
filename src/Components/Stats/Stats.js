@@ -6,7 +6,8 @@ import { LANGUAGES } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import { Alert, Loading } from "../../Components";
 import { findCounts } from './../../Helpers';
-import { Pie } from './../../Components/Chart';
+import { GenderStats } from './';
+import { Bar } from './../../Components/Chart';
 
 export default function Stats({data, options, text, questionTag}) {
   const { state } = useContext(AppContext);
@@ -133,30 +134,11 @@ export default function Stats({data, options, text, questionTag}) {
                     .sort((a, b) => b.value - a.value)                        
                     .filter((item, idx) => idx < maxNumberOfAddress));
 
-
-  const allMaleGender = (data).filter((i) => i.userGender === 'male').length;
-  const allFemaleGender = (data).filter((i) => i.userGender === 'female').length;
-  const allNonBinaryGender = (data).filter((i) => i.userGender === 'non-binary').length;
-  const allNoneGender = (data).filter((i) => i.userGender === '').length;
-
-  const pieAllGenderData = [
-    { value: allMaleGender, name: 'male' },
-    { value: allFemaleGender, name: 'female' },
-    { value: allNonBinaryGender, name: 'non-binary' },
-    { value: allNoneGender, name: 'not given' },
-];
-
-
-  const maleGenderListFor = (optionId) => ((data).filter((i) => i.optionId === optionId && i.userGender === 'male').length);
-  const femaleGenderListFor = (optionId) => ((data).filter((i) => i.optionId === optionId && i.userGender === 'female').length);
-  const nonBinaryGenderListFor = (optionId) => ((data).filter((i) => i.optionId === optionId && i.userGender === 'non-binary').length);
-  const noneGenderListFor = (optionId) => ((data).filter((i) => i.optionId === optionId && i.userGender === '').length);
-
   const allEnglishSpeaker = (data).filter((i) => i.userLanguage === 'en-US').length;
   const allPortugueseSpeaker = (data).filter((i) => i.userLanguage === 'pt-BR').length;
-
   const englishSpeakerFor = ((optionId) =>( data).filter((i) => i.optionId === optionId && i.userLanguage === 'en-US').length);
   const portugueseSpeakerFor = ((optionId) =>( data).filter((i) => i.optionId === optionId && i.userLanguage === 'pt-BR').length);
+
 
   const winningOption = Math.max(...optionList.map((o) => o.votes));  
   const wininingOptionItem = optionList.filter((i) => i.votes === winningOption ); 
@@ -211,20 +193,18 @@ export default function Stats({data, options, text, questionTag}) {
   const tv = totalVotes();
   const renderSingleOptionStats = (option) => (
     <div className="card">
-        <div className="card-header"> {text}</div>
+        <div className="card-header"> {option.text}</div>
         <div className="card-body">      
             <div className="row">  
                 <div className="col-md-4">  
-                    <h5>Gender:</h5>                                                 
-                    <div className="my-2">Male Votes: {maleGenderListFor(option.id)} </div>
-                    <div className="my-2">Female Votes: {femaleGenderListFor(option.id)} </div>
-                    <div className="my-2">Non-Binary Votes: {nonBinaryGenderListFor(option.id)} </div>  
-                    <div className="my-2">Not Entered: {noneGenderListFor(option.id)}</div>            
+                    <h5>Gender:</h5>                                                                 
+                    <GenderStats dataInput={data} optionId={option.id} />
                 </div>
                 <div className="col-md-4">
                     <h5>Language:</h5>
                     <div className="my-2"> English Speakers: {englishSpeakerFor(option.id)}</div>    
-                    <div className="my-2"> Portuguese Speakers: {portugueseSpeakerFor(option.id)}</div>                                          
+                    <div className="my-2"> Portuguese Speakers: {portugueseSpeakerFor(option.id)}</div>    
+                    <div><Bar x={['English', 'Portuguese']} y={[englishSpeakerFor(option.id), portugueseSpeakerFor(option.id)]} /></div>                                       
                 </div>
                 <div className="col-md-4">
                     <h5>Experts who answered:</h5>
@@ -290,17 +270,14 @@ export default function Stats({data, options, text, questionTag}) {
         <hr className="my-1" />
         <div className="row my-3">             
             <div className="col-md-4">      
-                <h5>Gender:</h5>                                                 
-                <div className="my-2">Male Votes: {allMaleGender} </div>
-                <div className="my-2">Female Votes: {allFemaleGender} </div>
-                <div className="my-2">Non-Binary Votes: {allNonBinaryGender} </div>     
-                <div className="my-2">Not Entered: {noneGenderListFor}</div>  
-                <div><Pie data={pieAllGenderData} /></div>            
+                <h5>Gender:</h5>          
+                <GenderStats dataInput={data} optionId={null} />
             </div>  
             <div className="col-md-4">
                 <h5>Language:</h5>
                 <div className="my-2"> English Speakers: {allEnglishSpeaker}</div>    
-                <div className="my-2"> Portuguese Speakers: {allPortugueseSpeaker}</div>                                          
+                <div className="my-2"> Portuguese Speakers: {allPortugueseSpeaker}</div>   
+                <div><Bar x={['English', 'Portuguese']} y={[allEnglishSpeaker, allPortugueseSpeaker]} /></div>                                         
             </div>
             <div className="col-md-4">
                 <h5>Experts who answered:</h5>

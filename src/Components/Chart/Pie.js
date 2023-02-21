@@ -55,7 +55,7 @@ const Pie = ({ data }) => {
 
     return (
         <>
-        <ReactEcharts option={option} />;
+        <ReactEcharts option={option} />
         </>
     )
 }

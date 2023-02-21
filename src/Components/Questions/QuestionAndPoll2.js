@@ -132,8 +132,17 @@ function QuestionAndPoll2({
 
       const handlePublishQuestion = e => {
         e.preventDefault();  
-        question.options = todos;                 
+        question.options = todos;     
+
         addQuestion(question);
+        // const isValidForm = todos.length >= 2 && todos.length <= 5; 
+        // console.log("is Question publishing valid - must have a date in the future and items > 2 and < 5", todos.length);
+        // if (isValidForm){
+         
+        // }else{
+        //   alert("Please enter options to your question ( min of 2 and max of 5 )");
+        //   return;
+        // } 
            
       }
     return(

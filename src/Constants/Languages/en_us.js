@@ -23,6 +23,12 @@ const en_us_lang = {
       EnterNewQuestion: "Enter Your Question",
       Next: "Next",
       Publish: "Publish Question",
+      WhatisYourQuestion: "What is your question?",
+      FlockTip: "Use #flocks to list out the options for your question. Using #flocks will auto populate the list of options for you!",
+      FlockTipExample: "i.e Most fun vacation spot with kids. #flocks beach, mountains.",
+      EnterOptions: "Enter the options",
+      FlockOptionTip: "Enter all the options that you want others to vote ( min 2, max 5 )",
+      FlockOptionTipExample: "i.e if your question is What do you prefer breakfast or brunch? Then your options to be entered here are: breakfast and brunch.",
     },
     PasswordRules: {
       Chars: "Must have at least 8 chars",

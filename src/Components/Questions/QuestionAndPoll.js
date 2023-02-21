@@ -113,8 +113,15 @@ function QuestionAndPoll({
         const newDate = addMinutes(createdDate, parseFloat(votePeriod));
         question.voteEndAt = newDate;
         question.options = todos;
+        const isValidForm = newDate && todos.length >= 2 && todos.length <= 5; 
+        console.log("is Question publishing valid - must have a date in the future and items > 2 and < 5", newDate, todos.length);
+        if (isValidForm){
+          addQuestion(question);
+        }else{
+          alert("Please enter options to your question ( min of 2 and max of 5 )");
+          return;
+        }
        
-        addQuestion(question);
       }
 
       const addMinutes = (date, minutes)  => {
