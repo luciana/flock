@@ -60,8 +60,8 @@ function Question({
     activeQuestion.id === question.id &&
     activeQuestion.type === "replying";
 
-  const minStatVoteCount = 2;
-  const isThereEnoughStats =  question && user.id === question.userID && question.options && question.stats && question.stats.length > minStatVoteCount ;
+  const minStatVoteCount = 2; //statistically 100 is min value
+  const isThereEnoughStats =  question && user.id === question.userID && question.options && question.stats && JSON.parse(question.stats).length > minStatVoteCount ;
 
 
   let alreadyVotedForQuestionList = votedList.filter(
@@ -134,7 +134,7 @@ function Question({
               )}
 
               {isThereEnoughStats && (
-                <StatsDialog data={question}
+                <StatsDialog question={question}
                             locale={user.locale}/>
               )}
             </div>

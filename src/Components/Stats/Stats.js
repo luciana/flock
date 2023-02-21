@@ -7,119 +7,110 @@ import { AppContext } from "../../Contexts";
 import { Alert, Loading } from "../../Components";
 import { findCounts } from './../../Helpers';
 import { Pie } from './../../Components/Chart';
-import { RiContactsBookLine } from "react-icons/ri";
 
-export default function Stats(dataInput) {
+export default function Stats({data, options, text, questionTag}) {
   const { state } = useContext(AppContext);
   const { user } = state;
-  const navigate = useNavigate();
   const [alert, setAlert] = useState();
-  const [language, setLanguage] = useState(user.locale);
 
-  useEffect(() => {
-    // userVoteCount();
-    // totalVotes();
-  }, [user]);
-
-    console.log("data input", data);
- 
-
-  const data = {
-    email: "luciana123_2002@yahoo.com",
-    questionID: "0714e188-f988-4492-9ddf-6378059c438b",
-    text: "Qual vestido devo comprar para uma festa social #flocks curto, longo?",
-    options: "[{\"votes\":5,\"id\":219,\"text\":\"Curto\"},{\"votes\":2,\"id\":9552,\"text\":\"Longo\",\"isComplete\":true}]",
-    questionTag: "parent",
-    stats: [{
-            optionId: 219,
-            userTag: "",
-            userGender: "male",
-            userAge: "46",
-            userAddress: "44039",
-            userBirthdate: "01/22/1977",
-            userGen: "Generation X",
-            userLanguage: "en-US",
-        },
-        {
-            optionId: 219,
-            userTag: "technologist",
-            userGender: "male",           
-            userAge: "47",
-            userAddress: "44139",
-            userBirthdate: "01/22/1975",
-            userGen: "Generation X",
-            userLanguage: "en-US",
-        },
-        {
-            optionId: 219,
-            userTag: "parent",
-            userGender: "female",           
-            userAge: "50",
-            userAddress: "52057",
-            userBirthdate: "01/22/1973",
-            userGen: "Generation X",
-            userLanguage: "pt-BR",
-        },
-        {
-            optionId: 219,
-            userTag: "cook",
-            userGender: "female",
-            userAge: "34",
-            userAddress: "44345",
-            userBirthdate: "01/22/1995",
-            userGen: "Generation Z",
-            userLanguage: "en-US",
-        },
-        {
-            optionId: 9552,
-            userTag: "parent",
-            userGender: "female",
-            userAge: "40",
-            userAddress: "44345",
-            userBirthdate: "01/22/1983",
-            userGen: "Millennials",
-            userLanguage: "en-US",
-        },
-        {
-            optionId: 9552,
-            userTag: "fashion_designer",
-            userGender: "female",
-            userAge: "23",
-            userAddress: "44039",
-            userBirthdate: "01/22/2000",
-            userGen: "Millennials",
-            userLanguage: "en-US",
-        },
-        {
-            optionId: 219,
-            userTag: "fashion_designer",
-            userGender: "non-binary",
-            userAge: "30",
-            userAddress: "44124",
-            userBirthdate: "01/22/1993",
-            userGen: "Millennials",
-            userLanguage: "en-US",
-        }
-    ]
-};
-  
-  const loading = () => {
-    setAlert()
+  if(!data || !options){  
+    setAlert({ type: "error", text:"No data loaded"});  
+    return;
   }
+
+  console.log("stats data input converted to data", data);
+//   const data = {
+//     email: "luciana123_2002@yahoo.com",
+//     questionID: "0714e188-f988-4492-9ddf-6378059c438b",
+//     text: "Qual vestido devo comprar para uma festa social #flocks curto, longo?",
+//     options: "[{\"votes\":5,\"id\":219,\"text\":\"Curto\"},{\"votes\":2,\"id\":9552,\"text\":\"Longo\",\"isComplete\":true}]",
+//     questionTag: "parent",
+//     stats: [{
+//             optionId: 219,
+//             userTag: "",
+//             userGender: "male",
+//             userAge: "46",
+//             userAddress: "44039",
+//             userBirthdate: "01/22/1977",
+//             userGen: "Generation X",
+//             userLanguage: "en-US",
+//         },
+//         {
+//             optionId: 219,
+//             userTag: "technologist",
+//             userGender: "male",           
+//             userAge: "47",
+//             userAddress: "44139",
+//             userBirthdate: "01/22/1975",
+//             userGen: "Generation X",
+//             userLanguage: "en-US",
+//         },
+//         {
+//             optionId: 219,
+//             userTag: "parent",
+//             userGender: "female",           
+//             userAge: "50",
+//             userAddress: "52057",
+//             userBirthdate: "01/22/1973",
+//             userGen: "Generation X",
+//             userLanguage: "pt-BR",
+//         },
+//         {
+//             optionId: 219,
+//             userTag: "cook",
+//             userGender: "female",
+//             userAge: "34",
+//             userAddress: "44345",
+//             userBirthdate: "01/22/1995",
+//             userGen: "Generation Z",
+//             userLanguage: "en-US",
+//         },
+//         {
+//             optionId: 9552,
+//             userTag: "parent",
+//             userGender: "female",
+//             userAge: "40",
+//             userAddress: "44345",
+//             userBirthdate: "01/22/1983",
+//             userGen: "Millennials",
+//             userLanguage: "en-US",
+//         },
+//         {
+//             optionId: 9552,
+//             userTag: "fashion_designer",
+//             userGender: "female",
+//             userAge: "23",
+//             userAddress: "44039",
+//             userBirthdate: "01/22/2000",
+//             userGen: "Millennials",
+//             userLanguage: "en-US",
+//         },
+//         {
+//             optionId: 219,
+//             userTag: "fashion_designer",
+//             userGender: "non-binary",
+//             userAge: "30",
+//             userAddress: "44124",
+//             userBirthdate: "01/22/1993",
+//             userGen: "Millennials",
+//             userLanguage: "en-US",
+//         }
+//     ]
+// };
 
   const minStatVoteCount = 2; 
   const maxNumberOfAddress = 5;
   const maxNumberOfExpertTags = 5;
   const maxNumberOfAge = 5;
   
-  const optionList = data.options && JSON.parse(data.options);
+  const optionList = options && JSON.parse(options);
   const checkOptionsListExists = optionList && optionList.length> 0;
-  const isThereEnoughStats = data && data.options && data.stats && data.stats.length > minStatVoteCount ;
+  const isThereEnoughStats = data && options && data.length > minStatVoteCount ;
 
-  const questionCallOut = data.questionTag ? data.questionTag : "none";
+  const questionCallOut = questionTag ? questionTag : "";
 
-  const statListFor = (optionId) => (data.stats).filter((i) => i.optionId === optionId);
-  const expertsTags = findCounts(data.stats, "userTag", "userTag")
+  const statListFor = (optionId) => (data).filter((i) => i.optionId === optionId);
+  const expertsTags = findCounts(data, "userTag", "userTag")
                         .sort((a, b) => b.value - a.value)
                         .filter((item, idx) => idx < maxNumberOfExpertTags);
   //console.log("expertsTags", expertsTags);
@@ -132,7 +123,7 @@ export default function Stats(dataInput) {
                                     .sort((a, b) => b.value - a.value)
                                     .filter((item, idx) => idx < maxNumberOfExpertTags));
 
-  const addressList = findCounts(data.stats, "userAddress", "userAddress")
+  const addressList = findCounts(data, "userAddress", "userAddress")
                         .sort((a, b) => b.userAddress - a.userAddress)
                         .sort((a, b) => b.value - a.value)                        
                         .filter((item, idx) => idx < maxNumberOfAddress);
@@ -143,10 +134,10 @@ export default function Stats(dataInput) {
                     .filter((item, idx) => idx < maxNumberOfAddress));
 
 
-  const allMaleGender = (data.stats).filter((i) => i.userGender === 'male').length;
-  const allFemaleGender = (data.stats).filter((i) => i.userGender === 'female').length;
-  const allNonBinaryGender = (data.stats).filter((i) => i.userGender === 'non-binary').length;
-  const allNoneGender = (data.stats).filter((i) => i.userGender === '').length;
+  const allMaleGender = (data).filter((i) => i.userGender === 'male').length;
+  const allFemaleGender = (data).filter((i) => i.userGender === 'female').length;
+  const allNonBinaryGender = (data).filter((i) => i.userGender === 'non-binary').length;
+  const allNoneGender = (data).filter((i) => i.userGender === '').length;
 
   const pieAllGenderData = [
     { value: allMaleGender, name: 'male' },
@@ -156,16 +147,16 @@ export default function Stats(dataInput) {
 ];
 
 
-  const maleGenderListFor = (optionId) => ((data.stats).filter((i) => i.optionId === optionId && i.userGender === 'male').length);
-  const femaleGenderListFor = (optionId) => ((data.stats).filter((i) => i.optionId === optionId && i.userGender === 'female').length);
-  const nonBinaryGenderListFor = (optionId) => ((data.stats).filter((i) => i.optionId === optionId && i.userGender === 'non-binary').length);
-  const noneGenderListFor = (optionId) => ((data.stats).filter((i) => i.optionId === optionId && i.userGender === '').length);
+  const maleGenderListFor = (optionId) => ((data).filter((i) => i.optionId === optionId && i.userGender === 'male').length);
+  const femaleGenderListFor = (optionId) => ((data).filter((i) => i.optionId === optionId && i.userGender === 'female').length);
+  const nonBinaryGenderListFor = (optionId) => ((data).filter((i) => i.optionId === optionId && i.userGender === 'non-binary').length);
+  const noneGenderListFor = (optionId) => ((data).filter((i) => i.optionId === optionId && i.userGender === '').length);
 
-  const allEnglishSpeaker = (data.stats).filter((i) => i.userLanguage === 'en-US').length;
-  const allPortugueseSpeaker = (data.stats).filter((i) => i.userLanguage === 'pt-BR').length;
+  const allEnglishSpeaker = (data).filter((i) => i.userLanguage === 'en-US').length;
+  const allPortugueseSpeaker = (data).filter((i) => i.userLanguage === 'pt-BR').length;
 
-  const englishSpeakerFor = ((optionId) =>( data.stats).filter((i) => i.optionId === optionId && i.userLanguage === 'en-US').length);
-  const portugueseSpeakerFor = ((optionId) =>( data.stats).filter((i) => i.optionId === optionId && i.userLanguage === 'pt-BR').length);
+  const englishSpeakerFor = ((optionId) =>( data).filter((i) => i.optionId === optionId && i.userLanguage === 'en-US').length);
+  const portugueseSpeakerFor = ((optionId) =>( data).filter((i) => i.optionId === optionId && i.userLanguage === 'pt-BR').length);
 
   const winningOption = Math.max(...optionList.map((o) => o.votes));  
   const wininingOptionItem = optionList.filter((i) => i.votes === winningOption ); 
@@ -181,7 +172,7 @@ export default function Stats(dataInput) {
 //     }
 // ]
 
- const generationList = findCounts(data.stats, "userGen", "userGen")
+ const generationList = findCounts(data, "userGen", "userGen")
             .sort((a, b) => b.userGen - a.userGen)
             .sort((a, b) => b.value - a.value);  
 
@@ -189,7 +180,7 @@ export default function Stats(dataInput) {
             .sort((a, b) => b.userGen - a.userGen)
             .sort((a, b) => b.value - a.value));  
  
-  const ageList = findCounts(data.stats, "userAge", "userAge")
+  const ageList = findCounts(data, "userAge", "userAge")
             .sort((a, b) => b.userAge - a.userAge)
             .sort((a, b) => b.value - a.value)           
             .filter((item, idx) => idx < maxNumberOfAge);
@@ -202,8 +193,8 @@ export default function Stats(dataInput) {
 
   const totalVotes = () =>{
     let totalVoteCount = 0;
-    if (data.stats) {
-        totalVoteCount = data.stats && data.stats.length;
+    if (data) {
+        totalVoteCount = data && data.length;
     }
     return totalVoteCount;
   }
@@ -218,12 +209,9 @@ export default function Stats(dataInput) {
   }
  
   const tv = totalVotes();
-
-  
-
   const renderSingleOptionStats = (option) => (
     <div className="card">
-        <div className="card-header"> {option.text}</div>
+        <div className="card-header"> {text}</div>
         <div className="card-body">      
             <div className="row">  
                 <div className="col-md-4">  
@@ -279,13 +267,13 @@ export default function Stats(dataInput) {
   
   const renderQuestionLevelStats = () => (
     <div className="card">
-    <div className="card-header"> {data.text}</div>
+    <div className="card-header"> {text}</div>
     <div className="card-body">      
         <div className="row">    
             <div className="col-md-8">
-            {checkOptionsListExists && (<div className="my-2">The options:</div>)}
-            {optionList.map((u) => (
-                <ul key={u.id} className="col-sm-4 align-items-center">                        
+             <div className="my-2">The options:</div>
+            {optionList.map((u, index) => (
+                <ul key={index} className="col-sm-4 align-items-center">                        
                 <li className=" lh-1 col"> {u.text}</li>
                 </ul>
             ))}                                 
@@ -293,8 +281,10 @@ export default function Stats(dataInput) {
             <div className="col-md-4">   
                 <div className="my-2">Winning Option: {winner} </div>
                 <div className="my-2"> Total Vote count: {tv}</div>  
-                <div className="my-2"> Call out for: #{questionCallOut}</div>
-                <div className="my-2"> I voted for: curto </div>
+                {questionCallOut != "" && ( 
+                    <div className="my-2">Call out for: #{questionCallOut}</div>
+                )}
+               
             </div>
         </div>      
         <hr className="my-1" />
@@ -363,7 +353,7 @@ export default function Stats(dataInput) {
             <>
             <hr className="m-3"></hr>     
             <div className="grid sm:grid-cols-3 gap-2">  
-                {renderQuestionLevelStats()}
+                 {renderQuestionLevelStats()}
             </div>
             <hr className="m-3"></hr>   
             {optionList.map((option, index)=> (

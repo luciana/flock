@@ -16,7 +16,7 @@ const Friends = ({votedList, backendQuestions}) => {
                             .sort((a, b) => b.value - a.value)
                             .filter((item, idx) => idx < maxNumberOfFriends);
         
-            console.log('counts ',countList);
+            //console.log('counts ',countList);
             //setUserFriends(countList);
     //      [{
     //         "userID": "0714e188-f988-4492-9ddf-6378059c438b",
