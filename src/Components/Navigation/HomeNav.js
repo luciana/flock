@@ -8,6 +8,9 @@ import Flags  from '../Flags';
 
 const HomeNav = ({locale}) => {
 
+  console.log("home locale", locale);
+  
+  if(!locale) locale="en-US";
   const tabs = [{
     route: "/",
     icon: faHome,

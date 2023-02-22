@@ -30,7 +30,7 @@ function Home() {
         };
     
         isUserLoggedIn();
-      }, [navigate, user]);
+      }, [navigate, user, state.lang]);
 
   return (
     <div className="App">    

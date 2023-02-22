@@ -186,7 +186,7 @@ export default function AuthLayout() {
 
   return (
     <div className="App">      
-      <HomeNav />
+      <HomeNav locale={state.lang}/>
      
       {loading && <Loading />}
       <div className="container my-4">
