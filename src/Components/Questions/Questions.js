@@ -223,7 +223,7 @@ const Questions = () => {
         };     
          let stat ={};
          stat.optionId = optID;
-         stat.userId = user.id;
+         stat.userID = user.id;
          stat.userName = user.name;
          stat.userTag = user.userTag;
          stat.userGender = user.gender;       

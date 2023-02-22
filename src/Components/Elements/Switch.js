@@ -179,10 +179,10 @@ const Switch = ({label,handleSwitch}) =>{
 
     return (
     <div className="row mx-3 ">
-        <div className=" col-md-8 col-form-label-sm">
+        <div className=" col col-form-label-sm">
         {label}
         </div>
-       <div className=" col-md-4 col-form-label">      
+       <div className=" col col-form-label">      
         <label className="switch">
             <input 
                 type="checkbox"                  
