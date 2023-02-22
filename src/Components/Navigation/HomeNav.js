@@ -2,24 +2,25 @@ import logo from'../../Assets/Images/logos/Flock-App-logo-black-small.png';
 import { NavLink } from "react-router-dom";
 import { Nav, NavItem} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import {  LANGUAGES } from "../../Constants";
 import Flags  from '../Flags';
 
-const HomeNav = () => {
+const HomeNav = ({locale}) => {
 
   const tabs = [{
     route: "/",
     icon: faHome,
-    label: "Home"
+    label: LANGUAGES[locale].Home
   },{
     route: "/signin",
-    icon: faUserCircle,
-    label: "Sign In"
+    icon: faSignIn,
+    label: LANGUAGES[locale].Auth.SignInTitle
   }
   ,{
     route: "/signup",
-    icon: faUserCircle,
-    label: "Sign Up"
+    icon: faSignOut,
+    label: LANGUAGES[locale].Auth.SignUpTitle
   }]
 
 	return (
