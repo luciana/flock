@@ -3,7 +3,7 @@ import { Title } from './../../Components';
 import { findCounts } from './../../Helpers';
 import Avatar from 'react-avatar';
 
-const Friends = ({votedList, backendQuestions}) => {
+const Friends = ({votedList, backendQuestions, userId}) => {
     const maxNumberOfFriends = 3;
     let countList =[];
     if(votedList.length>0 && backendQuestions.length>0){
@@ -12,6 +12,9 @@ const Friends = ({votedList, backendQuestions}) => {
             return voted.questionId === questions.id&& voted.questionId === questions.id;
                 });
             });        
+
+            //console.log("votedOnQuestions",votedOnQuestions);
+          //Those who I helped the most
             countList = findCounts(votedOnQuestions, "userID", "userName")
                             .sort((a, b) => b.value - a.value)
                             .filter((item, idx) => idx < maxNumberOfFriends);
@@ -29,7 +32,20 @@ const Friends = ({votedList, backendQuestions}) => {
     //         "value": 3
     //     }
     // ]
-        
+
+            //Those who helped me the most
+            const thoseWhoHelpedMe = backendQuestions.filter((backendQuestion) => (               
+                (backendQuestion.parentID === null) && backendQuestion.userID === userId && backendQuestion.stats ))
+                .map((q) => JSON.parse(q.stats))
+                .flat(1)
+                .filter((l) => l.userId && l.userName && l.userId !== userId);
+
+            console.log("thoseWhoHelpedMe",thoseWhoHelpedMe);
+
+            const thoseWhoHelpedMeCount = findCounts(thoseWhoHelpedMe, "userId", "userName")
+            .sort((a, b) => b.value - a.value)
+            .filter((item, idx) => idx < maxNumberOfFriends);
+            console.log("thoseWhoHelpedMeCount",thoseWhoHelpedMeCount);
     }
     
 

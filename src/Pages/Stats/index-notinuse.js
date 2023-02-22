@@ -5,8 +5,8 @@ import { useNavigate} from "react-router-dom";
 import { LANGUAGES } from "../../Constants";
 import { AppContext } from "../../Contexts";
 import { Alert, Loading } from "../../Components";
-import { findCounts } from './../../Helpers';
-import { Pie } from './../../Components/Chart';
+import { findCounts } from '../../Helpers';
+import { Pie } from '../../Components/Chart';
 
 export default function Stats() {
   const { state } = useContext(AppContext);

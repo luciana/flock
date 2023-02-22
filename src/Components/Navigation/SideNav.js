@@ -7,7 +7,6 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { Nav, NavItem} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import Flags  from '../Flags';
 
 function SideNav({ handleSignOut }) {
     const { state } = useContext(AppContext);
@@ -78,20 +77,20 @@ function SideNav({ handleSignOut }) {
       </nav>
         {/* Side Tab Navigator*/}
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav">       
-            <a className="navbar-brand js-scroll-trigger">
+            <div className="navbar-brand js-scroll-trigger">
                 <span className="d-block d-lg-none">{process.env.REACT_APP_TITLE}</span>
                 <span className="d-none d-lg-block text-wrap">    
                     <p><img src={logo} className="img-fluid" alt={process.env.REACT_APP_TITLE} /> </p>
                     <Avatar name={user.email} className=" img-profile rounded-circle mx-auto mb-2" />
                     <div className="text-white my-3 profile-name">{user.name}</div>   
                 </span>          
-            </a>
+            </div>
             
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarResponsive">
-                <ul className="navbar-nav">                                                                     
+                <ul className="navbar-nav mx-5">                                                                     
                     <li className="nav-item"><button className="btn nav-link js-scroll-trigger" onClick={() => navigate(ROUTES[user.locale].MAIN)}>{LANGUAGES[user.locale].Questions.Questions}</button></li>     
                     <li className="nav-item"><button className="btn nav-link js-scroll-trigger" onClick={() => navigate(ROUTES[user.locale].NEW_QUESTION)}>{LANGUAGES[user.locale].Questions.NewQuestion}</button></li>  
                     <li className="nav-item"><button className="btn nav-link js-scroll-trigger" onClick={() => navigate(ROUTES[user.locale].PROFILE)}>{LANGUAGES[user.locale].Profile.Profile}</button></li>  
@@ -103,7 +102,7 @@ function SideNav({ handleSignOut }) {
                       </button>
                       </li>       
                     <hr className='my-4' />     
-                    <li className="nav-item"><Flags /></li>      
+                       
                 </ul>
          
             </div>

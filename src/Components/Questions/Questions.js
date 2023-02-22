@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext, startTransition } from "react";
+import { useState, useEffect, useContext } from "react";
 import Question from "./Question";
 import QuestionService from '../../Services/QuestionService';
 import { Loading, Alert, Switch, Friends }  from '../../Components';
 import Queries from "../../Services/queries";
 import Mutations from "../../Services/mutations";
 import { AppContext} from '../../Contexts'; 
-import { ROUTES, TYPES, GENERATIONS } from "../../Constants";
+import { ROUTES, TYPES } from "../../Constants";
 import { findGeneration, findAge } from "../../Helpers";
 
 
@@ -22,7 +22,6 @@ const Questions = () => {
     const { state, dispatch } = useContext(AppContext);
     const { user } = state;
     const [filterList, setFilterList]= useState([]);
-    //const [userFriends, setUserFriends]= useState([]);
    // console.log("USER in Questions.js state", state);  
 
     useEffect(() => {
@@ -224,6 +223,8 @@ const Questions = () => {
         };     
          let stat ={};
          stat.optionId = optID;
+         stat.userId = user.id;
+         stat.userName = user.name;
          stat.userTag = user.userTag;
          stat.userGender = user.gender;       
          stat.userAddress = user.address;
@@ -369,7 +370,7 @@ const Questions = () => {
                     handleSwitch={handleQuestionFilterSwitch}/>   
               </div>              
             </div>     
-            <div>{(!loading) && <Friends votedList={votedList} backendQuestions={backendQuestions} />}
+            <div>{(!loading) && <Friends votedList={votedList} backendQuestions={backendQuestions} userId={user.id}/>}
               </div>
               <div id="all-questions" className=" border border-0 p-0 ">
                   {filterList.map((rootQuestion) => (

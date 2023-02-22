@@ -16,7 +16,6 @@ const ConfirmSignUp = lazy(() => import("./Pages/Auth/ConfirmSignUp"));
 const Layout = lazy(() => import("./Pages/Layout/Layout"));
 const Main = lazy(() => import("./Pages/Main"));
 const Home = lazy(() => import("./Pages/Home"));
-const Stats = lazy(() => import("./Pages/Stats"));
 const Terms = lazy(() => import("./Pages/Terms"));
 const Profile = lazy(() => import("./Pages/Profile"));
 const NewQuestion = lazy(() => import("./Pages/NewQuestion"));
@@ -49,9 +48,7 @@ function App() {
         <Route element={<Layout />}>
          
           <Route path={ROUTES[state.lang].MAIN} element={<Main />} />
-          <Route path={ROUTES[state.lang].PROFILE} element={<Profile />} />
-          <Route path={ROUTES[state.lang].STATS} element={<Stats />} />
-         
+          <Route path={ROUTES[state.lang].PROFILE} element={<Profile />} />         
           <Route path={ROUTES[state.lang].NEW_QUESTION} element={<NewQuestion />} />
         </Route>
         <Route path="*" element={<NotFound />} />
