@@ -83,8 +83,7 @@ const Questions = () => {
         
                       
       }, [user,  setFilterList ]);
-
-     
+       
         const handleVoteFilterSwitch = () => {               
           setIsVoteFilterChecked(!isVoteFilterChecked);  
          console.log("when the user clicks vote filter, the filtered list is ", filterList);
@@ -129,11 +128,13 @@ const Questions = () => {
          }                                   
         }; 
 
-        const handleQuestionFilterSwitch =() => {    
+        const handleQuestionFilterSwitch =(userID) => {    
           setIsQuestionFilterChecked(!isQuestionFilterChecked);   
-        
+          //console.log("USERID handleQuestionFilterSwitch before", userID);
           if(!isQuestionFilterChecked){
-            const id = user.id;
+            const id = (userID || userID!=="")? userID : user.id;
+           // console.log("USERID handleQuestionFilterSwitch ", userID);
+            //const id = user.id;
             console.log("Questions.js checkFilteredList for question looking for user ",id );
             const q = filterList.filter(
               (backendQuestion) => ((backendQuestion.parentID === null) && 
@@ -370,7 +371,10 @@ const Questions = () => {
                     handleSwitch={handleQuestionFilterSwitch}/>   
               </div>              
             </div>     
-            <div>{(!loading) && <Friends votedList={votedList} backendQuestions={backendQuestions} userId={user.id}/>}
+            <div>{(!loading) && <Friends votedList={votedList} 
+                                        backendQuestions={backendQuestions} 
+                                        userId={user.id}
+                                        handleSwitch={handleQuestionFilterSwitch}/>}
               </div>
               <div id="all-questions" className=" border border-0 p-0 ">
                   {filterList.map((rootQuestion) => (

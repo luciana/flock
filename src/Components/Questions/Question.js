@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Vote from '../Votes/Vote';
-import { FaCircleNotch , FaSyncAlt, FaCircle, FaTrashAlt, FaGrinHearts, FaPhoneVolume, FaChartPie} from 'react-icons/fa';
+import { FaCircleNotch , FaSyncAlt, FaCircle, FaTrashAlt, FaGrinHearts, FaPhoneVolume} from 'react-icons/fa';
 //import { Tooltip } from 'bootstrap';
 import Avatar from 'react-avatar';
 import ReplyModalDialog from './ReplyModalDialog';

@@ -186,7 +186,7 @@ const Switch = ({label,handleSwitch}) =>{
         <label className="switch">
             <input 
                 type="checkbox"                  
-                value="open"
+                value=""
                 onChange={(e) => handleSwitch(e.target.value)}
                 />
             <svg viewBox="0 0 38 24" filter="url(#goo)">
