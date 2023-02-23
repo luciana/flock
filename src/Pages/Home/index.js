@@ -25,7 +25,7 @@ function Home() {
            
           } catch (error) {
             console.error("Home.js error checking if user exists in state(FlockAppState)", error);    
-            navigate(ROUTES[state.lang].SIGN_IN);
+            navigate(ROUTES[state.lang].HOME);
           }
         };
     

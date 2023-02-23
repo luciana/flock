@@ -13,7 +13,7 @@ function Main() {
     <div className="App  ">      
        
         {(!user.name || !user.userTag || !user.gender || !user.address || !user.birthdate) && <Alert type="warning" text="Please, complete the Profile!" link="/Profile" />}
-        <div className="white-bg container border border-1 p-2 ">
+        <div className="white-bg container p-2 ">
                 <Questions />
         </div>               
         <hr className="m-0"></hr>       

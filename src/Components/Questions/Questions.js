@@ -362,21 +362,21 @@ const Questions = () => {
             {loading && <Loading />}
             {( !loading && showNoQuestions ) && <Alert type="warning" text="No questions retrieved. Start one!" link={ROUTES[state.lang].NEW_QUESTION} />}          
             <div className="row border border-1 ">
-              <div className=" col-md-4">
+              <div className=" col">
                  <Switch label={"Only open questions"}
                     handleSwitch={handleVoteFilterSwitch}/> 
               </div>
-              <div className=" col-md-4">                
+              <div className=" col">                
                   <Switch label={"Only my questions"}
                     handleSwitch={handleQuestionFilterSwitch}/>   
               </div>              
             </div>     
-            <div>{(!loading) && <Friends votedList={votedList} 
+            <div className=" ">{(!loading) && <Friends votedList={votedList} 
                                         backendQuestions={backendQuestions} 
                                         userId={user.id}
                                         handleSwitch={handleQuestionFilterSwitch}/>}
               </div>
-              <div id="all-questions" className=" border border-0 p-0 ">
+              <div id="all-questions" className=" ">
                   {filterList.map((rootQuestion) => (
                       <Question 
                           key={rootQuestion.id}

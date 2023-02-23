@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Nav, NavItem} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import {  LANGUAGES } from "../../Constants";
+import {  LANGUAGES, ROUTES } from "../../Constants";
 import Flags  from '../Flags';
 
 const HomeNav = ({locale}) => {
@@ -31,7 +31,7 @@ const HomeNav = ({locale}) => {
        {/* Top Bar*/}
       <nav className="navbar  navbar-expand-md navbar-light d-none d-lg-block sticky-top top-tab-nav" 	role="link">
         <div className="container-fluid">
-            <a className="navbar-brand" href="/main">
+            <a className="navbar-brand" href={ROUTES[locale].HOME}>
             
             <img src={logo} className="img-fluid" alt={process.env.REACT_APP_TITLE} />
             </a>

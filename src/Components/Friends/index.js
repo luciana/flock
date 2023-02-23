@@ -5,7 +5,7 @@ import Avatar from 'react-avatar';
 const Friends = ({votedList, backendQuestions, userId, handleSwitch}) => {
     const [style, setStyle] = useState({});
     const [active, setActive] = useState();
-    const maxNumberOfFriends = 5;   
+    const maxNumberOfFriends = 3;   
     let thoseWhoIHelpedCount =[];
     let thoseWhoHelpedMeCount=[];
     let friends=[];
@@ -96,57 +96,55 @@ const Friends = ({votedList, backendQuestions, userId, handleSwitch}) => {
                 .filter((item, idx) => idx < maxNumberOfFriends);
       console.log("friends",friends);
     }
+
+    const displayName = (name) => {
+      const maxChars = 15;
+      if ( name.length > maxChars){
+        return name.substring(0, maxChars-3)+'...';
+      }else if ( name.length === maxChars){
+        return name;
+      }else{
+       return name;
+      }
+  
+    }
    
    
 return (
-  <>
+  <div className="container">   
+
     {showFriendsSection && (
-      <div className="container mt-2 mb-2">       
+      <>          
           {friends && friends.length > 0  && (
             <div className="row align-items-center ">         
-              {friends.map((u, index) => (
-                  <div key={index} 
-                      value={u}  
-                      onClick={() => handleClick(u.userID, index)} 
-                      style={{
+              {friends.map((u, index) => (                
+                      <div key={index} 
+                       onClick={() => handleClick(u.userID, index)}  
+                       style={{
                         border:"1px 1px",
                         boxShadow: style[`${index}`] 
-                          ? "4px 3px 8px 0px rgba(1, 156, 48, 0.3)" 
+                          ? " 4px 3px 8px 0px #076AE0" 
                           : ""
                       }}
-                      className='col-sm-2 d-flex mx-3 my-1'>    
-                      <div className="card p-3 mb-2">        
-                        <div className="d-flex justify-content-between">
-                          <div className="d-flex flex-row align-items-center">
-                            <div className="icon"> <i className="bx bxl-mailchimp"></i> 
+                      className="col card p-1 m-1">                                
+                          <div className=" d-flex align-items-center">
+                            <div className="p-2 d-flex">
                             <Avatar size="48" name={u.userName} 
-                                className="rounded-circle mx-auto mb-0 mx-1" 
-                                alt="{u.userName}" />
-                                <div className="ms-2 c-details">
-                                    <h6 className="mb-0">{u.userName}</h6>
+                                className="rounded-circle mx-auto mb-0 mx-1 align-items-center" 
+                                alt={u.userName} />
+                                <div className="ms-2 d-none d-lg-block">
+                                    <h6 className="mb-0">{displayName(u.userName)}</h6>
                                 </div>
                                 </div>
-                                </div>
-                              <div className="badge"> <span>Design</span> </div>                           
+                                </div>                                                   
                             </div>             
-                       </div>
-                  </div>                                 
+                                                      
                 ))}
             </div>
           )}
-      </div>
+          </>
     )}
-
-
-             
-                
-
-                        
-                  
-          
-
-
-  </>
+  </div>
   )
 }
 export default Friends;
