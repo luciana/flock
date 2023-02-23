@@ -6,6 +6,7 @@ import Avatar from 'react-avatar';
 import ReplyModalDialog from './ReplyModalDialog';
 import QuestionForm from './QuestionForm';
 import StatsDialog from '../Stats/StatsDialog';
+import Social from '../Social';
 
 function Question({ 
   question, 
@@ -106,10 +107,6 @@ function Question({
 
   return (
     <div key={question.id} className="my-2">
-
-      
-      
-        
        <div key={question.id} className="container border border-1 p-1" >           
         <div className="p-2 row align-items-start"> 
             <div className="col-2"> <Avatar size="42" name={question.userName} className=" img-profile rounded-circle mx-auto mb-0" alt="{question.userName}" /></div>
@@ -119,6 +116,7 @@ function Question({
                 {!isAReply && voteEnded && (<span > Voting closed <FaCircle /> </span>)}
                 {!isAReply && !voteEnded && (<span> Voting Open < FaCircleNotch /> until {formatDateAndTime(question.voteEndAt)}</span>)}
                 {isAReply && (<span><FaCircle color="green"/> {question.sentiment}</span>)}
+                
               </div>
               
             </div>
@@ -137,6 +135,7 @@ function Question({
                 <StatsDialog question={question}
                             locale={user.locale}/>
               )}
+              <Social />
             </div>
         </div>      
         <div className="p-2"> 
